@@ -5,7 +5,7 @@ using UnityEngine;
 public class BaseEnemy : MonoBehaviour
 {
 
-    protected int MaxHealth;
+    [SerializeField]protected int MaxHealth;
     protected int CurrentHealth;
 
     protected float MoveSpeed;
@@ -14,6 +14,11 @@ public class BaseEnemy : MonoBehaviour
     public virtual void Startup()
     {
         HandleHealth(MaxHealth);
+
+        if (MaxHealth <= 0)
+        {
+            Debug.LogError("Health Not Set");
+        }
     }
 
     public virtual void HandleHealth(int HealthChange)
@@ -23,8 +28,7 @@ public class BaseEnemy : MonoBehaviour
             CurrentHealth += HealthChange;
             if (HealthChange < CurrentHealth) 
             {
-                ParticleSystem HitEffect = Instantiate(TakenDamageEffect, transform.position, Quaternion.identity);
-                HitEffect.Play();
+                TakenDamage();
             }
             return;
         }
@@ -34,9 +38,10 @@ public class BaseEnemy : MonoBehaviour
         }
     }
 
-    protected virtual void DealDamage()
+    protected void TakenDamage()
     {
-
+        ParticleSystem HitEffect = Instantiate(TakenDamageEffect, transform.position, Quaternion.identity);
+        HitEffect.Play();
     }
 
 }
