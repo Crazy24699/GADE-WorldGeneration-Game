@@ -9,11 +9,16 @@ public class TowerBase : MonoBehaviour
     [SerializeField] protected ParticleSystem TakenDamageEffect;
 
     [SerializeField] protected int MaxHealth;
-    protected int CurrentHealth;
+    [SerializeField]protected int CurrentHealth;
+    [SerializeField] protected int Damage;
+
+    [SerializeField] protected GameObject EnemiesInRange;
 
     // Start is called before the first frame update
     void Start()
     {
+        
+
         if(ProgramManager.ProgramManagerInstance.DevMode)
         {
             TowerStartup();
@@ -41,6 +46,7 @@ public class TowerBase : MonoBehaviour
     {
         if ((CurrentHealth > 0 || CurrentHealth <= MaxHealth))
         {
+
             CurrentHealth += HealthChange;
             if (HealthChange < CurrentHealth)
             {
@@ -54,6 +60,16 @@ public class TowerBase : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+    }
+
+    protected void DetectEnemyUnits()
+    {
+
+    }
+
+    protected virtual void Attack()
+    {
+
     }
 
 }

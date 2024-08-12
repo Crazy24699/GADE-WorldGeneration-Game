@@ -47,9 +47,11 @@ public class BasicEnemy : BaseEnemy
         }
     }
 
+
+
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.L))
+        if(Input.GetKeyDown(KeyCode.O))
         {
             Startup();
         }
@@ -59,7 +61,6 @@ public class BasicEnemy : BaseEnemy
     {
         if (Collision.CompareTag("PlayerTower"))
         {
-
             Collision.GetComponent<TowerLogic>().HandleHealth(-CurrentHealth);
             TakenDamage();
             Destroy(gameObject);

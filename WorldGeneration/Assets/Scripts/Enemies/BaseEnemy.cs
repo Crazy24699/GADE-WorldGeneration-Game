@@ -34,8 +34,13 @@ public class BaseEnemy : MonoBehaviour
         }
         else if (CurrentHealth <= 0) 
         {
-            Destroy(this.gameObject);
+            Die();
         }
+    }
+    protected void Die()
+    {
+        ProgramManager.ProgramManagerInstance.EnemyCount.Remove(this.gameObject);
+        Destroy(this.gameObject);
     }
 
     protected void TakenDamage()

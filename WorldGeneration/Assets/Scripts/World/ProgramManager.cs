@@ -1,14 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class ProgramManager : MonoBehaviour
 {
 
     public static ProgramManager ProgramManagerInstance;
     public bool GamePaused = false;
-
     public bool DevMode;
+
+    public UnityEvent SpawnWave;
+    public List<GameObject> EnemyCount;
 
     public void Start()
     {
@@ -36,6 +39,12 @@ public class ProgramManager : MonoBehaviour
                 GamePaused = false;
                 break;
         }
+
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            SpawnWave.Invoke();
+        }
+
     }
 
 }
