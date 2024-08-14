@@ -64,7 +64,12 @@ public class DefenderHall : MonoBehaviour
 
         HalfDist = MinPosition.z - MaxPosition.z;
 
-        Instantiate(VertLocation, new Vector3(0, 2, 1*HalfDist / 2.75f), Quaternion.identity);
+        Instantiate(VertLocation, new Vector3(0, 2, 1*HalfDist / 2.75f), Quaternion.identity).transform.SetParent(this.gameObject.transform);
+        GameObject StartPoint=Instantiate(VertLocation, new Vector3(0, 2, 1), Quaternion.identity);
+        StartPoint.transform.SetParent(this.gameObject.transform);
+        StartPoint.transform.localPosition = new Vector3(0, -0.5f, -1);
+
+
     }
 
     private void OnDrawGizmos()
