@@ -8,6 +8,7 @@ public class DefenderHall : MonoBehaviour
     // Start is called before the first frame update
     [SerializeField] private GameObject TowerDefenderRef;
     public float HalfDist;
+    public float MaxDefenderPlaceDist;
     [SerializeField] private List<GameObject> EnemySpawns = new List<GameObject>();
 
     [SerializeField] private int TowerSpawnNum = 12;
@@ -16,7 +17,10 @@ public class DefenderHall : MonoBehaviour
 
     [SerializeField] private float DefenderPlacementRange;
 
-    public Vector3 Scale;
+    [Header("Vector"),Space(5)]
+    [SerializeField]private Vector3 StartPosition;
+    [SerializeField]private Vector3 EndPosition;
+
 
     public void DefenderStart()
     {
@@ -29,7 +33,7 @@ public class DefenderHall : MonoBehaviour
         {
             FindBarriers();
             //Instantiate(Coob, new Vector3(0, 3, -15), Quaternion.identity).transform.localScale = Scale;
-            
+            VisualizeSpacing();
         }
     }
 
@@ -47,35 +51,46 @@ public class DefenderHall : MonoBehaviour
     private void FindBarriers()
     {
         GameObject GroundObject = GameObject.FindGameObjectWithTag("Ground");
-        MeshRenderer GroundMeshRendRef = GroundObject.GetComponent<MeshRenderer>();
         MeshFilter GroundMeshFilterRef = GroundObject.GetComponent<MeshFilter>();
 
         Mesh GroundMesh = GroundMeshFilterRef.sharedMesh;
-        foreach (var Vertex in GroundMesh.vertices)
-        {
 
-            //Debug.Log(Vertex);
-        }
+
         Vector3 MaxPosition = GroundObject.transform.TransformPoint(GroundMesh.bounds.max);
         Vector3 MinPosition = GroundObject.transform.TransformPoint(GroundMesh.bounds.min);
-
-        Instantiate(VertLocation, MaxPosition, Quaternion.identity);
-        Instantiate(VertLocation, MinPosition, Quaternion.identity);
 
         HalfDist = MinPosition.z - MaxPosition.z;
 
         Instantiate(VertLocation, new Vector3(0, 2, 1*HalfDist / 2.75f), Quaternion.identity).transform.SetParent(this.gameObject.transform);
         GameObject StartPoint=Instantiate(VertLocation, new Vector3(0, 2, 1), Quaternion.identity);
+        StartPosition = new Vector3(0, -0.5f, -1);
+        EndPosition = new Vector3(0, 1, HalfDist);
+
         StartPoint.transform.SetParent(this.gameObject.transform);
         StartPoint.transform.localPosition = new Vector3(0, -0.5f, -1);
 
+        HalfDist = StartPoint.transform.InverseTransformPoint(StartPoint.transform.localPosition).z;
+        float HalfDistRounded = Mathf.Ceil(Mathf.Abs(HalfDist) / 5) * 5;
+        HalfDist = (HalfDist < 0 ? HalfDistRounded * -1 : HalfDistRounded * 1)+10;
+        Debug.Log(HalfDist);
 
+    }
+
+    private void VisualizeSpacing()
+    {
+        for (int i = 0; i < Mathf.Abs(HalfDist) /2; i++)
+        {
+            GameObject VisualPoint = Instantiate(VertLocation, new Vector3(0, 2, 1 * HalfDist + (i * 5)), Quaternion.identity);
+            VisualPoint.transform.SetParent(this.transform);
+            VisualPoint.transform.localPosition= new Vector3(0, 2, 1 * HalfDist + (i * 2)); 
+            Debug.Log("kiss");
+        }
     }
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = new Color(1, 0, 0, 0.5f);
-        Gizmos.DrawCube(new Vector3(0,3,-15), Scale);
+        //Gizmos.color = new Color(1, 0, 0, 0.5f);
+        //Gizmos.DrawCube(new Vector3(0,3,-15), Scale);
     }
 
 }
