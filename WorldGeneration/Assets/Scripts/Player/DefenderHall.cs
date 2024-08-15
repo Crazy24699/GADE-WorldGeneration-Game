@@ -20,6 +20,8 @@ public class DefenderHall : MonoBehaviour
     [Header("Vector"),Space(5)]
     [SerializeField]private Vector3 StartPosition;
     [SerializeField]private Vector3 EndPosition;
+    [SerializeField]private Vector3 StartX;
+    [SerializeField]private Vector3 EndX;
 
 
     public void DefenderStart()
@@ -59,12 +61,17 @@ public class DefenderHall : MonoBehaviour
         Vector3 MaxPosition = GroundObject.transform.TransformPoint(GroundMesh.bounds.max);
         Vector3 MinPosition = GroundObject.transform.TransformPoint(GroundMesh.bounds.min);
 
+        StartX = new Vector3(MaxPosition.x, 0, 0);
+        EndX = new Vector3(MinPosition.x, 0, 0);
+        StartPosition = new Vector3(0, 0, MaxPosition.z);
+        EndPosition = new Vector3(0, 0, MinPosition.z);
+
+
         HalfDist = MinPosition.z - MaxPosition.z;
 
-        Instantiate(VertLocation, new Vector3(0, 2, 1*HalfDist / 2.75f), Quaternion.identity).transform.SetParent(this.gameObject.transform);
+        Instantiate(VertLocation, new Vector3(0, 2, 1 * HalfDist / 2.75f), Quaternion.identity).transform.SetParent(this.gameObject.transform);
         GameObject StartPoint=Instantiate(VertLocation, new Vector3(0, 2, 1), Quaternion.identity);
-        StartPosition = new Vector3(0, -0.5f, -1);
-        EndPosition = new Vector3(0, 1, HalfDist);
+
 
         StartPoint.transform.SetParent(this.gameObject.transform);
         StartPoint.transform.localPosition = new Vector3(0, -0.5f, -1);
@@ -82,9 +89,11 @@ public class DefenderHall : MonoBehaviour
         {
             GameObject VisualPoint = Instantiate(VertLocation, new Vector3(0, 2, 1 * HalfDist + (i * 5)), Quaternion.identity);
             VisualPoint.transform.SetParent(this.transform);
-            VisualPoint.transform.localPosition= new Vector3(0, 2, 1 * HalfDist + (i * 2)); 
+            VisualPoint.transform.localPosition= new Vector3(0, 0, 1 * HalfDist + (i * 2)); 
             Debug.Log("kiss");
         }
+
+        
     }
 
     private void OnDrawGizmos()

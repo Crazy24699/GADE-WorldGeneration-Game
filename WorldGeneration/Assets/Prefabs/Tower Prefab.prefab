@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 2665997604047049063}
   m_Layer: 6
   m_Name: Tower Prefab
-  m_TagString: PlayerTower
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -124,6 +124,9 @@ MonoBehaviour:
   HealthBar: {fileID: 0}
   TakenDamageEffect: {fileID: 5269410802817535968, guid: 1c7b93a4dc4d0d842acb62a5f9cbae16, type: 3}
   MaxHealth: 50
+  CurrentHealth: 0
+  Damage: 0
+  EnemiesInRange: {fileID: 0}
 --- !u!54 &7640031778619461401
 Rigidbody:
   m_ObjectHideFlags: 0

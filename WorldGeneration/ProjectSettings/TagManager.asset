@@ -7,6 +7,8 @@ TagManager:
   - Enemy AI
   - PlayerTower
   - Ground
+  - TowerArea
+  - Pathway
   layers:
   - Default
   - TransparentFX
