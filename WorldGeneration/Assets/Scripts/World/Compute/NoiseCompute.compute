@@ -1,17 +1,46 @@
 // Each #kernel tells which function to compile; you can have many kernels
 #pragma kernel CSMain
+#pragma Kernel Density
 
 // Create a RenderTexture with enableRandomWrite flag and set it
 // with cs.SetTexture
 RWTexture2D<float4> Result;
 
+StructuredBuffer<float3> Offsets;
+int MeshOctaves;
 
+float Lacunarity; //the gapsize of the patterns and how it fills the space. 
+float NoiseScale;
+float NoiseWeighting;
+float FloorOffset;
+float WeightingMultiplier;
+float HardFloorValue;
+float HardFloorWeighting;
 
+float4 GemerationParameters;
 
 [numthreads(8,8,1)]
 void CSMain (uint3 id : SV_DispatchThreadID)
 {
     // TODO: insert actual code here!
 
-    Result[id.xy] = float4(id.x & id.y, (id.x & 15)/15.0, (id.y & 15)/15.0, 0.0);
+    //if (id.x >= PointsPerAxis || id.y >= PointsPerAxis || id.z >= PointsPerAxis)
+    //{
+    //    return;
+    //}
+    
+    //float3 Position = MeshCenter + id * Spacing - BoundarySize / 2;
+    //float NoiseOffset = 0.5f;
+    //float Noise = 0;
+    
+    //float Frequency = NoiseScale / 100;
+    //float Amplitude = 1;
+    //float Weight = 1;
+    
+    //for (int i = 0; j < MeshOctaves; j++)
+    //{
+        
+    //}
+    
+        Result[id.xy] = float4(id.x & id.y, (id.x & 15) / 15.0, (id.y & 15) / 15.0, 0.0);
 }

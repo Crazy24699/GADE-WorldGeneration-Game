@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class LandDensityGenerator : MonoBehaviour
 {
@@ -24,10 +25,13 @@ public class LandDensityGenerator : MonoBehaviour
 
     public virtual ComputeBuffer GenerateMesh(ComputeBuffer BufferPoints, int PointsPerAxis, float BoundarySize, Vector3 WorldBoundary,Vector3 MeshCenter, Vector3 MeshOffset, float Spacing)
     {
-        
+
 
         //Need to get the smallest int equal or greater to the sum result
-        int ThreadPerAxisNum=Mathf.CeilToInt(ThreadSize);
+
+        int ThreadPerAxisNum = Mathf.CeilToInt(ThreadSize);
+
+        NoiseComputeRef.SetBuffer(0, "Points", BufferPoints);
 
         return BufferPoints;
     }

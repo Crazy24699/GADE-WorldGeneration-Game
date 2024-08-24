@@ -12,7 +12,7 @@ public class Chunk : MonoBehaviour
     private MeshRenderer ChunkRenderer;
     private MeshCollider ChunkCollider;
 
-    public void CreateChunk(Material ChunkMaterial)
+    public void ChunkStartup(Material ChunkMaterial)
     {
         ChunkMeshFilter = ChunkMeshFilter == null ? gameObject.AddComponent<MeshFilter>() : GetComponent<MeshFilter>();
         ChunkRenderer = ChunkRenderer == null ? gameObject.AddComponent<MeshRenderer>() : GetComponent<MeshRenderer>();

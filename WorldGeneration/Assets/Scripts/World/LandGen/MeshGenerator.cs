@@ -44,6 +44,7 @@ public class MeshGenerator : MonoBehaviour
     //Scripts
     private List<Chunk> AllChunks = new List<Chunk>();
     private Dictionary<Vector3Int, Chunk> CreatedChunks = new Dictionary<Vector3Int, Chunk>();
+    public Material ChunkMaterial;
 
     //Need to use queues for the first in and first out nature of them 
     //in regards to marching cubes mesh generation 
@@ -57,8 +58,6 @@ public class MeshGenerator : MonoBehaviour
     public void CreateMap()
     {
         MapParent = MapParent == null ? GameObject.Find("MapParent") : new GameObject("MapParent");
-
-
     }
 
     private void CreateChunkBuffers()
@@ -106,6 +105,56 @@ public class MeshGenerator : MonoBehaviour
     private void UpdateChunk()
     {
         TriangleStruct[] Triangles = new TriangleStruct[1];
+    }
+
+    private void InitializeChunk()
+    {
+        CreateMap();
+        AllChunks = new List<Chunk>();
+
+        List<Chunk> OldChunks = new List<Chunk>(FindObjectsOfType<Chunk>());
+
+        for (int x = 0; x < ChunkNumber.x; x++)
+        {
+            for (int y = 0; y < ChunkNumber.y; y++)
+            {
+                for (int z = 0; z < ChunkNumber.z; z++)
+                {
+                    Vector3Int Coordinate = new Vector3Int(x, y, z);
+                    HandleChunkStorage(Coordinate, OldChunks);
+                }
+            }
+        }
+
+        for (int i = 0; i < OldChunks.Count; i++)
+        {
+            OldChunks[i].DestoryChunk();
+        }
+
+    }
+
+    private void HandleChunkStorage(Vector3Int ChunkCord, List<Chunk> OldChunkList)
+    {
+        bool ChunkExists = false;
+        for (int i = 0; i < OldChunkList.Count; i++)
+        {
+            if (OldChunkList[i].Coordinate == ChunkCord) 
+            {
+                AllChunks.Add(OldChunkList[i]);
+                OldChunkList.RemoveAt(i);
+
+                ChunkExists = true;
+                break;
+            }
+        }
+
+        if(!ChunkExists)
+        {
+            Chunk NewChunk = CreateChunk(ChunkCord);
+            AllChunks.Add(NewChunk);
+        }
+        AllChunks[AllChunks.Count - 1].ChunkStartup(ChunkMaterial);
+
     }
 
     private struct TriangleStruct
