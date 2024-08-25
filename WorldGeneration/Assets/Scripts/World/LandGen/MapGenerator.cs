@@ -8,8 +8,7 @@ public class MapGenerator : MonoBehaviour
 
     public LODInfo[] LevelDetails;
 
-    public MeshSettings MeshSettingsRef;
-    public HeightMapSettings HightSettingsRef;
+    
 
 }
 

@@ -51,12 +51,53 @@ public class HandleNoise : MonoBehaviour
         {
             for (int y = 0; y < MapHeight; y++)
             {
+                Amplitude = 1;
+                Frequency = 1;
 
+                float NoiseHeight = 0;
+
+                for (int i = 0; i < NoiseOctaves; i++)
+                {
+                    float XSample = (x - HalfWidth + OctaveOffsets[i].x) / NoiseScale * Frequency;
+                    float YSample = (y - HalfHeight + OctaveOffsets[i].y) / NoiseScale * Frequency;
+
+                    float PerlinVoiseValue = Mathf.PerlinNoise(XSample, YSample) * 2 - 1;
+                    NoiseHeight += PerlinVoiseValue * Amplitude;
+
+                    Amplitude *= NoisePersistance;
+                    Frequency *= NoiseScale;
+
+                }
+
+                if(NoiseHeight > MaxNoiseHeight)
+                {
+                    MaxNoiseHeight = NoiseHeight;
+                }
+
+                if (NoiseHeight < MinNoiseHeight)
+                {
+                    MinNoiseHeight = NoiseHeight;
+                }
+
+                NoiseMap[x, y] = NoiseHeight;
+
+            }
+        }
+
+        if (CurrentNormalizationMode == NoiseNormalization.Local)
+        {
+            for (int x = 0; x < MapWidth; x++)
+            {
+                for (int y = 0; y < MapHeight; y++)
+                {
+                    NoiseMap[x, y] = Mathf.InverseLerp(MinNoiseHeight, MaxNoiseHeight, NoiseMap[x, y]);
+                }
             }
         }
 
         return NoiseMap;
     }
-    
+   
+
 
 }
