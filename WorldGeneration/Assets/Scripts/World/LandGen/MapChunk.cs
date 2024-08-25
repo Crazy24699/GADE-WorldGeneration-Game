@@ -15,21 +15,31 @@ public class MapChunk : MonoBehaviour
     private MeshRenderer MeshRendererRef;
     private MeshFilter MeshFilterRef;
     private MeshCollider MeshColliderRef;
+    
+    private HeightMapGenerator HeightMapGeneratorScript;
+    private MeshGenerator MeshGeneratorScript;
 
     private LODInfo[] DetailLevels;
-    private 
+    private MeshLOD[] LODMeshes;
 
-    // Start is called before the first frame update
-    void Start()
+    private int LODColliderIndex;
+    private int LastLODIndex = -1;
+
+    private float MaxViewDistamce;
+    
+    public MapChunk(Vector2 Coordinate, HeightMapGenerator HeightMapGenerator, MeshGenerator MeshGenerator, LODInfo[] DetailLevelsRef, int CollisionLODIndex, Transform Parent, Material Mat)
     {
-        
+        ChunkCoordinate = Coordinate;
+        DetailLevels = DetailLevelsRef;
+        LODColliderIndex = CollisionLODIndex;
+
+        HeightMapGeneratorScript = HeightMapGenerator;
+        MeshGeneratorScript = MeshGenerator;
+
+        Vector2 Position = Coordinate * MeshGeneratorScript.MeshWorldScale / MeshGeneratorScript.MeshScale;
+
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
 
 class MeshLOD
