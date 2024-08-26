@@ -40,6 +40,10 @@ public class MapChunk : MonoBehaviour
 
     }
 
+
+
+
+
 }
 
 class MeshLOD
