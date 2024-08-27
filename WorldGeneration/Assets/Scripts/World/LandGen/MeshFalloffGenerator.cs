@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class MeshFalloffGenerator 
 {
-    public float[,] FalloffMapGenerator(int MapSize)
+
+    public static float[,] FalloffMapGenerator(int MapSize)
     {
         float[,] MapRef = new float[MapSize, MapSize];
 
@@ -23,7 +24,7 @@ public class MeshFalloffGenerator
         return MapRef;
     }
 
-    private float EvaluateValue(float Value)
+    private static float EvaluateValue(float Value)
     {
         float ValueA = 3;
         float ValueB = 2.25f;

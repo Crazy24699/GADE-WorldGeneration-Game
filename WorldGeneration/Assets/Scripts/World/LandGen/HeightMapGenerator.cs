@@ -81,7 +81,7 @@ public class HeightMapGenerator : MonoBehaviour
     {
         HandleNoise NoiseScript = new HandleNoise();
         float[,] NoiseMap = NoiseScript.GenerateNoiseMap(ChunkSize, ChunkSize, NoiseSeed, NoiseScale, Octaves, Persistance, Lacunarity, offset);
-        DrawMesh(MeshGeneratorScript.GenerateTerrainMesh(NoiseMap, HeightMultiplier, HeightCurve, LODValue));
+        //DrawMesh(MeshGeneratorScript.GenerateTerrainMesh(NoiseMap, HeightMultiplier, HeightCurve, LODValue));
     }
 
 }

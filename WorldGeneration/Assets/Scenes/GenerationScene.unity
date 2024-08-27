@@ -591,6 +591,7 @@ GameObject:
   - component: {fileID: 2051312237}
   - component: {fileID: 2051312240}
   - component: {fileID: 2051312239}
+  - component: {fileID: 2051312241}
   m_Layer: 0
   m_Name: Terrain Generator
   m_TagString: Untagged
@@ -632,7 +633,7 @@ MonoBehaviour:
     VerticesPerLine: 53
     ChunkSizeIndex: 0
     FlatshadedChunkSizeIndex: 0
-  HeightMultiplier: 29.8
+  HeightMultiplier: 14.2
   HeightCurve:
     serializedVersion: 2
     m_Curve:
@@ -667,12 +668,12 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   MinHeight: 1.22
-  MaxHeight: 16.58
-  NoiseScale: 10.6
-  NoiseSeed: 35
+  MaxHeight: 17.13
+  NoiseScale: 12.8
+  NoiseSeed: 8
   Octaves: 14
-  LODValue: 12
-  Persistance: 0.871
+  LODValue: 7
+  Persistance: 0.522
   Lacunarity: 0.74
   offset: {x: 13.8, y: 0}
   textureRender: {fileID: 0}
@@ -692,7 +693,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ColliderLODIndex: 1
-  MeshWorldSize: 5
+  NoiseSeed: 16
+  Octaves: 39
+  LODValue: 11
+  MinHeight: 1.04
+  MaxHeight: 0
+  NoiseScale: 0.84
+  MeshWorldSize: 4.04
+  HeightMultiplyer: 0
+  Persistance: 0.703
+  Lacunarity: 1.11
+  MapOffset: {x: 0.54, y: 0}
+  MeshGenerationParameters: {x: 0, y: 0}
+  AutoUpdate: 1
   LevelDetails:
   - LODLevel: 1
     VisibleDistanceLimit: 200
@@ -706,9 +719,46 @@ MonoBehaviour:
     ChunkSizeIndex: 0
     FlatshadedChunkSizeIndex: 0
   HeightMapGeneratorScript: {fileID: 2051312239}
+  textureRender: {fileID: 0}
+  meshFilter: {fileID: 0}
+  meshRenderer: {fileID: 0}
   MapMaterialRef: {fileID: 2100000, guid: b33ffbd0a126ce8428de9543ebe1fd49, type: 2}
-  MeshGenerationParameters: {x: 0, y: 0}
-  AutoUpdate: 1
+  HeightCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &2051312241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2051312236}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04832005370bc06499cbbc090b9cebd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

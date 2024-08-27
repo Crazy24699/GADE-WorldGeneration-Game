@@ -1,25 +1,60 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public class MapGenerator : MonoBehaviour
 {
+
+
+    public const int MapChunkSize = 240;
     public int ColliderLODIndex;
-    
+    public int NoiseSeed;
+    public int Octaves;
+    public int LODValue;
+
+    [Space(2), Header("Floats")]
+    public float MinHeight;
+    #region Floats  
+    public float MaxHeight;
+    public float NoiseScale;
     public float MeshWorldSize;
+    public float HeightMultiplyer;
+    [Space(2)]
+    [Range(0, 1)]
+    public float Persistance;
+    public float Lacunarity;
+    #endregion
+
+    private float[,] FalloffMap;
+
+
+    public Vector2 MapOffset;
+    public Vector2 MeshGenerationParameters;
+
+    public bool AutoUpdate = true;
 
     public LODInfo[] LevelDetails;
 
     public MeshGenerator MeshGenScript;
     public HeightMapGenerator HeightMapGeneratorScript;
-
+    public Renderer textureRender;
+    public MeshFilter meshFilter;
+    public MeshRenderer meshRenderer;
     public Material MapMaterialRef;
+    public AnimationCurve HeightCurve;
 
-    public Vector2 MeshGenerationParameters;
     private Dictionary<Vector2, MapChunk> SavedChunks = new Dictionary<Vector2, MapChunk>();
     private List<MapChunk> VisableChunks = new List<MapChunk>();
 
-    public bool AutoUpdate = true;
+    private Queue<MapThreadInfo<MapData>> MapDataThreadQueue = new Queue<MapThreadInfo<MapData>>();
+    private Queue<MapThreadInfo<MeshData>> MeshDataThreadQueue = new Queue<MapThreadInfo<MeshData>>();
+
+    private void Awake()
+    {
+        FalloffMap = MeshFalloffGenerator.FalloffMapGenerator(MapChunkSize);
+    }
 
     private void Start()
     {
@@ -38,82 +73,82 @@ public class MapGenerator : MonoBehaviour
 
     }
 
-    public void UpdateVisibleChunks()
+    #region Threading
+    private void RequestMapData(Vector2 MapCenter,Action<MapData> MapDataVar)
     {
-        HashSet<Vector2> alreadyUpdatedChunkCoords = new HashSet<Vector2>();
-        for (int i = VisableChunks.Count - 1; i >= 0; i--)
+        ThreadStart ThreadStartScript = delegate
         {
-            alreadyUpdatedChunkCoords.Add(VisableChunks[i].ChunkCoordinate);
-            VisableChunks[i].UpdateChunk();
-        }
+            MapDataThread(MapCenter, MapDataVar);
+        };
+        new Thread(ThreadStartScript).Start();
+    }
 
-        for (int yOffset = 0; yOffset <= MeshGenerationParameters.x; yOffset++)
+    private void MapDataThread(Vector2 MapCenter, Action<MapData> MapDataVar)
+    {
+        MapData MapDataRef = GenerateMapData(MapCenter);
+        lock (MapDataThreadQueue)
         {
-            for (int xOffset = 0; xOffset <= MeshGenerationParameters.y; xOffset++)
-            {
-                Vector2 viewedChunkCoord = new Vector2(xOffset, yOffset);
-                if (!alreadyUpdatedChunkCoords.Contains(viewedChunkCoord))
-                {
-                    if (SavedChunks.ContainsKey(viewedChunkCoord))
-                    {
-                        SavedChunks[viewedChunkCoord].UpdateChunk();
-                    }
-                    else
-                    {
-                        MapChunk NewChunk = new MapChunk(viewedChunkCoord, new HeightMapGenerator(), new MeshGenerator(), LevelDetails, ColliderLODIndex, transform, MapMaterialRef);
-                        SavedChunks.Add(viewedChunkCoord, NewChunk);
-                        //newChunk.onVisibilityChanged += OnTerrainChunkVisibilityChanged;
-                        //NewChunk.LoadChunk();
-                    }
-                }
-
-            }
+            MapDataThreadQueue.Enqueue(new MapThreadInfo<MapData>(MapDataVar, MapDataRef));
         }
-
 
     }
 
-
-    public void UpdateVisibleChunkss()
+    public void RequestMeshData(MapData MapDataVar,int LOD, Action<MeshData> MeshDataVar)
     {
-        HashSet<Vector2> UpdatedChunkCoords = new HashSet<Vector2>();
-        
-        for (int i = 0; i < VisableChunks.Count; i++)
+        ThreadStart ThreadStartScript = delegate
         {
-            UpdatedChunkCoords.Add(VisableChunks[i].ChunkCoordinate);
-            VisableChunks[i].UpdateChunk();
-        }
-
-        for (int XOffset = 0; XOffset < MeshGenerationParameters.x; XOffset++)
-        {
-            for (int YOffset = 0; YOffset < MeshGenerationParameters.y; YOffset++)
-            {
-                Vector2 ChunkCord = new Vector2(XOffset, YOffset);
-                MapChunk NewChunk = new MapChunk(ChunkCord, new HeightMapGenerator(), new MeshGenerator(), LevelDetails, ColliderLODIndex, transform, MapMaterialRef);
-                if (!UpdatedChunkCoords.Contains(ChunkCord))
-                {
-                    Debug.Log("run");
-                    if (SavedChunks.ContainsKey(ChunkCord))
-                    {
-                        SavedChunks[ChunkCord].UpdateChunk();
-                    }
-                    else
-                    {
-                        //MapChunk NewChunk = new MapChunk(ChunkCord, HeightMapGeneratorScript, MeshGenScript, LevelDetails, ColliderLODIndex, transform, MapMaterialRef);
-                        SavedChunks.Add(ChunkCord, NewChunk);
-                        //NewChunk.LoadChunk();
-                    }
-                }
-            }
-        }
-
-
+            MeshDataThread(MapDataVar, LOD, MeshDataVar);
+        };
+        new Thread(ThreadStartScript).Start();
     }
 
-    /*
-    
-     
-     */
+    public void MeshDataThread(MapData MapDataRef, int LOD, Action<MeshData> MeshDataVar)
+    {
+        MeshData MeshDataScript = MeshGenerator.GenerateTerrainMesh(MapDataRef.HeightMapData, HeightMultiplyer, HeightCurve, LOD);
+        lock (MeshDataThreadQueue)
+        {
+            MeshDataThreadQueue.Enqueue(new MapThreadInfo<MeshData>(MeshDataVar, MeshDataScript));
+        }
+    }
+
+    private MapData GenerateMapData(Vector2 MapCenter)
+    {
+        float[,] NoiseMap = new HandleNoise().GenerateNoiseMap(MapChunkSize, MapChunkSize, NoiseSeed, NoiseScale, Octaves, Persistance, Lacunarity, MapOffset);
+
+        Color[] ColourMap = new Color[MapChunkSize ^ 2];
+        for (int x = 0; x < MapChunkSize; x++)
+        {
+            for (int y = 0; y < MapChunkSize; y++)
+            {
+                NoiseMap[x, y] = Mathf.Clamp01(NoiseMap[x, y] - FalloffMap[x, y]);
+                float CurrentHeight = NoiseMap[x, y];
+            }
+            
+
+        }
+
+        return new MapData(NoiseMap, ColourMap);
+    }
+    #endregion
+
+    private void OnValidate()
+    {
+
+        FalloffMap = MeshFalloffGenerator.FalloffMapGenerator(MapChunkSize);
+    }
+
+    private struct MapThreadInfo<T>
+    {
+        public readonly Action<T> AssignedAction;
+        public readonly T SetParameter;
+
+        public MapThreadInfo(Action<T> ParsedAction, T ParsedParameter)
+        {
+            AssignedAction = ParsedAction;
+            SetParameter = ParsedParameter;
+        }
+
+    }
 
 }
 
@@ -127,6 +162,19 @@ public struct LODInfo
     public float SqurVisibleDistanceLimit(float VisableDistanceSqrt)
     {
         return VisableDistanceSqrt;
+    }
+
+}
+
+public struct MapData
+{
+    public readonly float[,] HeightMapData;
+    public readonly Color[] ColourMapData;
+
+    public MapData(float[,] HeightMapRef, Color[] ColourMapRef)
+    {
+        HeightMapData = HeightMapRef;
+        ColourMapData = ColourMapRef;
     }
 
 }

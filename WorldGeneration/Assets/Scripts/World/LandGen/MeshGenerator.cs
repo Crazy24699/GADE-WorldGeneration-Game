@@ -29,7 +29,7 @@ public class MeshGenerator
         MeshWorldScale = (VerticesPerLine - 3) * MeshScale;
     }
 
-    public MeshData GenerateTerrainMesh(float[,] heightMap, float HeightMultiplier, AnimationCurve HeightCurve,int levelOfDetail)
+    public static MeshData GenerateTerrainMesh(float[,] heightMap, float HeightMultiplier, AnimationCurve HeightCurve,int levelOfDetail)
     {
         int width = heightMap.GetLength(0);
         int height = heightMap.GetLength(1);
