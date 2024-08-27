@@ -19,6 +19,7 @@ public class MapGenerator : MonoBehaviour
     private Dictionary<Vector2, MapChunk> SavedChunks = new Dictionary<Vector2, MapChunk>();
     private List<MapChunk> VisableChunks = new List<MapChunk>();
 
+    public bool AutoUpdate = true;
 
     private void Start()
     {
@@ -28,10 +29,14 @@ public class MapGenerator : MonoBehaviour
             MeshGenerationParameters = Vector2.one;
         }
 
-        UpdateVisibleChunks();
+        //UpdateVisibleChunks();
     }
 
+    public void GenerateMap()
+    {
+        //float[,] NoiseMap=new HandleNoise().GenerateNoiseMap(mapChunkSize, mapChunkSize, seed, noiseScale, octaves, persistance, lacunarity, offset)
 
+    }
 
     public void UpdateVisibleChunks()
     {
@@ -58,7 +63,7 @@ public class MapGenerator : MonoBehaviour
                         MapChunk NewChunk = new MapChunk(viewedChunkCoord, new HeightMapGenerator(), new MeshGenerator(), LevelDetails, ColliderLODIndex, transform, MapMaterialRef);
                         SavedChunks.Add(viewedChunkCoord, NewChunk);
                         //newChunk.onVisibilityChanged += OnTerrainChunkVisibilityChanged;
-                        NewChunk.LoadChunk();
+                        //NewChunk.LoadChunk();
                     }
                 }
 
@@ -96,7 +101,7 @@ public class MapGenerator : MonoBehaviour
                     {
                         //MapChunk NewChunk = new MapChunk(ChunkCord, HeightMapGeneratorScript, MeshGenScript, LevelDetails, ColliderLODIndex, transform, MapMaterialRef);
                         SavedChunks.Add(ChunkCord, NewChunk);
-                        NewChunk.LoadChunk();
+                        //NewChunk.LoadChunk();
                     }
                 }
             }

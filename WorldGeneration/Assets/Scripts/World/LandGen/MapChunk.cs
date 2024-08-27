@@ -138,7 +138,7 @@ public class MeshLOD
         MeshRequested = true;
 
         //MeshGenScript.GenerateTerrainMesh(HeightMapScript.HeightValues, LODValue);
-        OnMeshDataReceived(MeshGenScript.GenerateTerrainMesh(HeightMapScript.HeightValues, LODValue));
+        //OnMeshDataReceived(MeshGenScript.GenerateTerrainMesh(HeightMapScript.HeightValues, LODValue));
 
     }
 
