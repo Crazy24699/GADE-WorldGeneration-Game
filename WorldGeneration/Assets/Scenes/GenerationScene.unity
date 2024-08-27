@@ -426,6 +426,7 @@ GameObject:
   - component: {fileID: 2051312237}
   - component: {fileID: 2051312240}
   - component: {fileID: 2051312239}
+  - component: {fileID: 2051312241}
   m_Layer: 0
   m_Name: Terrain Generator
   m_TagString: Untagged
@@ -460,7 +461,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10d402f58d0bfe048a90ebeb10c43907, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NoiseGenerator: {fileID: 0}
+  NoiseGenerator: {fileID: 2051312241}
   HeightMultiplier: 50
   HeightCurve:
     serializedVersion: 2
@@ -507,10 +508,35 @@ MonoBehaviour:
     VisibleDistanceLimit: 200
   - LODLevel: 2
     VisibleDistanceLimit: 400
-  MeshGenScript: {fileID: 0}
+  MeshGenScript:
+    MeshScale: 2.5
+    MeshWorldScale: 125
+    FlatShadingActive: 0
+    VerticesPerLine: 53
+    ChunkSizeIndex: 0
+    FlatshadedChunkSizeIndex: 0
   HeightMapGeneratorScript: {fileID: 2051312239}
   MapMaterialRef: {fileID: 2100000, guid: b33ffbd0a126ce8428de9543ebe1fd49, type: 2}
   MeshGenerationParameters: {x: 0, y: 0}
+--- !u!114 &2051312241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2051312236}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e43e2f99fe4d7b84ab117bae186d3f2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CurrentNormalizationMode: 0
+  NoiseScale: 50
+  NoiseOctaves: 34
+  NoiseSeed: 27
+  NoisePersistance: 2.77
+  Lacunarity: 4.07
+  NoiseMapOffset: {x: 0, y: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
