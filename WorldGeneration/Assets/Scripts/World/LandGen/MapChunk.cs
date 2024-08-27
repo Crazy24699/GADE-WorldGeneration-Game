@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Events;
 
 public class MapChunk
@@ -21,7 +22,7 @@ public class MapChunk
     private MeshGenerator MeshGeneratorScript;
 
     private LODInfo[] DetailLevels;
-    private MeshLOD[] LODMeshes;
+    public MeshLOD[] LODMeshes;
 
     private int LODColliderIndex;
     private int LastLODIndex = -1;
@@ -67,6 +68,7 @@ public class MapChunk
     public void LoadChunk()
     {
         int VertsPerLineRef=MeshGeneratorScript.VerticesPerLine;
+        Debug.Log(VertsPerLineRef);
         HeightMapGenerator HeightMapGeneration = GameObject.FindObjectOfType<HeightMapGenerator>();
         HeightMapGeneration.GenerateHeightMap(VertsPerLineRef, VertsPerLineRef, CenterCoordinate);
         Debug.Log(HeightMapGeneration != null);
@@ -84,24 +86,30 @@ public class MapChunk
 
     public void UpdateChunk()
     {
+        int LODIndex=0;
         for (int i = 0; i < LODMeshes.Length; i++)
         {
+            Debug.Log("unleaded now");
             MeshLOD MeshLODRef = LODMeshes[i];
             if (LODMeshes[i].HasMesh)
             {
-                
+                LastLODIndex = LODIndex;
                 MeshFilterRef.mesh = MeshLODRef.MeshRef;
+
             }
             else if (!LODMeshes[i].MeshRequested)
             {
+                Debug.Log("unleaded nothing to do");
                 MeshLODRef.RequestMesh(HeightMapValuesRef, MeshGeneratorScript);
+
             }
         }
     }
 
 }
 
-class MeshLOD
+[System.Serializable]
+public class MeshLOD
 {
     public Mesh MeshRef;
     public bool MeshRequested;
@@ -116,17 +124,21 @@ class MeshLOD
         LODValue = LODValueRef;
     }
 
-    private void MeshDataUploaded(object MeshDataObject)
+    void OnMeshDataReceived(object meshDataObject)
     {
-        MeshRef = ((Mesh)MeshDataObject);
+        MeshRef = new Mesh();
+        MeshRef = ((MeshData)meshDataObject).CreateMesh();
+        HasMesh = true;
+        Debug.Log(((MeshData)meshDataObject).vertices.Length);
+        
     }
 
     public void RequestMesh(HeightMapValues HeightMapScript, MeshGenerator MeshGenScript)
     {
         MeshRequested = true;
 
-        MeshGenScript.GenerateMesh(HeightMapScript.HeightValues, LODValue);
-        MeshDataUploaded(HeightMapScript);
+        //MeshGenScript.GenerateTerrainMesh(HeightMapScript.HeightValues, LODValue);
+        OnMeshDataReceived(MeshGenScript.GenerateTerrainMesh(HeightMapScript.HeightValues, LODValue));
 
     }
 

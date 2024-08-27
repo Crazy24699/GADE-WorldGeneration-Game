@@ -31,7 +31,45 @@ public class MapGenerator : MonoBehaviour
         UpdateVisibleChunks();
     }
 
+
+
     public void UpdateVisibleChunks()
+    {
+        HashSet<Vector2> alreadyUpdatedChunkCoords = new HashSet<Vector2>();
+        for (int i = VisableChunks.Count - 1; i >= 0; i--)
+        {
+            alreadyUpdatedChunkCoords.Add(VisableChunks[i].ChunkCoordinate);
+            VisableChunks[i].UpdateChunk();
+        }
+
+        for (int yOffset = 0; yOffset <= MeshGenerationParameters.x; yOffset++)
+        {
+            for (int xOffset = 0; xOffset <= MeshGenerationParameters.y; xOffset++)
+            {
+                Vector2 viewedChunkCoord = new Vector2(xOffset, yOffset);
+                if (!alreadyUpdatedChunkCoords.Contains(viewedChunkCoord))
+                {
+                    if (SavedChunks.ContainsKey(viewedChunkCoord))
+                    {
+                        SavedChunks[viewedChunkCoord].UpdateChunk();
+                    }
+                    else
+                    {
+                        MapChunk NewChunk = new MapChunk(viewedChunkCoord, new HeightMapGenerator(), new MeshGenerator(), LevelDetails, ColliderLODIndex, transform, MapMaterialRef);
+                        SavedChunks.Add(viewedChunkCoord, NewChunk);
+                        //newChunk.onVisibilityChanged += OnTerrainChunkVisibilityChanged;
+                        NewChunk.LoadChunk();
+                    }
+                }
+
+            }
+        }
+
+
+    }
+
+
+    public void UpdateVisibleChunkss()
     {
         HashSet<Vector2> UpdatedChunkCoords = new HashSet<Vector2>();
         
@@ -66,6 +104,11 @@ public class MapGenerator : MonoBehaviour
 
 
     }
+
+    /*
+    
+     
+     */
 
 }
 
