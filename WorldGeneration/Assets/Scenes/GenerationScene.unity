@@ -633,7 +633,7 @@ MonoBehaviour:
     VerticesPerLine: 53
     ChunkSizeIndex: 0
     FlatshadedChunkSizeIndex: 0
-  HeightMultiplier: 14.2
+  HeightMultiplier: 0
   HeightCurve:
     serializedVersion: 2
     m_Curve:
@@ -646,6 +646,15 @@ MonoBehaviour:
       weightedMode: 0
       inWeight: 0
       outWeight: 0
+    - serializedVersion: 3
+      time: 0.50029427
+      value: -0.14683393
+      inSlope: 2.489012
+      outSlope: 2.489012
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     - serializedVersion: 3
       time: 0.50714964
       value: 0.88994366
@@ -667,19 +676,19 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  MinHeight: 1.22
-  MaxHeight: 17.13
-  NoiseScale: 12.8
-  NoiseSeed: 8
-  Octaves: 14
-  LODValue: 7
-  Persistance: 0.522
-  Lacunarity: 0.74
-  offset: {x: 13.8, y: 0}
+  MinHeight: 0
+  MaxHeight: 0
+  NoiseScale: 0
+  NoiseSeed: 0
+  Octaves: 0
+  LODValue: 0
+  Persistance: 0.479
+  Lacunarity: 0
+  offset: {x: 0, y: 0}
   textureRender: {fileID: 0}
   meshFilter: {fileID: 907575006}
   meshRenderer: {fileID: 907575005}
-  AutoUpdate: 1
+  AutoUpdate: 0
 --- !u!114 &2051312240
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -692,18 +701,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 547d1dd0d6b9029478cb08ab303c0da0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ColliderLODIndex: 1
-  NoiseSeed: 16
-  Octaves: 39
-  LODValue: 11
-  MinHeight: 1.04
+  ColliderLODIndex: 0
+  NoiseSeed: 0
+  Octaves: 0
+  LODValue: 0
+  MinHeight: 0
   MaxHeight: 0
-  NoiseScale: 0.84
-  MeshWorldSize: 4.04
+  NoiseScale: 0
+  MeshWorldSize: 0
   HeightMultiplyer: 0
-  Persistance: 0.703
-  Lacunarity: 1.11
-  MapOffset: {x: 0.54, y: 0}
+  Persistance: 0
+  Lacunarity: 0
+  MapOffset: {x: 0, y: 0}
   MeshGenerationParameters: {x: 0, y: 0}
   AutoUpdate: 1
   LevelDetails:
@@ -711,38 +720,60 @@ MonoBehaviour:
     VisibleDistanceLimit: 200
   - LODLevel: 2
     VisibleDistanceLimit: 400
+  - LODLevel: 2
+    VisibleDistanceLimit: 400
+  - LODLevel: 2
+    VisibleDistanceLimit: 400
   MeshGenScript:
-    MeshScale: 2.5
-    MeshWorldScale: 125
+    MeshScale: 0
+    MeshWorldScale: 0
     FlatShadingActive: 0
-    VerticesPerLine: 53
-    ChunkSizeIndex: 0
-    FlatshadedChunkSizeIndex: 0
+    VerticesPerLine: 0
+    ChunkSizeIndex: 2
+    FlatshadedChunkSizeIndex: 1
   HeightMapGeneratorScript: {fileID: 2051312239}
   textureRender: {fileID: 0}
-  meshFilter: {fileID: 0}
-  meshRenderer: {fileID: 0}
+  meshFilter: {fileID: 907575006}
+  meshRenderer: {fileID: 907575005}
   MapMaterialRef: {fileID: 2100000, guid: b33ffbd0a126ce8428de9543ebe1fd49, type: 2}
   HeightCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
+      time: -0.23381191
+      value: 1.1372573
+      inSlope: -4.8639836
+      outSlope: -4.8639836
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
+      inSlope: 5.580283
+      outSlope: 5.580283
+      tangentMode: 34
       weightedMode: 0
-      inWeight: 0
-      outWeight: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.05624491
+      value: 0.90129936
+      inSlope: 8.064567
+      outSlope: 8.064567
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
+      inSlope: 0.1045829
+      outSlope: 0.1045829
+      tangentMode: 34
       weightedMode: 0
-      inWeight: 0
+      inWeight: 0.33333334
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
