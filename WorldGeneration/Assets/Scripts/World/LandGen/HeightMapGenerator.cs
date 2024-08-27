@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class HeightMapGenerator : MonoBehaviour
 {
-    private HandleNoise NoiseGenerator;
+    public HandleNoise NoiseGenerator;
 
     [SerializeField] private float HeightMultiplier;
     [SerializeField] private AnimationCurve HeightCurve;
@@ -14,17 +14,20 @@ public class HeightMapGenerator : MonoBehaviour
 
     public HeightMapValues GenerateHeightMap(int Width, int Height, Vector2 CenterCord)
     {
-        float[,] HeightValues=NoiseGenerator.GenerateNoiseMap(Width, Height, CenterCord);
+        Debug.Log("Bang");
+        float[,] HeightValues = NoiseGenerator.GenerateNoiseMap(Width, Height, CenterCord);
         AnimationCurve HeightMapCurve = new AnimationCurve(HeightCurve.keys);
 
+        Debug.Log("Bang Bang");
         float MaxHeightValue = float.MaxValue;
         float MinHeightValue = float.MinValue;
 
+        Debug.Log("Bang Bang Bang");
         for (int i = 0; i < Width; i++)
         {
-            for (int j = 0;  j < Height;  j++)
+            for (int j = 0; j < Height; j++)
             {
-                HeightValues[i, j] *= HeightCurve.Evaluate(HeightValues[i, j] * HeightMultiplier);
+                HeightValues[i, j] *= HeightMapCurve.Evaluate(HeightValues[i, j] * HeightMultiplier);
                 if (HeightValues[i, j] > MaxHeightValue)
                 {
                     MaxHeight = HeightValues[i, j];

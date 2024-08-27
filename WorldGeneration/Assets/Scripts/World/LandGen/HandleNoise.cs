@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HandleNoise : MonoBehaviour
+public class HandleNoise:MonoBehaviour
 {
     public enum NoiseNormalization {Local, Global}
 
@@ -10,7 +10,7 @@ public class HandleNoise : MonoBehaviour
 
     public int NoiseScale = 50;
     public int NoiseOctaves = 6;
-    public int NoiseSeed;
+    public int NoiseSeed=1;
 
     [Range(0, 6)]
     public float NoisePersistance = 1.5f;

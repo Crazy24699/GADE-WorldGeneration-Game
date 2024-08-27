@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MeshGenerator : MonoBehaviour
+public class MeshGenerator
 {
     public float MeshScale = 2.5f;
     public float MeshWorldScale;
@@ -22,7 +22,7 @@ public class MeshGenerator : MonoBehaviour
     [Range(0, MaxFlatshadedChunkSize - 1)]
     public int FlatshadedChunkSizeIndex;
 
-    private MeshGenerator()
+    public MeshGenerator()
     {
         VerticesPerLine = SpecifiedChunkSizes[(FlatShadingActive) ? FlatshadedChunkSizeIndex : ChunkSizeIndex] + 5;
         MeshWorldScale = (VerticesPerLine - 3) * MeshScale;
@@ -45,9 +45,10 @@ public class MeshGenerator : MonoBehaviour
 
     private MeshGenerationData SetVertices(Vector2 TopLeftCord, int SkipValue, int[,] VertexMapRef, float[,] HeightMapRef, MeshGenerationData MeshGenRef)
     {
-
+        Debug.Log("Varried");
         for (int x = 0; x < VerticesPerLine; x++)
         {
+            Debug.Log("Not so much");
             for (int y = 0; y < VerticesPerLine; y++)
             {
                 bool OutOfMeshVertex = y == 0 || y == VerticesPerLine - 1 || x == 0 || x == VerticesPerLine - 1;
@@ -62,31 +63,38 @@ public class MeshGenerator : MonoBehaviour
                     VertexMapRef[x, y] = VerticesIndex;
                     VerticesIndex++;
                 }
+                Debug.Log("Night of sin");
+
             }
         }
+        Debug.Log("The eve of curses");
 
         for (int x = 0; x < VerticesPerLine; x++)
         {
+            Debug.Log("Huntress of blood and wonder");
             for (int y = 0; y < VerticesPerLine; y++)
             {
                 bool VertexSkipped = x > 2 && x < VerticesPerLine - 3 && y > 2 && y < VerticesPerLine - 3 && ((x - 2) % SkipValue != 0 || (y - 2) % SkipValue != 0);
-
+                Debug.Log("Forbidden rites");
                 if (VertexSkipped)
                 {
+                    Debug.Log("For moonlit nights");
                     bool OutOfMeshVertex = y == 0 || y == VerticesPerLine - 1 || x == 0 || x == VerticesPerLine - 1;
                     bool AtMeshEdge = ((y == 1 || y == VerticesPerLine - 2 || x == 1 || x == VerticesPerLine - 2) && !OutOfMeshVertex);
                     bool IsMainVertex = (x - 2) % SkipValue == 0 && (y - 2) % SkipValue == 0 && !OutOfMeshVertex && !AtMeshEdge;
                     bool VertexEdgeConnected = (y == 2 || y == VerticesPerLine - 3 || x == 2 || x == VerticesPerLine - 3) && !OutOfMeshVertex && !AtMeshEdge && !IsMainVertex;
 
+
                     int VertexIndex = VertexMapRef[x, y];
                     Vector2 Percent = new Vector2(x - 1, y - 1) / (VerticesPerLine - 3);
                     Vector2 VertexPosition = TopLeftCord + new Vector2(Percent.x, Percent.y) * MeshWorldScale;
+                    Debug.Log("youre turning hearts to stone");
 
                     float Height = HeightMapRef[x, y];
                     if (VertexEdgeConnected)
                     {
                         bool VertexVertical = x == 2 || x == VerticesPerLine - 2;
-
+                        Debug.Log("I feel the magic in my bones");
                         int VertexA_Distance = ((VertexVertical) ? y - 2 : x - 2) % SkipValue;
                         int VertexB_Distance = (SkipValue - VertexA_Distance);
 
@@ -95,8 +103,9 @@ public class MeshGenerator : MonoBehaviour
                         float VertexB_Height = HeightMapRef[(VertexVertical) ? x : x + VertexA_Distance, (VertexVertical) ? y + VertexA_Distance : y];
 
                         Height = VertexA_Height * (1 - PercentageDistanceFromA_To_B) + VertexB_Height * PercentageDistanceFromA_To_B;
+                        Debug.Log("essense of love from above");
                     }
-
+                    Debug.Log("Ive made our hellbent misake");
                     MeshGenRef.AddVertex(new Vector3(VertexPosition.x, Height, VertexPosition.y), Percent, VertexIndex);
 
                     bool CreateTriangle = x < VerticesPerLine - 1 && y < VerticesPerLine- 1 && (!VertexEdgeConnected || (x != 2 && y != 2));
@@ -114,9 +123,9 @@ public class MeshGenerator : MonoBehaviour
 
                     MeshGenRef.AddTriangle(VertexA, VertexD, VertexC);
                     MeshGenRef.AddTriangle(VertexD, VertexA, VertexB);
-
+                    Debug.Log("the devils take");
                 }
-
+                Debug.Log("at midnight");
 
             }
         }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class MapChunk : MonoBehaviour
+public class MapChunk
 {
     private const float ColliderGeneration = 5;
 
@@ -17,6 +17,7 @@ public class MapChunk : MonoBehaviour
     private MeshCollider MeshColliderRef;
     
     private HeightMapGenerator HeightMapGeneratorScript;
+    private HeightMapValues HeightMapValuesRef;
     private MeshGenerator MeshGeneratorScript;
 
     private LODInfo[] DetailLevels;
@@ -26,7 +27,9 @@ public class MapChunk : MonoBehaviour
     private int LastLODIndex = -1;
 
     private float MaxViewDistamce;
-    
+
+    public bool MeshRequested;
+
     public MapChunk(Vector2 Coordinate, HeightMapGenerator HeightMapGenerator, MeshGenerator MeshGenerator, LODInfo[] DetailLevelsRef, int CollisionLODIndex, Transform Parent, Material Mat)
     {
         ChunkCoordinate = Coordinate;
@@ -36,13 +39,65 @@ public class MapChunk : MonoBehaviour
         HeightMapGeneratorScript = HeightMapGenerator;
         MeshGeneratorScript = MeshGenerator;
 
-        Vector2 Position = Coordinate * MeshGeneratorScript.MeshWorldScale / MeshGeneratorScript.MeshScale;
+        Vector2 Position = Coordinate;
+        ChunkBounds = new Bounds(ChunkCoordinate, Vector2.one * MeshGeneratorScript.MeshScale);
+
+        MeshGameObject = new GameObject("WorldChunk");
+        MeshFilterRef = MeshGameObject.AddComponent<MeshFilter>();
+        MeshRendererRef = MeshGameObject.AddComponent<MeshRenderer>();
+        MeshColliderRef = MeshGameObject.AddComponent<MeshCollider>();
+        MeshRendererRef.material = Mat;
+
+        MeshGameObject.transform.position = new Vector3(ChunkCoordinate.x, 0, ChunkCoordinate.y);
+        MeshGameObject.transform.parent = Parent;
+
+        LODMeshes = new MeshLOD[DetailLevels.Length];
+        for (int i = 0; i < LODMeshes.Length; i++)
+        {
+            LODMeshes[i] = new MeshLOD(DetailLevels[i].LODLevel);
+            //LODMeshes[i].MeshUpdateEvent.AddListener(UpdateChunk);
+            //if (i == CollisionLODIndex)
+            //{
+
+            //}
+        }
 
     }
 
+    public void LoadChunk()
+    {
+        int VertsPerLineRef=MeshGeneratorScript.VerticesPerLine;
+        HeightMapGenerator HeightMapGeneration = GameObject.FindObjectOfType<HeightMapGenerator>();
+        HeightMapGeneration.GenerateHeightMap(VertsPerLineRef, VertsPerLineRef, CenterCoordinate);
+        Debug.Log(HeightMapGeneration != null);
 
+        HeightMapValuesRecived(HeightMapGeneration.GenerateHeightMap(VertsPerLineRef, VertsPerLineRef, CenterCoordinate));
+    }
 
+    private void HeightMapValuesRecived(object HeightMapObject)
+    {
+        HeightMapValuesRef = (HeightMapValues)HeightMapObject;
+        MeshRequested = true;
 
+        UpdateChunk();
+    }
+
+    public void UpdateChunk()
+    {
+        for (int i = 0; i < LODMeshes.Length; i++)
+        {
+            MeshLOD MeshLODRef = LODMeshes[i];
+            if (LODMeshes[i].HasMesh)
+            {
+                
+                MeshFilterRef.mesh = MeshLODRef.MeshRef;
+            }
+            else if (!LODMeshes[i].MeshRequested)
+            {
+                MeshLODRef.RequestMesh(HeightMapValuesRef, MeshGeneratorScript);
+            }
+        }
+    }
 
 }
 
@@ -64,6 +119,15 @@ class MeshLOD
     private void MeshDataUploaded(object MeshDataObject)
     {
         MeshRef = ((Mesh)MeshDataObject);
+    }
+
+    public void RequestMesh(HeightMapValues HeightMapScript, MeshGenerator MeshGenScript)
+    {
+        MeshRequested = true;
+
+        MeshGenScript.GenerateMesh(HeightMapScript.HeightValues, LODValue);
+        MeshDataUploaded(HeightMapScript);
+
     }
 
 }
