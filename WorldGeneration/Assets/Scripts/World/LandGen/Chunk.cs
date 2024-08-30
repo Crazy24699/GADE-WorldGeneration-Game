@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
+using UnityEngine.XR;
 using static MapGenerator;
 
-public class Chunk 
+public class Chunk : MonoBehaviour 
 {
     public const float Scale = 2.5f;
     public GameObject MeshObject;
@@ -21,12 +22,18 @@ public class Chunk
 
     public MapGenerator MapGeneratorScript;
     private TextureGenerator TextureGenScript;
+    public MeshGenerationData GenerationData;
 
     public MapDisplayStruct MapDataVar;
     public bool MapDataReceived;
     public int PreviousLodIndex = -1;
 
-    public Chunk(Vector2 CoordVar, int SizeVar, LODInfoClass[] DetailLevelsVar, Transform ParentVar, Material MaterialVar)
+    public Chunk()
+    {
+       
+    }
+
+    public void SetValues(Vector2 CoordVar, int SizeVar, LODInfoClass[] DetailLevelsVar, Transform ParentVar, Material MaterialVar)
     {
         Debug.Log("Live");
 
@@ -34,11 +41,18 @@ public class Chunk
 
         DetailLevels = DetailLevelsVar;
         MapGeneratorScript = GameObject.FindObjectOfType<MapGenerator>();
+        //GenerationData=MapGeneratorScript.mesh
         Position = CoordVar * SizeVar;
         BoundsVar = new Bounds(Position, Vector2.one * SizeVar);
         Vector3 PositionV3 = new Vector3(Position.x, 0, Position.y);
 
-        MeshObject = new GameObject("Terrain Chunk");
+        MeshObject = this.gameObject;
+        MeshObject.AddComponent<ChunkInfo>();
+
+        //ChunkInfoScript.BorderVertices = MeshData.BorderVertices;
+
+
+
         MeshRendererVar = MeshObject.AddComponent<MeshRenderer>();
         MeshFilterVar = MeshObject.AddComponent<MeshFilter>();
         MeshColliderVar = MeshObject.AddComponent<MeshCollider>();
@@ -86,15 +100,21 @@ public class Chunk
 
             if (LodIndexVar != PreviousLodIndex)
             {
-                LODMeshClass LodMeshVar = LodMeshes[LodIndexVar];
-                if (LodMeshVar.HasMesh)
+                LODMeshClass LODMeshVar = LodMeshes[LodIndexVar];
+                if (LODMeshVar.HasMesh)
                 {
                     PreviousLodIndex = LodIndexVar;
-                    MeshFilterVar.mesh = LodMeshVar.MeshRef;
+                    MeshFilterVar.mesh = LODMeshVar.MeshRef;
                 }
-                else if (!LodMeshVar.HasRequestedMesh)
+                else if (!LODMeshVar.HasRequestedMesh)
                 {
-                    LodMeshVar.RequestMesh(MapDataVar);
+                    LODMeshVar.RequestMesh(MapDataVar);
+                    LODMeshVar.MadeChunk = this.gameObject;
+                    
+                }
+                if (LODMeshVar.MadeChunk != null) 
+                {
+                    //LODMeshVar.MadeChunk.GetComponent<MeshInfo>().MeshId = LodIndexVar;
                 }
             }
 
@@ -106,12 +126,14 @@ public class Chunk
                 }
                 else if (!CollisionLodMesh.HasRequestedMesh)
                 {
-                    CollisionLodMesh.RequestMesh(MapDataVar);
+                    //CollisionLodMesh.RequestMesh(MapDataVar);
                 }
             }
 
             MapGenerator.AllVisableChunks.Add(this);
         }
+
+       
 
         SetVisible(true);
     }

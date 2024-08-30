@@ -3,6 +3,7 @@ using System.Collections;
 using System;
 using System.Threading;
 using System.Collections.Generic;
+using UnityEngine.XR;
 
 public class MapGenerator : MonoBehaviour
 {
@@ -45,7 +46,7 @@ public class MapGenerator : MonoBehaviour
     [Header("Floats"),Space(2)]
     float[,] FalloffMap;
     public static float MaxViewDst;
-
+    public static GameObject Current;
     #region Const floats
     //const Floats
     const float Scale = 2.5f;
@@ -60,8 +61,10 @@ public class MapGenerator : MonoBehaviour
     private TextureGenerator TextureGenScript;
     public static List<Chunk> AllVisableChunks = new List<Chunk>();
 
+    public List<Chunk> CreatedChunks = new List<Chunk>();
+
     Queue<MapThreadInfo<MapDisplayStruct>> MapDataThreadInfoQueue = new Queue<MapThreadInfo<MapDisplayStruct>>();
-    Queue<MapThreadInfo<MeshGenerationData>> MeshDataThreadInfoQueue = new Queue<MapThreadInfo<MeshGenerationData>>();
+    Queue<MapThreadInfo<MeshGenerationData>> MeshDataInfoThread = new Queue<MapThreadInfo<MeshGenerationData>>();
 
 
     public Transform Viewer;
@@ -90,6 +93,9 @@ public class MapGenerator : MonoBehaviour
         TextureGenScript = new TextureGenerator();
 
         StartCoroutine(UpdateVisibleChunks());
+
+        SetMeshAndData();
+
     }
 
     IEnumerator UpdateVisibleChunks()
@@ -117,7 +123,15 @@ public class MapGenerator : MonoBehaviour
                 }
                 else
                 {
-                    SavedChunks.Add(ViewedChunkCoord, new Chunk(ViewedChunkCoord, ChunkSize, DetailLevels, transform, MapMaterial));
+                    GameObject ChunkObject = new GameObject("terrain" + CreatedChunks.Count);
+                    Current = ChunkObject;
+                    Chunk MadeChunk = ChunkObject.AddComponent<Chunk>();
+                    MadeChunk.SetValues(ViewedChunkCoord, ChunkSize, DetailLevels, transform, MapMaterial);
+
+                    CreatedChunks.Add(MadeChunk);
+
+                    SavedChunks.Add(ViewedChunkCoord, MadeChunk);
+
                 }
             }
         }
@@ -161,14 +175,21 @@ public class MapGenerator : MonoBehaviour
 
     void MeshDataThread(MapDisplayStruct MapDisplayRef, int LODValue, Action<MeshGenerationData> MeshGenDataRef)
     {
+        //where its generated. Look here
+
         MeshGenerationData MeshData = MeshGenerator.GenerateTerrainMesh(MapDisplayRef.HeightMapValues, MeshHeightMultiplier, MeshHeightCurve, LODValue);
+        
+        
+
         Debug.Log("right");
-        lock (MeshDataThreadInfoQueue)
+        lock (MeshDataInfoThread)
         {
             //ChunkSpawn++;
             //Debug.Log(ChunkSpawn);
             //Seed++;
-            MeshDataThreadInfoQueue.Enqueue(new MapThreadInfo<MeshGenerationData>(MeshGenDataRef, MeshData));
+            
+            MeshDataInfoThread.Enqueue(new MapThreadInfo<MeshGenerationData>(MeshGenDataRef, MeshData));
+            Debug.Log(MeshData.BorderVertices.Length + "     " + MeshData.VertsPerLine);
         }
     }
 
@@ -183,14 +204,19 @@ public class MapGenerator : MonoBehaviour
             }
         }
 
-        if (MeshDataThreadInfoQueue.Count > 0)
+        if (MeshDataInfoThread.Count > 0)
         {
-            for (int i = 0; i < MeshDataThreadInfoQueue.Count; i++)
+            for (int i = 0; i < MeshDataInfoThread.Count; i++)
             {
-                MapThreadInfo<MeshGenerationData> threadInfo = MeshDataThreadInfoQueue.Dequeue();
-                threadInfo.Callback(threadInfo.Parameter);
+                MapThreadInfo<MeshGenerationData> ThreadInfo = MeshDataInfoThread.Dequeue();
+                ThreadInfo.Callback(ThreadInfo.Parameter);
             }
         }
+    }
+
+    private void SetMeshAndData()
+    {
+  
     }
 
     MapDisplayStruct GenerateMapData(Vector2 MapCenterCoord)
@@ -244,10 +270,10 @@ public class MapGenerator : MonoBehaviour
         public readonly Action<T> Callback;
         public readonly T Parameter;
 
-        public MapThreadInfo(Action<T> callback, T parameter)
+        public MapThreadInfo(Action<T> MapThreadAction, T ParsedParameter)
         {
-            this.Callback = callback;
-            this.Parameter = parameter;
+            Callback = MapThreadAction;
+            Parameter = ParsedParameter;
         }
     }
 
@@ -262,6 +288,7 @@ public struct LODInfoClass
 
 public class LODMeshClass
 {
+    public GameObject MadeChunk;
     public Mesh MeshRef;
     public bool HasRequestedMesh;
     public bool HasMesh;
@@ -282,6 +309,13 @@ public class LODMeshClass
         MeshRef = MeshDataVar.CreateMesh();
         HasMesh = true;
 
+        if (MadeChunk != null)
+        {
+            MadeChunk.GetComponent<ChunkInfo>().Meshdata = MeshDataVar;
+            MadeChunk.GetComponent<ChunkInfo>().Populate();
+            
+        }
+
         UpdateMeshLOD();
     }
 
@@ -289,7 +323,11 @@ public class LODMeshClass
     {
         HasRequestedMesh = true;
         MapGenScript.RequestMeshData(MapDisplayData, LODValue, OnMeshDataReceived);
+        //GeneratedMesh.GetComponent<ChunkInfo>().Meshdata =;
     }
+
+
+
 }
 
 [System.Serializable]

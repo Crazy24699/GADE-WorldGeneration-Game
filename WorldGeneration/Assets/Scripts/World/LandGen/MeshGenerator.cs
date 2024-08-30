@@ -5,10 +5,12 @@ public class MeshGenerator
 {
     private AnimationCurve HeightCurveValue;
     private int MeshIncrimentValue = 0;
+    public GameObject This;
 
     public MeshGenerationData GenerateTerrainMesh(float[,] HeightMap, float HeightMultiplier, AnimationCurve HeightCurveTemplate, int LevelOfDetail)
     {
         HeightCurveValue = new AnimationCurve(HeightCurveTemplate.keys);
+        //Debug.Log(HeightMap[5, 5] + "      " + MapGenerator.Current.name);
 
         MeshIncrimentValue = (LevelOfDetail == 0) ? 1 : LevelOfDetail * 2;
 
@@ -82,13 +84,17 @@ public class MeshGenerator
 
 public class MeshGenerationData
 {
-    private Vector3[] Vertices;
+
+
+    public Vector3[] Vertices;
     private int[] Triangles;
     private Vector2[] UVs;
     private Vector3[] BakedNormals;
 
+    public int VertsPerLine;
+
     public Vector3[] BorderVertices;
-    int[] BorderTriangles;
+    public int[] BorderTriangles;
 
     int TriangleIndex;
     public int BorderTriangleIndex;
@@ -96,11 +102,17 @@ public class MeshGenerationData
     public MeshGenerationData(int VerticesPerLine)
     {
         Vertices = new Vector3[VerticesPerLine * VerticesPerLine];
+
         UVs = new Vector2[VerticesPerLine * VerticesPerLine];
         Triangles = new int[(VerticesPerLine - 1) * (VerticesPerLine - 1) * 6];
 
+        VertsPerLine = VerticesPerLine;
+
         BorderVertices = new Vector3[VerticesPerLine * 4 + 4];
         BorderTriangles = new int[24 * VerticesPerLine];
+
+
+
     }
 
     public void AddVertex(Vector3 VertexPosition, Vector2 Uv, int VertexIndex)
@@ -206,6 +218,13 @@ public class MeshGenerationData
         MeshRef.triangles = Triangles;
         MeshRef.uv = UVs;
         MeshRef.normals = BakedNormals;
+
+        Debug.Log("Frgot to laugh");
+
+        foreach (var Vet in Vertices)
+        {
+            //Debug.Log(Vet);
+        }
 
         return MeshRef;
     }
