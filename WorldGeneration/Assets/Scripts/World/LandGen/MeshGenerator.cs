@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Linq;
+using System.Collections.Generic;
 
 public class MeshGenerator
 {
@@ -96,6 +97,8 @@ public class MeshGenerationData
     public Vector3[] BorderVertices;
     public int[] BorderTriangles;
 
+    public List<Vector3> Border;
+
     int TriangleIndex;
     public int BorderTriangleIndex;
 
@@ -112,7 +115,57 @@ public class MeshGenerationData
         BorderTriangles = new int[24 * VerticesPerLine];
 
 
+    }
 
+    public HashSet<Vector3> PopulateBorder()
+    {
+        HashSet<Vector3> AllCords = new HashSet<Vector3>();
+        HashSet<Vector3> XCords = new HashSet<Vector3>();
+        float MaxValue=Vertices.Max(t => t.x);
+        float MinValue=Vertices.Min(t => t.x);
+        Debug.Log(MaxValue);
+
+        Debug.Log(Vertices[Vertices.Length - 1].x);
+
+        XCords = GetSpecifiedCords(true, Vertices, true);
+
+        //Debug.Log(GetSpecifiedCords(true, Vertices, true).Count);
+
+        XCords.UnionWith(GetSpecifiedCords(false, Vertices, true));
+
+        Debug.Log(XCords.Count);
+
+        XCords.UnionWith(GetSpecifiedCords(false, Vertices, false));
+
+        XCords.UnionWith(GetSpecifiedCords(true, Vertices, false));
+
+
+        AllCords = XCords;
+
+        return AllCords;
+    }
+
+    private HashSet<Vector3> GetSpecifiedCords(bool FindMin, Vector3[] ParsedArray, bool FindX)
+    {
+        HashSet<Vector3> Cords = new HashSet<Vector3>();
+
+        float FindValue;
+        switch (FindX)
+        {
+            case true:
+                FindValue = (FindMin) ? ParsedArray.Min(Value => Value.x) : ParsedArray.Max(Value => Value.x);
+                Cords = ParsedArray.Where(ArrayValue => Mathf.Approximately(ArrayValue.x, FindValue)).ToHashSet();
+                break;
+
+            case false:
+                FindValue = (FindMin) ? ParsedArray.Min(Value => Value.z) : ParsedArray.Max(Value => Value.z);
+                Cords = ParsedArray.Where(ArrayValue => Mathf.Approximately(ArrayValue.z, FindValue)).ToHashSet();
+                break; 
+        }
+
+        Debug.Log("Parsed       "+Cords.Count);
+        
+        return Cords;
     }
 
     public void AddVertex(Vector3 VertexPosition, Vector2 Uv, int VertexIndex)
@@ -128,20 +181,20 @@ public class MeshGenerationData
         }
     }
 
-    public void AddTriangle(int A, int B, int C)
+    public void AddTriangle(int PointA, int PointB, int PointC)
     {
-        if (A < 0 || B < 0 || C < 0)
+        if (PointA < 0 || PointB < 0 || PointC < 0)
         {
-            BorderTriangles[BorderTriangleIndex] = A;
-            BorderTriangles[BorderTriangleIndex + 1] = B;
-            BorderTriangles[BorderTriangleIndex + 2] = C;
+            BorderTriangles[BorderTriangleIndex] = PointA;
+            BorderTriangles[BorderTriangleIndex + 1] = PointB;
+            BorderTriangles[BorderTriangleIndex + 2] = PointC;
             BorderTriangleIndex += 3;
         }
         else
         {
-            Triangles[TriangleIndex] = A;
-            Triangles[TriangleIndex + 1] = B;
-            Triangles[TriangleIndex + 2] = C;
+            Triangles[TriangleIndex] = PointA;
+            Triangles[TriangleIndex + 1] = PointB;
+            Triangles[TriangleIndex + 2] = PointC;
             TriangleIndex += 3;
         }
     }
@@ -212,6 +265,18 @@ public class MeshGenerationData
 
     public Mesh CreateMesh()
     {
+
+        for (int i = 0; i < BorderVertices.Length; i++)
+        {
+            Debug.Log(BorderVertices[i]);
+        }
+
+        for (int i = 0; i < Vertices.Length; i++)
+        {
+            Debug.Log(Vertices[i]);
+
+        }
+
         Mesh MeshRef = new Mesh();
 
         MeshRef.vertices = Vertices;
@@ -225,7 +290,11 @@ public class MeshGenerationData
         {
             //Debug.Log(Vet);
         }
+        
 
         return MeshRef;
     }
+
+
+
 }

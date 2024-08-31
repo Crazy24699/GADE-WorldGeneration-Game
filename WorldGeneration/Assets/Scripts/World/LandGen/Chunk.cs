@@ -1,10 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
-using UnityEngine.XR;
-using static MapGenerator;
-
 public class Chunk : MonoBehaviour 
 {
     public const float Scale = 2.5f;
@@ -33,6 +31,21 @@ public class Chunk : MonoBehaviour
        
     }
 
+    public void ApplyMeshData(MeshGenerationData MeshData)
+    {
+        MeshFilterVar = GetComponent<MeshFilter>();
+        Debug.Log(MeshData.BorderVertices[5]);
+        MeshFilterVar.mesh=MeshData.CreateMesh();
+        Debug.Log(MeshData.BorderVertices[5]);
+        ChunkInfo Info = GetComponent<ChunkInfo>();
+
+        //Debug.Log(MapGenerator.MeshDataInfoThread.FirstOrDefault(Position));
+
+
+
+        Info.BorderVertices = MeshData.BorderVertices;
+    }
+
     public void SetValues(Vector2 CoordVar, int SizeVar, LODInfoClass[] DetailLevelsVar, Transform ParentVar, Material MaterialVar)
     {
         Debug.Log("Live");
@@ -47,7 +60,7 @@ public class Chunk : MonoBehaviour
         Vector3 PositionV3 = new Vector3(Position.x, 0, Position.y);
 
         MeshObject = this.gameObject;
-        MeshObject.AddComponent<ChunkInfo>();
+        //MeshObject.AddComponent<ChunkInfo>();
 
         //ChunkInfoScript.BorderVertices = MeshData.BorderVertices;
 
@@ -73,6 +86,11 @@ public class Chunk : MonoBehaviour
             }
         }
 
+        if(GenerationData!=null)
+        {
+            Debug.Log("sick cowards");
+        }
+
         MapGeneratorScript.RequestMapData(Position, OnMapDataReceived);
     }
 
@@ -85,6 +103,16 @@ public class Chunk : MonoBehaviour
         MeshRendererVar.material.mainTexture = TextureVar;
 
         UpdateTerrainChunk();
+        if (GenerationData != null)
+        {
+            Debug.Log("his swons y firend");
+        }
+
+    }
+
+    public void EditMesh()
+    {
+
     }
 
     public void UpdateTerrainChunk()
@@ -106,6 +134,7 @@ public class Chunk : MonoBehaviour
                     PreviousLodIndex = LodIndexVar;
                     MeshFilterVar.mesh = LODMeshVar.MeshRef;
                 }
+
                 else if (!LODMeshVar.HasRequestedMesh)
                 {
                     LODMeshVar.RequestMesh(MapDataVar);
@@ -132,8 +161,10 @@ public class Chunk : MonoBehaviour
 
             MapGenerator.AllVisableChunks.Add(this);
         }
-
-       
+        if (GenerationData != null)
+        {
+            Debug.Log("hell make everyone bleed");
+        }
 
         SetVisible(true);
     }

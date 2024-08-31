@@ -114,7 +114,7 @@ public class MapGenerator : MonoBehaviour
         {
             for (int XSpawn = 0; XSpawn < XSpawnNum; XSpawn++)
             {
-                yield return new WaitForSeconds(0.015f);
+                yield return new WaitForSeconds(0.0015f);
                 Vector2 ViewedChunkCoord = new Vector2(CurrentChunkCoordX + XSpawn, CurrentChunkCoordY + YSpawn);
                 Debug.Log("rite");
                 if (SavedChunks.ContainsKey(ViewedChunkCoord))
@@ -128,7 +128,7 @@ public class MapGenerator : MonoBehaviour
                     Chunk MadeChunk = ChunkObject.AddComponent<Chunk>();
                     MadeChunk.SetValues(ViewedChunkCoord, ChunkSize, DetailLevels, transform, MapMaterial);
 
-                    CreatedChunks.Add(MadeChunk);
+                    //CreatedChunks.Add(MadeChunk);
 
                     SavedChunks.Add(ViewedChunkCoord, MadeChunk);
 
@@ -178,8 +178,6 @@ public class MapGenerator : MonoBehaviour
         //where its generated. Look here
 
         MeshGenerationData MeshData = MeshGenerator.GenerateTerrainMesh(MapDisplayRef.HeightMapValues, MeshHeightMultiplier, MeshHeightCurve, LODValue);
-        
-        
 
         Debug.Log("right");
         lock (MeshDataInfoThread)
@@ -311,8 +309,8 @@ public class LODMeshClass
 
         if (MadeChunk != null)
         {
-            MadeChunk.GetComponent<ChunkInfo>().Meshdata = MeshDataVar;
-            MadeChunk.GetComponent<ChunkInfo>().Populate();
+            //MadeChunk.GetComponent<ChunkInfo>().Meshdata = MeshDataVar;
+            //MadeChunk.GetComponent<ChunkInfo>().HandleMeshInfo();
             
         }
 
@@ -323,11 +321,7 @@ public class LODMeshClass
     {
         HasRequestedMesh = true;
         MapGenScript.RequestMeshData(MapDisplayData, LODValue, OnMeshDataReceived);
-        //GeneratedMesh.GetComponent<ChunkInfo>().Meshdata =;
     }
-
-
-
 }
 
 [System.Serializable]
@@ -338,7 +332,8 @@ public struct TerrainType
     public Color Colour;
 }
 
-public struct MapDisplayStruct
+
+public class MapDisplayStruct
 {
     public readonly float[,] HeightMapValues;
     public readonly Color[] ColourMapValues;
