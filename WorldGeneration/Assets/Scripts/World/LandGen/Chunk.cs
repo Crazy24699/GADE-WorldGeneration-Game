@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 public class Chunk : MonoBehaviour 
 {
@@ -21,6 +20,8 @@ public class Chunk : MonoBehaviour
     public MapGenerator MapGeneratorScript;
     private TextureGenerator TextureGenScript;
     public MeshGenerationData GenerationData;
+
+    [SerializeField]private ChunkInfo ChunkInfoRef;
 
     public MapDisplayStruct MapDataVar;
     public bool MapDataReceived;
@@ -60,11 +61,11 @@ public class Chunk : MonoBehaviour
         Vector3 PositionV3 = new Vector3(Position.x, 0, Position.y);
 
         MeshObject = this.gameObject;
-        //MeshObject.AddComponent<ChunkInfo>();
+        MeshObject.AddComponent<ChunkInfo>();
 
         //ChunkInfoScript.BorderVertices = MeshData.BorderVertices;
 
-
+        ChunkInfoRef = GetComponent<ChunkInfo>();
 
         MeshRendererVar = MeshObject.AddComponent<MeshRenderer>();
         MeshFilterVar = MeshObject.AddComponent<MeshFilter>();
@@ -92,6 +93,7 @@ public class Chunk : MonoBehaviour
         }
 
         MapGeneratorScript.RequestMapData(Position, OnMapDataReceived);
+        
     }
 
     void OnMapDataReceived(MapDisplayStruct MapDispalyDataRef)
@@ -107,12 +109,52 @@ public class Chunk : MonoBehaviour
         {
             Debug.Log("his swons y firend");
         }
+        
+    }
 
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.U))
+        {
+            EditMesh();
+        }
     }
 
     public void EditMesh()
     {
+        List<Vector3> VertexList = ChunkInfoRef.AllVertices.ToList();
+        List<Vector3> BorderVertices = ChunkInfoRef.BorderVertices.ToList();
 
+        for (int i = 0; i < VertexList.Count; i++)
+        {
+            if (BorderVertices.Contains(VertexList[i]))
+            {
+                VertexList[i] = new Vector3(VertexList[i].x, 0, VertexList[i].z);
+            }
+        }
+
+        ChunkInfoRef.AllVertices = VertexList.ToArray();
+
+        //foreach (var Vertex in VertexList)
+        //{
+        //    if (ChunkInfoRef.BorderVertices.Contains(Vertex))
+        //    {
+
+
+        //    }
+        //}
+
+        //for (int i = 0; i < ChunkInfoRef.AllVertices.Length; i++)
+        //{
+        //    //if (i< VertexList.l && VertexList[i] == ChunkInfoRef.AllVertices[i])
+        //    //{
+        //    //    Debug.Log("Das nothing");
+        //    //    ChunkInfoRef.AllVertices[i].y = 0;
+        //    //    ChunkInfoRef.AllVertices[i].z = 0;
+        //    //}
+        //    //VertexList[i].y = 0;
+        //}
+        MeshFilterVar.sharedMesh.vertices = ChunkInfoRef.AllVertices;
     }
 
     public void UpdateTerrainChunk()

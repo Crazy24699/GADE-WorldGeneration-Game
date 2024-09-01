@@ -266,16 +266,16 @@ public class MeshGenerationData
     public Mesh CreateMesh()
     {
 
-        for (int i = 0; i < BorderVertices.Length; i++)
-        {
-            Debug.Log(BorderVertices[i]);
-        }
+        //for (int i = 0; i < BorderVertices.Length; i++)
+        //{
+        //    Debug.Log(BorderVertices[i]);
+        //}
 
-        for (int i = 0; i < Vertices.Length; i++)
-        {
-            Debug.Log(Vertices[i]);
+        //for (int i = 0; i < Vertices.Length; i++)
+        //{
+        //    Debug.Log(Vertices[i]);
 
-        }
+        //}
 
         Mesh MeshRef = new Mesh();
 
@@ -285,12 +285,6 @@ public class MeshGenerationData
         MeshRef.normals = BakedNormals;
 
         Debug.Log("Frgot to laugh");
-
-        foreach (var Vet in Vertices)
-        {
-            //Debug.Log(Vet);
-        }
-        
 
         return MeshRef;
     }

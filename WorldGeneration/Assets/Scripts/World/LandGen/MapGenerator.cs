@@ -94,8 +94,6 @@ public class MapGenerator : MonoBehaviour
 
         StartCoroutine(UpdateVisibleChunks());
 
-        SetMeshAndData();
-
     }
 
     IEnumerator UpdateVisibleChunks()
@@ -123,9 +121,11 @@ public class MapGenerator : MonoBehaviour
                 }
                 else
                 {
-                    GameObject ChunkObject = new GameObject("terrain" + CreatedChunks.Count);
+                    GameObject ChunkObject = new GameObject("terrain" + SavedChunks.Count);
                     Current = ChunkObject;
                     Chunk MadeChunk = ChunkObject.AddComponent<Chunk>();
+
+                    Debug.Log("ChunkObject"+ChunkObject.name);
                     MadeChunk.SetValues(ViewedChunkCoord, ChunkSize, DetailLevels, transform, MapMaterial);
 
                     //CreatedChunks.Add(MadeChunk);
@@ -193,12 +193,13 @@ public class MapGenerator : MonoBehaviour
 
     void Update()
     {
+
         if (MapDataThreadInfoQueue.Count > 0)
         {
             for (int i = 0; i < MapDataThreadInfoQueue.Count; i++)
             {
-                MapThreadInfo<MapDisplayStruct> threadInfo = MapDataThreadInfoQueue.Dequeue();
-                threadInfo.Callback(threadInfo.Parameter);
+                MapThreadInfo<MapDisplayStruct> ThreadInfoRef = MapDataThreadInfoQueue.Dequeue();
+                ThreadInfoRef.Callback(ThreadInfoRef.Parameter);
             }
         }
 
@@ -206,15 +207,20 @@ public class MapGenerator : MonoBehaviour
         {
             for (int i = 0; i < MeshDataInfoThread.Count; i++)
             {
-                MapThreadInfo<MeshGenerationData> ThreadInfo = MeshDataInfoThread.Dequeue();
-                ThreadInfo.Callback(ThreadInfo.Parameter);
+                MapThreadInfo<MeshGenerationData> ThreadInfoRef = MeshDataInfoThread.Dequeue();
+                ThreadInfoRef.Callback(ThreadInfoRef.Parameter);
             }
+        }
+
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            UpdateMap();
         }
     }
 
-    private void SetMeshAndData()
+    public void UpdateMap()
     {
-  
+
     }
 
     MapDisplayStruct GenerateMapData(Vector2 MapCenterCoord)
@@ -309,9 +315,9 @@ public class LODMeshClass
 
         if (MadeChunk != null)
         {
-            //MadeChunk.GetComponent<ChunkInfo>().Meshdata = MeshDataVar;
+            MadeChunk.GetComponent<ChunkInfo>().Meshdata = MeshDataVar;
             //MadeChunk.GetComponent<ChunkInfo>().HandleMeshInfo();
-            
+
         }
 
         UpdateMeshLOD();

@@ -27,20 +27,20 @@ public class ChunkInfo : MonoBehaviour
         for (int i = 0; i < AllVertices.Length; i++)
         {
             Vector3 CurrentCoordinate = Meshdata.Vertices[i];
-            Vector3 UpdatedCoordinate = new Vector3(transform.localScale.x * CurrentCoordinate.x,
-                transform.localScale.y * CurrentCoordinate.y, transform.localScale.z * CurrentCoordinate.z);
+            Vector3 UpdatedCoordinate = new Vector3(CurrentCoordinate.x,
+                CurrentCoordinate.y, CurrentCoordinate.z);
 
-            UpdatedCoordinate += transform.position;
+            //UpdatedCoordinate += transform.position;
             AllVertices[i] = UpdatedCoordinate;
         }
 
         for (int i = 0; i < Meshdata.BorderVertices.Length; i++)
         {
             Vector3 CurrentCoordinate = Meshdata.BorderVertices[i];
-            Vector3 UpdatedCoordinate = new Vector3(transform.localScale.x * CurrentCoordinate.x,
-                transform.localScale.y * CurrentCoordinate.y, transform.localScale.z * CurrentCoordinate.z);
+            Vector3 UpdatedCoordinate = new Vector3(CurrentCoordinate.x,
+                CurrentCoordinate.y, CurrentCoordinate.z);
 
-            UpdatedCoordinate += transform.position;
+            //UpdatedCoordinate += transform.position;
             BorderVertices[i] = UpdatedCoordinate;
         }
 
@@ -52,9 +52,11 @@ public class ChunkInfo : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.T))
         {
             //EditMesh();
+            HandleMeshInfo();
             BorderVertices=Meshdata.PopulateBorder().ToArray();
             Debug.Log("Mind"+ BorderVertices.Length);
             BorderVertices = BorderVertices.ToArray();
+            //HandleMeshInfo();
         }
 
         if (Meshdata != null)
