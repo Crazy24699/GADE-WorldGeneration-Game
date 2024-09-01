@@ -16,6 +16,7 @@ public class Chunk : MonoBehaviour
     public LODInfoClass[] DetailLevels;
     public LODMeshClass[] LodMeshes;
     public LODMeshClass CollisionLodMesh;
+    public ChunkInfo[] NeighbouringChunks;
 
     public MapGenerator MapGeneratorScript;
     private TextureGenerator TextureGenScript;
@@ -220,4 +221,11 @@ public class Chunk : MonoBehaviour
     {
         return MeshObject.activeSelf;
     }
+}
+
+public class ChunkNeighbour
+{
+
+    HashSet<Vector3> Border;
+
 }

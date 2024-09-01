@@ -145,7 +145,7 @@ public class MeshGenerationData
         return AllCords;
     }
 
-    private HashSet<Vector3> GetSpecifiedCords(bool FindMin, Vector3[] ParsedArray, bool FindX)
+    public HashSet<Vector3> GetSpecifiedCords(bool FindMin, Vector3[] ParsedArray, bool FindX)
     {
         HashSet<Vector3> Cords = new HashSet<Vector3>();
 

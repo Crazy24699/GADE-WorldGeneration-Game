@@ -24,25 +24,25 @@ public class ChunkInfo : MonoBehaviour
 
         //Change this later
 
-        for (int i = 0; i < AllVertices.Length; i++)
-        {
-            Vector3 CurrentCoordinate = Meshdata.Vertices[i];
-            Vector3 UpdatedCoordinate = new Vector3(CurrentCoordinate.x,
-                CurrentCoordinate.y, CurrentCoordinate.z);
+        //for (int i = 0; i < AllVertices.Length; i++)
+        //{
+        //    Vector3 CurrentCoordinate = Meshdata.Vertices[i];
+        //    Vector3 UpdatedCoordinate = new Vector3(CurrentCoordinate.x,
+        //        CurrentCoordinate.y, CurrentCoordinate.z);
 
-            //UpdatedCoordinate += transform.position;
-            AllVertices[i] = UpdatedCoordinate;
-        }
+        //    //UpdatedCoordinate += transform.position;
+        //    AllVertices[i] = UpdatedCoordinate;
+        //}
 
-        for (int i = 0; i < Meshdata.BorderVertices.Length; i++)
-        {
-            Vector3 CurrentCoordinate = Meshdata.BorderVertices[i];
-            Vector3 UpdatedCoordinate = new Vector3(CurrentCoordinate.x,
-                CurrentCoordinate.y, CurrentCoordinate.z);
+        //for (int i = 0; i < Meshdata.BorderVertices.Length; i++)
+        //{
+        //    Vector3 CurrentCoordinate = Meshdata.BorderVertices[i];
+        //    Vector3 UpdatedCoordinate = new Vector3(CurrentCoordinate.x,
+        //        CurrentCoordinate.y, CurrentCoordinate.z);
 
-            //UpdatedCoordinate += transform.position;
-            BorderVertices[i] = UpdatedCoordinate;
-        }
+        //    //UpdatedCoordinate += transform.position;
+        //    BorderVertices[i] = UpdatedCoordinate;
+        //}
 
         Populated = true;
     }

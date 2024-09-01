@@ -191,6 +191,11 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
+    public void NormalizeBorders()
+    {
+
+    }
+
     void Update()
     {
 
