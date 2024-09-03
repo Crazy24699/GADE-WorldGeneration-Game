@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -12,6 +13,8 @@ public class PathGenerator : MonoBehaviour
     public Vector3 MinVector;
     public Vector3 MaxVector;
 
+    public Transform StartPoint;
+
     public MeshCollider MeshCol;
     public MeshFilter MeshFilterRef;
 
@@ -19,6 +22,8 @@ public class PathGenerator : MonoBehaviour
 
     public Vector3[] MeshVertices;
     public Vector3[] WorldVertices;
+
+    public List<Transform> WaypointList;
 
     public int[] MeshTriangles;
     public int[] WorldTriangles;
@@ -42,6 +47,7 @@ public class PathGenerator : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.G))
         {
             MeshCol.sharedMesh = MeshFilterRef.sharedMesh;
+            StartCoroutine(FindPath(StartPoint));
         }
     }
 
@@ -140,6 +146,46 @@ public class PathGenerator : MonoBehaviour
 
         }
         MeshFilterRef.mesh.vertices=WorldVertices;
+    }
+
+
+    private IEnumerator FindPath(Transform StartingPoint)
+    {
+
+        float UpperXRange = StartingPoint.position.x + 200;
+        float LowerXRange = StartingPoint.position.x - 150;
+
+        float Upper_Z_Range = StartingPoint.position.z + 20;
+        float Lower_Z_Range = StartingPoint.position.z - 20;
+        
+        float Lower_YRange = StartingPoint.position.y - 7.75f;
+        float Upper_YRange = StartingPoint.position.y + 5.75f;
+
+
+
+        IEnumerable<Vector3> VectorsInRange=WorldVertices.Where(
+            MatchingVectors=>MatchingVectors.y >= Lower_YRange&& MatchingVectors.y<=Upper_YRange 
+            &&MatchingVectors.x>=LowerXRange && MatchingVectors.x<=UpperXRange 
+            && MatchingVectors.z >= Lower_Z_Range && MatchingVectors.z <= Upper_Z_Range);
+        List<Vector3> UseableVectors = VectorsInRange.ToList();
+
+        Debug.Log(VectorsInRange.Count());
+        float UpdatedXPos= transform.position.x;
+        for (int i = 0; i < 4; i++)
+        {
+            UpdatedXPos += 40;
+            List<Vector3> PossibleVectors = VectorsInRange.Where(Vectors => Vectors.x >= UpdatedXPos-4.5f
+            && Vectors.x<=UpdatedXPos+4.5f).ToList();
+
+            Vector3 RandomWaypoint = new Vector3(UpdatedXPos, 0, 0);
+            Debug.Log(PossibleVectors.Count);
+            if(PossibleVectors.Count > 0)
+            {
+                int WaypointIndex=Random.Range(0,PossibleVectors.Count);
+                Instantiate(StartingPoint, PossibleVectors[WaypointIndex], Quaternion.identity);
+            }
+            yield return new WaitForSeconds(0.25f);
+        }
     }
 
 }

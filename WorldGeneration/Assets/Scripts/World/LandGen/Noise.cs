@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UIElements;
+using JetBrains.Annotations;
 
 public class Noise 
 {
@@ -17,6 +18,7 @@ public class Noise
     public float[,] GenerateNoiseMap(int MapWidth, int MapHeight, int NoiseSeed, float NoiseScale, int NoiseOctaves, float NoisePersistance, float Lacunarity, Vector2 NoiseMapOffset)
     {
         float[,] noiseMap = new float[MapWidth, MapHeight];
+        
 
         System.Random prng = new System.Random(NoiseSeed);
         Vector2[] octaveOffsets = new Vector2[NoiseOctaves];
@@ -91,9 +93,28 @@ public class Noise
             }
         }
 
+        
+
         return noiseMap;
     }
 
+    public float GetMaxHeight(float[,] Map, int CountLength)
+    {
+        float MaxValue = -10;
 
+        for (int i = 0; i < CountLength; i++)
+        {
+            for (int j = 0; j < CountLength; j++)
+            {
+                Debug.Log(Map[i, j]);
+                if (Map[i, j] > MaxValue)
+                {
+                    MaxValue = Map[i, j];
+                }
+            }
+        }
+
+        return MaxValue;
+    }
 
 }

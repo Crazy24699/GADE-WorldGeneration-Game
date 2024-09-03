@@ -233,6 +233,8 @@ public class MapGenerator : MonoBehaviour
 
         float[,] GeneratedNoiseMap = NoiseGenerator.GenerateNoiseMap(MapChunkSize + 2, MapChunkSize + 2, Seed, NoiseScale, Octaves, Persistance, Lacunarity, MapCenterCoord + Offset);
 
+        //Debug.Log(NoiseGenerator.GetMaxHeight(GeneratedNoiseMap, MapChunkSize + 2));
+
         Color[] GeneratedColourMap = new Color[MapChunkSize * MapChunkSize];
         for (int y = 0; y < MapChunkSize; y++)
         {

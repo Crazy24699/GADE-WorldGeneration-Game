@@ -49,12 +49,20 @@ public class MeshGenerator
                 }
             }
         }
-
+        float HeightChange = 0;
         for (int y = 0; y < BorderedSize; y += MeshIncrimentValue)
         {
+
+            
+            
+            //Debug.Log(HeightChange);
             for (int x = 0; x < BorderedSize; x += MeshIncrimentValue)
             {
+                //int ChangeHeightLevel = Random.Range(0, 2);
+                //HeightChange = (ChangeHeightLevel == 0) ? 0 : Random.Range(HeightChange, HeightChange);
+
                 int VertexIndex = VertexIndicesMap[x, y];
+
                 Vector2 Percent = new Vector2((x - MeshIncrimentValue) / (float)MeshSize, (y - MeshIncrimentValue) / (float)MeshSize);
                 float Height = HeightCurveValue.Evaluate(HeightMap[x, y]) * HeightMultiplier;
                 Vector3 VertexPosition = new Vector3(TopLeftX + Percent.x * MeshSizeUnsimplified, Height, TopLeftZ - Percent.y * MeshSizeUnsimplified);
