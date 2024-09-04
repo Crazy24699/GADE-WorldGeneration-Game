@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 public class Chunk : MonoBehaviour 
 {
-    public const float Scale = 2.5f;
+    public const float Scale = 1;
     public GameObject MeshObject;
     public Vector2 Position;
     public Bounds BoundsVar;

@@ -49,7 +49,7 @@ public class MapGenerator : MonoBehaviour
     public static GameObject Current;
     #region Const floats
     //const Floats
-    const float Scale = 2.5f;
+    const float Scale = 1;
     const float ViewerMoveThresholdForChunkUpdate = 25f;
     const float SqrViewerMoveThresholdForChunkUpdate = ViewerMoveThresholdForChunkUpdate * ViewerMoveThresholdForChunkUpdate;
     #endregion

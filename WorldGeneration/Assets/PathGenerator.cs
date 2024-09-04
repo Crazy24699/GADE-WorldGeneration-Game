@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -13,91 +14,68 @@ public class PathGenerator : MonoBehaviour
     public Vector3 MinVector;
     public Vector3 MaxVector;
 
+    public Vector3 ChangeValue;
+
     public Transform StartPoint;
+    public Transform EndPoint;
 
     public MeshCollider MeshCol;
     public MeshFilter MeshFilterRef;
 
     public GameObject PathRef;
+    public GameObject MadePath;
+    public GameObject Visualiser;
 
     public Vector3[] MeshVertices;
     public Vector3[] WorldVertices;
 
-    public List<Transform> WaypointList;
+    public List<Vector3> WaypointList=new List<Vector3>();
+
+    public List<Vector3> EnemyWaypoints;
 
     public int[] MeshTriangles;
     public int[] WorldTriangles;
 
     public LayerMask GroundLayer;
 
+    public int PathResolution;
+    public float Width;
+
+    public Material MaterialRef;
 
     private void Start()
     {
         WorldVertices = MeshFilterRef.sharedMesh.vertices;
         WorldTriangles = MeshFilterRef.sharedMesh.triangles;
+
+        //MeshFilterRef.AddComponent<MeshFilter>();
+
+        Debug.Log(WaypointList.Count);
+
+        WaypointList.Add(transform.position);
+        MadePath=new GameObject("Path"+this.gameObject.name);
+        MadePath.transform.position=Vector3.zero;
+        MadePath.transform.parent = transform;
+
+        MadePath.AddComponent<MeshCollider>();
+        MadePath.AddComponent<MeshRenderer>();
+        MadePath.GetComponent<MeshRenderer>().material = MaterialRef;
+        MadePath.AddComponent<MeshFilter>();
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.L))
         {
-            HandleFinding();
+            //HandleFinding();
         }
 
         if(Input.GetKeyDown(KeyCode.G))
         {
             MeshCol.sharedMesh = MeshFilterRef.sharedMesh;
             StartCoroutine(FindPath(StartPoint));
-        }
-    }
-
-    public void HandleFinding()
-    {
-
-        MeshVertices = PathFinderRef.GetComponent<MeshFilter>().mesh.vertices;
-        MeshTriangles = PathFinderRef.GetComponent<MeshFilter>().mesh.triangles;
-
-        for (int i = 0; i < MeshVertices.Length; i++)
-        {
-            MeshVertices[i] = PathFinderRef.transform.TransformPoint(PathFinderRef.GetComponent<MeshFilter>().mesh.vertices[i]);
-            Debug.Log(PathFinderRef.GetComponent<MeshFilter>().sharedMesh.bounds.max);
-        }
-
-        foreach (var Vertex in MeshVertices)
-        {
-
-
-
-            if (MinVector == Vector3.zero)
-            {
-                MinVector = Vertex;
-            }
-            if (Vertex.x < MinVector.x)
-            {
-                MinVector=Vertex;
-            }
-
-            if(MaxVector == Vector3.zero)
-            {
-                MaxVector = Vertex;
-            }
-
-            if(Vertex.x > MaxVector.x)
-            {
-                MaxVector=Vertex;
-            }
 
         }
-
-        Vector3.Min(MinVector, MaxVector);
-
-        float Distance = MinVector.x - MaxVector.x;
-
-        Instantiate(new GameObject(), MaxVector, Quaternion.identity);
-        Instantiate(new GameObject(), MinVector, Quaternion.identity);
-
-        StartCoroutine(Intervals(Mathf.Abs(Distance)));
-
     }
 
     private IEnumerator Intervals(float Distance)
@@ -152,8 +130,8 @@ public class PathGenerator : MonoBehaviour
     private IEnumerator FindPath(Transform StartingPoint)
     {
 
-        float UpperXRange = StartingPoint.position.x + 200;
-        float LowerXRange = StartingPoint.position.x - 150;
+        float UpperXRange = StartingPoint.position.x + 220;
+        float LowerXRange = StartingPoint.position.x - 220;
 
         float Upper_Z_Range = StartingPoint.position.z + 20;
         float Lower_Z_Range = StartingPoint.position.z - 20;
@@ -178,37 +156,88 @@ public class PathGenerator : MonoBehaviour
             && Vectors.x<=UpdatedXPos+4.5f).ToList();
 
             Vector3 RandomWaypoint = new Vector3(UpdatedXPos, 0, 0);
-            Debug.Log(PossibleVectors.Count);
+            //Debug.Log(PossibleVectors.Count);
             if(PossibleVectors.Count > 0)
             {
                 int WaypointIndex=Random.Range(0,PossibleVectors.Count);
-                Instantiate(StartingPoint, PossibleVectors[WaypointIndex], Quaternion.identity);
+                WaypointList.Add(PossibleVectors[WaypointIndex]);
             }
             yield return new WaitForSeconds(0.25f);
         }
+        WaypointList.Add(EndPoint.transform.position - ChangeValue * 20);
+
+        MadePath.transform.position += Vector3.up * 2;
+        Mesh MeshRef = CreateMeshPath(WaypointList, PathResolution, Width);
+        //StartCoroutine(Points(MeshRef));
+        MeshRef = ConformPathToMesh(MeshRef);
+        MadePath.GetComponent<MeshFilter>().mesh = MeshRef;
+        MadePath.GetComponent<MeshFilter>().mesh.RecalculateNormals();
+
+        
     }
 
-}
-
-
-class SplineMeshClass
-{
-    public MeshRenderer Renderer;
-    public MeshFilter Filter;
-    public Mesh meshRef;
-    public Transform[] ControlPoints;  // Array of control points for the spline
-    public int Resolution = 10;  // Number of segments between each control point
-    public float Width = 1.0f;  // Width of the mesh
-
-    private void Start()
+    private IEnumerator Points(Mesh CreatedMesh)
     {
-        if (ControlPoints.Length < 2) return;
+        List<Vector3> NewPah=new List<Vector3>();
+        yield return new WaitForSeconds(0.25f);
+        Vector3[] PathVectors = CreatedMesh.vertices;
+        foreach (var Vert in PathVectors)
+        {
+            Vector3 SpawnPos=DetectConformDirection(Vector3.down, Vert);
 
-        Mesh mesh = CreateMeshFromSpline(ControlPoints, Resolution, Width);
-        //GetComponent<MeshFilter>().mesh = mesh;
+            //NewPah.Add(Vert-Vector3.one*3);
+            if (!SpawnPos.Equals(Vector3.zero))
+            {
+                Debug.Log("Wants");
+                //Instantiate(Visualiser, SpawnPos, Quaternion.identity);
+            }
+            yield return new WaitForSeconds(0.05f);
+            
+        }
+        //MadePath.GetComponent<MeshFilter>().mesh.vertices=NewPah.ToArray();
     }
 
-    private Mesh CreateMeshFromSpline(Transform[] controlPoints, int resolution, float width)
+    private Mesh ConformPathToMesh(Mesh CreatedMesh)
+    {
+
+        Vector3[] PathVectors = CreatedMesh.vertices;
+        for (int i = 0; i < PathVectors.Length; i++)
+        {
+            Vector3 VertexChange = DetectConformDirection(Vector3.up, PathVectors[i]);
+            if (VertexChange == Vector3.zero)
+            {
+                VertexChange = DetectConformDirection(Vector3.down, PathVectors[i]);
+            }
+            Debug.Log(MadePath.name + " " + VertexChange+"      " + PathVectors[i]);
+            PathVectors[i] = VertexChange;
+        }
+        CreatedMesh.vertices = PathVectors;
+        return CreatedMesh;
+    }
+
+    public Vector3 DetectConformDirection(Vector3 Direction, Vector3 RayStartingPosition)
+    {
+
+        RaycastHit HitObject;
+
+        bool Hit = Physics.Raycast(RayStartingPosition+(new Vector3(0,3,0)), Direction, out HitObject, 1000.0f, GroundLayer);
+        //Debug.Log(RayStartingPosition);
+        Vector3 MeshVertex = Vector3.zero ;
+        //Debug.Log(HitObject.point);
+        //Instantiate(Visualiser, RayStartingPosition + (new Vector3(0, 3, 0)), Quaternion.identity);
+        //Instantiate(Visualiser, HitObject.point, Quaternion.identity);
+        if (HitObject.collider != null && HitObject.collider.gameObject.CompareTag("Ground")) 
+        {
+            MeshVertex = HitObject.point;
+            Debug.Log("Prevent");
+            //MeshVertex.y = HitObject.point.y + 2.5f;
+            //Debug.Log("tran");
+        }
+
+        return MeshVertex;
+    }
+
+    private Mesh CreateMeshPath(List<Vector3> controlPoints, int resolution, float width)
     {
         List<Vector3> vertices = new List<Vector3>();
         List<int> triangles = new List<int>();
@@ -260,16 +289,16 @@ class SplineMeshClass
         return mesh;
     }
 
-    private Vector3[] SampleSpline(Transform[] controlPoints, int resolution)
+    private Vector3[] SampleSpline(List<Vector3> controlPoints, int resolution)
     {
         List<Vector3> sampledPoints = new List<Vector3>();
 
-        for (int i = 0; i < controlPoints.Length - 1; i++)
+        for (int i = 0; i < controlPoints.Count - 1; i++)
         {
-            Vector3 p0 = controlPoints[Mathf.Max(i - 1, 0)].position;
-            Vector3 p1 = controlPoints[i].position;
-            Vector3 p2 = controlPoints[i + 1].position;
-            Vector3 p3 = controlPoints[Mathf.Min(i + 2, controlPoints.Length - 1)].position;
+            Vector3 p0 = controlPoints[Mathf.Max(i - 1, 0)];
+            Vector3 p1 = controlPoints[i];
+            Vector3 p2 = controlPoints[i + 1];
+            Vector3 p3 = controlPoints[Mathf.Min(i + 2, controlPoints.Count - 1)];
 
             for (int j = 0; j < resolution; j++)
             {
@@ -279,7 +308,7 @@ class SplineMeshClass
             }
         }
 
-        sampledPoints.Add(controlPoints[controlPoints.Length - 1].position); // Add last point
+        sampledPoints.Add(controlPoints[controlPoints.Count - 1]); // Add last point
         return sampledPoints.ToArray();
     }
 
