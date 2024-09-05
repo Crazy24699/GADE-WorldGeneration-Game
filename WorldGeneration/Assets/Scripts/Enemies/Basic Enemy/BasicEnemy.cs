@@ -20,10 +20,8 @@ public class BasicEnemy : BaseEnemy
     public override void Startup()
     {
         base.Startup();
-        Debug.Log("startup");
-        AgentRef = GetComponent<NavMeshAgent>();
-        FindNearestTower();
-        AgentRef.SetDestination(TowerTarget.transform.position);
+        //Debug.Log("startup");
+        StartCoroutine(AdditionalStartup());
     }
 
     private void FindNearestTower()
@@ -47,13 +45,23 @@ public class BasicEnemy : BaseEnemy
         }
     }
 
+    public IEnumerator AdditionalStartup()
+    {
+        yield return new WaitForSeconds(0.25f);
+        AgentRef = GetComponent<NavMeshAgent>();
+        AgentRef.enabled = true;
+        FindNearestTower();
+        yield return new WaitForSeconds(0.55f);
+        AgentRef.SetDestination(TowerTarget.transform.position);
 
+    }
 
     private void Update()
     {
         if(Input.GetKeyDown(KeyCode.O))
         {
-            Startup();
+            AgentRef.SetDestination(TowerTarget.transform.position);
+            Debug.Log("Nice try but two can play this game");
         }
     }
 

@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using Unity.AI.Navigation;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.UIElements;
 
 public class PathGenerator : MonoBehaviour
@@ -25,6 +28,8 @@ public class PathGenerator : MonoBehaviour
     public GameObject PathRef;
     public GameObject MadePath;
     public GameObject Visualiser;
+
+    private EnemySpawnerLogic SpawnerRef;
 
     public Vector3[] MeshVertices;
     public Vector3[] WorldVertices;
@@ -72,10 +77,20 @@ public class PathGenerator : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.G))
         {
-            MeshCol.sharedMesh = MeshFilterRef.sharedMesh;
-            StartCoroutine(FindPath(StartPoint));
 
+            HandleGeneration();
         }
+    }
+
+    public void HandleGeneration()
+    {
+        SpawnerRef=FindObjectOfType<EnemySpawnerLogic>();
+
+        MeshCol.sharedMesh = MeshFilterRef.sharedMesh;
+        StartCoroutine(FindPath(StartPoint));
+
+        Debug.Log("Little wolf"+this.gameObject);
+
     }
 
     private IEnumerator Intervals(float Distance)
@@ -147,7 +162,7 @@ public class PathGenerator : MonoBehaviour
             && MatchingVectors.z >= Lower_Z_Range && MatchingVectors.z <= Upper_Z_Range);
         List<Vector3> UseableVectors = VectorsInRange.ToList();
 
-        Debug.Log(VectorsInRange.Count());
+        //Debug.Log(VectorsInRange.Count());
         float UpdatedXPos= transform.position.x;
         for (int i = 0; i < 4; i++)
         {
@@ -160,41 +175,61 @@ public class PathGenerator : MonoBehaviour
             if(PossibleVectors.Count > 0)
             {
                 int WaypointIndex=Random.Range(0,PossibleVectors.Count);
-                WaypointList.Add(PossibleVectors[WaypointIndex]);
+                if (PossibleVectors[WaypointIndex] != Vector3.zero)
+                {
+                    WaypointList.Add(PossibleVectors[WaypointIndex]);
+                    Debug.Log(PossibleVectors[WaypointIndex]);
+                }
+                else if(PossibleVectors[WaypointIndex] == Vector3.zero)
+                {
+                    Debug.Log("we go");
+                    WaypointList.Add(PossibleVectors[WaypointIndex-3]+new Vector3(2.5f,2.5f,0));
+                    Debug.Log(WaypointList[WaypointList.Count]);
+                }
             }
             yield return new WaitForSeconds(0.25f);
         }
-        WaypointList.Add(EndPoint.transform.position - ChangeValue * 20);
+        WaypointList.Add(EndPoint.transform.position + ChangeValue * 3);
 
         MadePath.transform.position += Vector3.up * 2;
         Mesh MeshRef = CreateMeshPath(WaypointList, PathResolution, Width);
         //StartCoroutine(Points(MeshRef));
         MeshRef = ConformPathToMesh(MeshRef);
-        MadePath.GetComponent<MeshFilter>().mesh = MeshRef;
-        MadePath.GetComponent<MeshFilter>().mesh.RecalculateNormals();
 
-        
+        MeshRef=VerifyVectors(MeshRef);
+        MadePath.GetComponent<MeshFilter>().mesh = MeshRef;
+        //MadePath.GetComponent<MeshFilter>().mesh.RecalculateNormals();
+
+        //SetEnemyWaypoints(MeshRef.vertices);
+        NavMeshSurface NavSurface = MadePath.AddComponent<NavMeshSurface>();
+        MadePath.layer = 8;
+        //Debug.Log(NavMesh.GetAreaFromName("Ground") + "        nobody");
+        NavSurface.layerMask = SceneHandler.SceneInstance.WalkableLayers;
+
+        MadePath.tag = "Pathway";
+        NavSurface.BuildNavMesh();
+
+        //ProgramManager.ProgramManagerInstance.SpawnWave.Invoke();
+
+        SpawnerRef.CheckSpawnList(this);
+
+
+        Debug.Log("Fight");
     }
 
-    private IEnumerator Points(Mesh CreatedMesh)
+    private Mesh VerifyVectors(Mesh MeshRef)
     {
-        List<Vector3> NewPah=new List<Vector3>();
-        yield return new WaitForSeconds(0.25f);
-        Vector3[] PathVectors = CreatedMesh.vertices;
-        foreach (var Vert in PathVectors)
+        Vector3[] Vertices = MeshRef.vertices;
+        for (int i = 0; i < Vertices.Length; i++)
         {
-            Vector3 SpawnPos=DetectConformDirection(Vector3.down, Vert);
-
-            //NewPah.Add(Vert-Vector3.one*3);
-            if (!SpawnPos.Equals(Vector3.zero))
+            if (Vertices[i] == Vector3.zero)
             {
-                Debug.Log("Wants");
-                //Instantiate(Visualiser, SpawnPos, Quaternion.identity);
+                Vertices[i] = Vertices[i - 1] + ChangeValue * 3;
             }
-            yield return new WaitForSeconds(0.05f);
-            
+
         }
-        //MadePath.GetComponent<MeshFilter>().mesh.vertices=NewPah.ToArray();
+        MeshRef.vertices = Vertices;
+        return MeshRef;
     }
 
     private Mesh ConformPathToMesh(Mesh CreatedMesh)
@@ -203,16 +238,32 @@ public class PathGenerator : MonoBehaviour
         Vector3[] PathVectors = CreatedMesh.vertices;
         for (int i = 0; i < PathVectors.Length; i++)
         {
+
             Vector3 VertexChange = DetectConformDirection(Vector3.up, PathVectors[i]);
             if (VertexChange == Vector3.zero)
             {
                 VertexChange = DetectConformDirection(Vector3.down, PathVectors[i]);
             }
-            Debug.Log(MadePath.name + " " + VertexChange+"      " + PathVectors[i]);
+            //Debug.Log(MadePath.name + " " + VertexChange+"      " + PathVectors[i]);
             PathVectors[i] = VertexChange;
         }
+
         CreatedMesh.vertices = PathVectors;
         return CreatedMesh;
+    }
+
+    public void SetEnemyWaypoints(Vector3[] PathVectors)
+    {
+        for (int i = 0; i < PathVectors.Length; i++)
+        {
+            if (i % 2 == 0 && i >= 2)
+            {
+                Vector3 WaypointVector;
+                WaypointVector = PathVectors[i] + new Vector3(0, 3f, 1f);
+                EnemyWaypoints.Add(WaypointVector);
+                //Instantiate(Visualiser, WaypointVector, Quaternion.identity);
+            }
+        }
     }
 
     public Vector3 DetectConformDirection(Vector3 Direction, Vector3 RayStartingPosition)
@@ -221,17 +272,12 @@ public class PathGenerator : MonoBehaviour
         RaycastHit HitObject;
 
         bool Hit = Physics.Raycast(RayStartingPosition+(new Vector3(0,3,0)), Direction, out HitObject, 1000.0f, GroundLayer);
-        //Debug.Log(RayStartingPosition);
         Vector3 MeshVertex = Vector3.zero ;
-        //Debug.Log(HitObject.point);
-        //Instantiate(Visualiser, RayStartingPosition + (new Vector3(0, 3, 0)), Quaternion.identity);
-        //Instantiate(Visualiser, HitObject.point, Quaternion.identity);
+
         if (HitObject.collider != null && HitObject.collider.gameObject.CompareTag("Ground")) 
         {
             MeshVertex = HitObject.point;
-            Debug.Log("Prevent");
-            //MeshVertex.y = HitObject.point.y + 2.5f;
-            //Debug.Log("tran");
+            //Debug.Log("Prevent");
         }
 
         return MeshVertex;
@@ -283,7 +329,7 @@ public class PathGenerator : MonoBehaviour
         mesh.vertices = vertices.ToArray();
         mesh.triangles = triangles.ToArray();
 
-        // Optionally recalculate normals and UVs
+        
         mesh.RecalculateNormals();
 
         return mesh;
@@ -308,7 +354,7 @@ public class PathGenerator : MonoBehaviour
             }
         }
 
-        sampledPoints.Add(controlPoints[controlPoints.Count - 1]); // Add last point
+        sampledPoints.Add(controlPoints[controlPoints.Count - 1]); 
         return sampledPoints.ToArray();
     }
 

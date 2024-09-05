@@ -187,7 +187,7 @@ public class MapGenerator : MonoBehaviour
             //Seed++;
             
             MeshDataInfoThread.Enqueue(new MapThreadInfo<MeshGenerationData>(MeshGenDataRef, MeshData));
-            Debug.Log(MeshData.BorderVertices.Length + "     " + MeshData.VertsPerLine);
+            //Debug.Log(MeshData.BorderVertices.Length + "     " + MeshData.VertsPerLine);
         }
     }
 

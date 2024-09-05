@@ -10,6 +10,8 @@ public class ProgramManager : MonoBehaviour
     public bool GamePaused = false;
     public bool DevMode;
 
+    public bool StartSpawning;
+
     public UnityEvent SpawnWave;
     public List<GameObject> EnemyCount;
 
@@ -24,6 +26,7 @@ public class ProgramManager : MonoBehaviour
         }
 
         Destroy(ProgramManagerInstance);
+        //SpawnWave.Invoke();
     }
 
 
