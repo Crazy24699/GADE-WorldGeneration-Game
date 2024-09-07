@@ -50,22 +50,7 @@ public class PathGenerator : MonoBehaviour
 
     private void Start()
     {
-        WorldVertices = MeshFilterRef.sharedMesh.vertices;
-        WorldTriangles = MeshFilterRef.sharedMesh.triangles;
-
-        //MeshFilterRef.AddComponent<MeshFilter>();
-
-        Debug.Log(WaypointList.Count);
-
-        WaypointList.Add(transform.position);
-        MadePath=new GameObject("Path"+this.gameObject.name);
-        MadePath.transform.position=Vector3.zero;
-        MadePath.transform.parent = transform;
-
-        MadePath.AddComponent<MeshCollider>();
-        MadePath.AddComponent<MeshRenderer>();
-        MadePath.GetComponent<MeshRenderer>().material = MaterialRef;
-        MadePath.AddComponent<MeshFilter>();
+       
     }
 
     private void Update()
@@ -84,7 +69,26 @@ public class PathGenerator : MonoBehaviour
 
     public void HandleGeneration()
     {
-        SpawnerRef=FindObjectOfType<EnemySpawnerLogic>();
+        WorldVertices = MeshFilterRef.sharedMesh.vertices;
+        WorldTriangles = MeshFilterRef.sharedMesh.triangles;
+
+        //MeshFilterRef.AddComponent<MeshFilter>();
+
+        Debug.Log(WaypointList.Count);
+
+        WaypointList.Add(transform.position);
+        MadePath = new GameObject("Path" + this.gameObject.name);
+        MadePath.transform.position = Vector3.zero;
+        MadePath.transform.parent = transform;
+
+        MadePath.AddComponent<MeshCollider>();
+        MadePath.AddComponent<MeshRenderer>();
+        MadePath.GetComponent<MeshRenderer>().material = MaterialRef;
+        MadePath.AddComponent<MeshFilter>();
+
+
+
+        SpawnerRef =FindObjectOfType<EnemySpawnerLogic>();
 
         MeshCol.sharedMesh = MeshFilterRef.sharedMesh;
         StartCoroutine(FindPath(StartPoint));
@@ -93,54 +97,8 @@ public class PathGenerator : MonoBehaviour
 
     }
 
-    private IEnumerator Intervals(float Distance)
-    {
-        Vector3 PathPosition = MinVector;
 
-        yield return new WaitForSeconds(0.52f);
-
-
-
-        for (int i = 0; i < Distance / 8; i++)
-        {
-            yield return new WaitForSeconds(0.2f);
-            RaycastHit HitObject;
-
-            bool Hit = Physics.Raycast(PathPosition, Vector3.down, out HitObject, 100.0f, GroundLayer);
-            Debug.Log(HitObject.collider.gameObject.name);
-
-            Debug.Log(HitObject.triangleIndex);
-
-            if (Hit)
-            {
-                int FirstVertexCord = WorldTriangles[HitObject.triangleIndex * 3 + 0];
-                int SecondVertexCord = WorldTriangles[HitObject.triangleIndex * 3 + 1];
-                int ThirdVertexCord = WorldTriangles[HitObject.triangleIndex * 3 + 2];
-                int ForthVertexCord = WorldTriangles[HitObject.triangleIndex * 3 + 3];
-
-                WorldVertices[FirstVertexCord] += Vector3.up;
-                WorldVertices[SecondVertexCord] += Vector3.up;
-                WorldVertices[ThirdVertexCord] += Vector3.up;
-
-                WorldVertices[ForthVertexCord] += Vector3.up;
-
-                Vector3 FaceCord = (WorldVertices[FirstVertexCord] + WorldVertices[SecondVertexCord] 
-                    + WorldVertices[ThirdVertexCord] + WorldVertices[ForthVertexCord]) / 4;
-
-                Vector3 PathCord = WorldVertices[FirstVertexCord];
-
-                Debug.Log(PathCord);
-
-                Instantiate(PathRef, FaceCord+=Vector3.up*2, Quaternion.identity);
-                PathPosition.x += 10;
-
-                
-            }
-
-        }
-        MeshFilterRef.mesh.vertices=WorldVertices;
-    }
-
+  
 
     private IEnumerator FindPath(Transform StartingPoint)
     {
@@ -178,13 +136,13 @@ public class PathGenerator : MonoBehaviour
                 if (PossibleVectors[WaypointIndex] != Vector3.zero)
                 {
                     WaypointList.Add(PossibleVectors[WaypointIndex]);
-                    Debug.Log(PossibleVectors[WaypointIndex]);
+                    //Debug.Log(PossibleVectors[WaypointIndex]);
                 }
                 else if(PossibleVectors[WaypointIndex] == Vector3.zero)
                 {
-                    Debug.Log("we go");
+                    //Debug.Log("we go");
                     WaypointList.Add(PossibleVectors[WaypointIndex-3]+new Vector3(2.5f,2.5f,0));
-                    Debug.Log(WaypointList[WaypointList.Count]);
+                    //Debug.Log(WaypointList[WaypointList.Count]);
                 }
             }
             yield return new WaitForSeconds(0.25f);
@@ -214,7 +172,7 @@ public class PathGenerator : MonoBehaviour
         SpawnerRef.CheckSpawnList(this);
 
 
-        Debug.Log("Fight");
+        //Debug.Log("Fight");
     }
 
     private Mesh VerifyVectors(Mesh MeshRef)
@@ -224,7 +182,8 @@ public class PathGenerator : MonoBehaviour
         {
             if (Vertices[i] == Vector3.zero)
             {
-                Vertices[i] = Vertices[i - 1] + ChangeValue * 3;
+                int AccessIndex = (i == 0) ? i : i-1;
+                Vertices[i] = Vertices[AccessIndex] + ChangeValue * 3;
             }
 
         }
@@ -288,12 +247,14 @@ public class PathGenerator : MonoBehaviour
         List<Vector3> vertices = new List<Vector3>();
         List<int> triangles = new List<int>();
 
+        // Sample points on the spline
         Vector3[] splinePoints = SampleSpline(controlPoints, resolution);
 
         for (int i = 0; i < splinePoints.Length; i++)
         {
-            Vector3 forward = Vector3.zero;
+            Vector3 forward;
 
+            // Ensure smooth forward vector calculation
             if (i < splinePoints.Length - 1)
             {
                 forward = (splinePoints[i + 1] - splinePoints[i]).normalized;
@@ -303,38 +264,44 @@ public class PathGenerator : MonoBehaviour
                 forward = (splinePoints[i] - splinePoints[i - 1]).normalized;
             }
 
+            // Calculate perpendicular vector to create width
             Vector3 perpendicular = Vector3.Cross(forward, Vector3.up).normalized;
 
             Vector3 vertex1 = splinePoints[i] - perpendicular * width * 0.5f;
             Vector3 vertex2 = splinePoints[i] + perpendicular * width * 0.5f;
 
+            // Add vertices for the current segment
             vertices.Add(vertex1);
             vertices.Add(vertex2);
 
+            // Add triangles connecting vertices for each segment
             if (i < splinePoints.Length - 1)
             {
                 int startIndex = i * 2;
 
-                triangles.Add(startIndex);
+                triangles.Add(startIndex);     // First triangle
                 triangles.Add(startIndex + 1);
                 triangles.Add(startIndex + 2);
 
-                triangles.Add(startIndex + 1);
+                triangles.Add(startIndex + 1); // Second triangle
                 triangles.Add(startIndex + 3);
                 triangles.Add(startIndex + 2);
             }
         }
 
-        Mesh mesh = new Mesh();
-        mesh.vertices = vertices.ToArray();
-        mesh.triangles = triangles.ToArray();
+        // Create and return the mesh
+        Mesh pathMesh = new Mesh();
+        pathMesh.vertices = vertices.ToArray();
+        pathMesh.triangles = triangles.ToArray();
 
-        
-        mesh.RecalculateNormals();
+        // Ensure normals and bounds are recalculated
+        pathMesh.RecalculateNormals();
+        pathMesh.RecalculateBounds();
 
-        return mesh;
+        return pathMesh;
     }
 
+    // Spline interpolation (unchanged)
     private Vector3[] SampleSpline(List<Vector3> controlPoints, int resolution)
     {
         List<Vector3> sampledPoints = new List<Vector3>();
@@ -354,10 +321,11 @@ public class PathGenerator : MonoBehaviour
             }
         }
 
-        sampledPoints.Add(controlPoints[controlPoints.Count - 1]); 
+        sampledPoints.Add(controlPoints[controlPoints.Count - 1]);
         return sampledPoints.ToArray();
     }
 
+    // Spline interpolation (unchanged)
     private Vector3 CatmullRomSpline(Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3, float t)
     {
         // Catmull-Rom spline calculation

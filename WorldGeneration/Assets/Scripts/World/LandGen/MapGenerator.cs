@@ -47,16 +47,12 @@ public class MapGenerator : MonoBehaviour
     float[,] FalloffMap;
     public static float MaxViewDst;
     public static GameObject Current;
-    #region Const floats
-    //const Floats
-    const float Scale = 1;
-    const float ViewerMoveThresholdForChunkUpdate = 25f;
-    const float SqrViewerMoveThresholdForChunkUpdate = ViewerMoveThresholdForChunkUpdate * ViewerMoveThresholdForChunkUpdate;
-    #endregion
+
+    public GameObject BasePlane;
+
 
     [Header("Scripts and Structs"),Space(2)]
     //Scripts and Structs
-    private MapGenerator MapGeneratorInstance;
     public LODInfoClass[] DetailLevels;
     private TextureGenerator TextureGenScript;
     public static List<Chunk> AllVisableChunks = new List<Chunk>();
@@ -73,9 +69,9 @@ public class MapGenerator : MonoBehaviour
     public static Vector2 ViewerPosition;
     Vector2 ViewerPositionOld;
 
+    public MeshFilter GeneratedMesh;
 
-    int ChunkSize;
-    int ChunksVisibleInViewDst = 2;
+    public int ChunkSize;
 
     MeshGenerator MeshGenerator = new MeshGenerator();
     private TextureGenerator TextureGeneratorScript;
@@ -85,7 +81,12 @@ public class MapGenerator : MonoBehaviour
 
     void Start()
     {
-        MapGeneratorInstance = this;
+
+        int RandomSeedChange = UnityEngine.Random.Range(-10, 50);
+        Seed += Seed + RandomSeedChange;
+        Offset.x = UnityEngine.Random.Range(-50, 50);
+        Offset.x = UnityEngine.Random.Range(-10, 60);
+
         MaxViewDst = DetailLevels[DetailLevels.Length - 1].VisibleDstThreshold;
         ChunkSize = MapGenerator.MapChunkSize - 1;
         //ChunksVisibleInViewDst = Mathf.RoundToInt(MaxViewDst / ChunkSize);
@@ -93,7 +94,7 @@ public class MapGenerator : MonoBehaviour
         TextureGenScript = new TextureGenerator();
 
         StartCoroutine(UpdateVisibleChunks());
-
+        BasePlane.SetActive(false);
     }
 
     IEnumerator UpdateVisibleChunks()
@@ -131,7 +132,7 @@ public class MapGenerator : MonoBehaviour
                     //CreatedChunks.Add(MadeChunk);
 
                     SavedChunks.Add(ViewedChunkCoord, MadeChunk);
-
+                    GeneratedMesh = MadeChunk.MeshFilterVar;
                 }
             }
         }
@@ -191,10 +192,6 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
-    public void NormalizeBorders()
-    {
-
-    }
 
     void Update()
     {
@@ -216,16 +213,6 @@ public class MapGenerator : MonoBehaviour
                 ThreadInfoRef.Callback(ThreadInfoRef.Parameter);
             }
         }
-
-        if (Input.GetKeyDown(KeyCode.J))
-        {
-            UpdateMap();
-        }
-    }
-
-    public void UpdateMap()
-    {
-
     }
 
     MapDisplayStruct GenerateMapData(Vector2 MapCenterCoord)
@@ -244,6 +231,7 @@ public class MapGenerator : MonoBehaviour
                 {
                     GeneratedNoiseMap[x, y] = Mathf.Clamp01(GeneratedNoiseMap[x, y] - FalloffMap[x, y]);
                 }
+
                 float currentHeight = GeneratedNoiseMap[x, y];
                 for (int i = 0; i < Regions.Length; i++)
                 {

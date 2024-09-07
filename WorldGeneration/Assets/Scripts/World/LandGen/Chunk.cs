@@ -106,10 +106,6 @@ public class Chunk : MonoBehaviour
         MeshRendererVar.material.mainTexture = TextureVar;
 
         UpdateTerrainChunk();
-        if (GenerationData != null)
-        {
-            Debug.Log("his swons y firend");
-        }
         
     }
 
@@ -208,6 +204,7 @@ public class Chunk : MonoBehaviour
         {
             Debug.Log("hell make everyone bleed");
         }
+        this.GetComponent<MeshCollider>().sharedMesh = MeshFilterVar.sharedMesh;
 
         SetVisible(true);
     }

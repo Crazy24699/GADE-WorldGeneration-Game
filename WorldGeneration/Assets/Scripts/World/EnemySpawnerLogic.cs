@@ -51,7 +51,7 @@ public class EnemySpawnerLogic : MonoBehaviour
     public void CheckSpawnList(PathGenerator PathGenRef)
     {
         MadePaths.Add(PathGenRef);
-        Debug.Log(MadePaths.Count);
+        //Debug.Log(MadePaths.Count);
         if(MadePaths.Count >= 3)
         {
             ProgramManager.ProgramManagerInstance.SpawnWave.Invoke();
