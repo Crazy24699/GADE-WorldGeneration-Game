@@ -8,7 +8,7 @@ public class BasicEnemy : BaseEnemy
 {
 
     private GameObject[] PlayerTowers;
-    [SerializeField] private GameObject TowerTarget;
+    [SerializeField] public GameObject FinalTarget;
     [SerializeField] private NavMeshAgent AgentRef;
 
     // Start is called before the first frame update
@@ -26,23 +26,25 @@ public class BasicEnemy : BaseEnemy
 
     private void FindNearestTower()
     {
-        PlayerTowers = GameObject.FindGameObjectsWithTag("PlayerTower");
-        float MinDistance = 0;
+        //PlayerTowers = GameObject.FindGameObjectsWithTag("PlayerTower");
+        //float MinDistance = 0;
 
-        foreach (var Tower in PlayerTowers)
-        {
-            float TowerDistance = Vector3.Distance(transform.position, Tower.transform.position);
-            TowerDistance = Mathf.Abs(TowerDistance);
-            if (MinDistance == 0)
-            {
-                MinDistance = TowerDistance;
-                TowerTarget = Tower;
-            }
-            if (TowerDistance < MinDistance)
-            {
-                TowerTarget = Tower;
-            }
-        }
+        //foreach (var Tower in PlayerTowers)
+        //{
+        //    float TowerDistance = Vector3.Distance(transform.position, Tower.transform.position);
+        //    TowerDistance = Mathf.Abs(TowerDistance);
+        //    if (MinDistance == 0)
+        //    {
+        //        MinDistance = TowerDistance;
+        //        TowerTarget = Tower;
+        //    }
+        //    if (TowerDistance < MinDistance)
+        //    {
+        //        TowerTarget = Tower;
+        //    }
+        //}
+
+
     }
 
     public IEnumerator AdditionalStartup()
@@ -52,17 +54,18 @@ public class BasicEnemy : BaseEnemy
         AgentRef.enabled = true;
         FindNearestTower();
         yield return new WaitForSeconds(0.55f);
-        AgentRef.SetDestination(TowerTarget.transform.position);
-
+        yield return new WaitForSeconds(0.55f);
+        AgentRef.SetDestination(FinalTarget.transform.position);
     }
 
     private void Update()
     {
         if(Input.GetKeyDown(KeyCode.O))
         {
-            AgentRef.SetDestination(TowerTarget.transform.position);
+            AgentRef.SetDestination(FinalTarget.transform.position);
             Debug.Log("Nice try but two can play this game");
         }
+        //AgentRef.SetDestination(TowerTarget.transform.position);
     }
 
     private void OnTriggerEnter(Collider Collision)
@@ -71,7 +74,7 @@ public class BasicEnemy : BaseEnemy
         {
             Collision.GetComponent<TowerLogic>().HandleHealth(-CurrentHealth);
             TakenDamage();
-            Destroy(gameObject);
+            Destroy(this.gameObject);
         }
     }
 

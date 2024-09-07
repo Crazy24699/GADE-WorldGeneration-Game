@@ -41,17 +41,17 @@ public class TowerLogic : TowerBase
         {
             
         }
-        OnTriggerEnter(ColliderObject);
+        //OnTriggerEnter(ColliderObject);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.GetComponent<MeshCollider>().name == "AreaOccupation" && other.transform.parent.name != this.gameObject.name)
+        if (other.gameObject.GetComponent<Collider>().name == "AreaOccupation" && other.transform.parent.name != this.gameObject.name)
         {
             Debug.Log("This works");
             return; 
         }
-        else if(other.gameObject.GetComponent<MeshCollider>().name == "AreaOccupation")
+        else if(other.gameObject.GetComponent<Collider>().name == "AreaOccupation")
         {
             Debug.Log("this doesnt");
         }

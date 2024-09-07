@@ -29,7 +29,6 @@ public class MapGenerator : MonoBehaviour
 
     public Vector2 Offset;
 
-    public bool UseFalloff;
 
     public float MeshHeightMultiplier;
     public AnimationCurve MeshHeightCurve;
@@ -40,7 +39,8 @@ public class MapGenerator : MonoBehaviour
 
     public TerrainType[] Regions;
 
-
+    public bool UseFalloff;
+    [HideInInspector]public bool MapGenerated=false;
     public bool AutoGen = false;
 
     [Header("Floats"),Space(2)]
@@ -136,6 +136,8 @@ public class MapGenerator : MonoBehaviour
                 }
             }
         }
+
+        MapGenerated = true;
     }
 
     public void DrawMapInEditor()

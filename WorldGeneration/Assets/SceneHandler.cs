@@ -10,6 +10,8 @@ public class SceneHandler : MonoBehaviour
 
     public EnemySpawnerLogic SpawnerScript;
 
+    public bool PathsGenerated = false;
+
     public LayerMask WalkableLayers;
 
     // Start is called before the first frame update
@@ -20,6 +22,7 @@ public class SceneHandler : MonoBehaviour
         SceneInstance = this;
 
         SpawnerScript = FindObjectOfType<EnemySpawnerLogic>();
+        InvokeRepeating(nameof(StartSpawning), 0.0f, .025f);
     }
 
     private IEnumerator RunWorldSetup()
@@ -34,6 +37,16 @@ public class SceneHandler : MonoBehaviour
         yield return new WaitForSeconds(0.025f);
         //ProgramManager.ProgramManagerInstance.SpawnWave.Invoke();
 
+    }
+
+    private void StartSpawning()
+    {
+        if(!PathsGenerated)
+        {
+            return;
+        }
+        ProgramManager.ProgramManagerInstance.SpawnWave.Invoke();
+        CancelInvoke(nameof(StartSpawning));
     }
 
 }
