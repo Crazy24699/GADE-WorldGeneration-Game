@@ -464,7 +464,6 @@ MonoBehaviour:
   - {fileID: 1722235546}
   - {fileID: 385682077}
   - {fileID: 43556796}
-  ReadyPaths: 
 --- !u!4 &239845597
 Transform:
   m_ObjectHideFlags: 0
