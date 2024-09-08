@@ -15,7 +15,7 @@ public class MeshGenerator
 
         MeshIncrimentValue = (LevelOfDetail == 0) ? 1 : LevelOfDetail * 2;
 
-        Debug.Log(HeightMap.Length);
+        //Debug.Log(HeightMap.Length);
 
         int BorderedSize = HeightMap.GetLength(0);
         int MeshSize = BorderedSize - 2 * MeshIncrimentValue;
@@ -292,7 +292,7 @@ public class MeshGenerationData
         MeshRef.uv = UVs;
         MeshRef.normals = BakedNormals;
 
-        Debug.Log("Frgot to laugh");
+        //Debug.Log("Frgot to laugh");
 
         return MeshRef;
     }

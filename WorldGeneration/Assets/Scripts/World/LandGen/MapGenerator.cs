@@ -7,94 +7,86 @@ using UnityEngine.XR;
 
 public class MapGenerator : MonoBehaviour
 {
-
-    public const int MapChunkSize = 239;
+    //Floats
+    [Header("Floats"),Space(2)]
     [Range(0, 6)]
-    public int EditorPreviewLOD;
     public float NoiseScale;
-
-    public int Octaves;
     [Range(0, 1)]
     public float Persistance;
+
+    private float[,] FalloffMap;
+    public static float MaxViewDst;
+    public float MeshHeightMultiplier;
     public float Lacunarity;
 
-    public int Seed;
-    public int ChunkSpawn;
 
+    //Ints
+    public const int MapChunkSize = 239;
+    public int Octaves;
+    public int Seed;
+    public int EditorPreviewLOD;
+    public int ChunkSpawn;
     //How many chunks will spawn on the X Axis
     public int XSpawnNum;
-
     //How many chunks will spawn on the Y Axis
     public int YSpawnNum;
+    public int ChunkSize;
 
-    public Vector2 Offset;
 
-
-    public float MeshHeightMultiplier;
-    public AnimationCurve MeshHeightCurve;
-
+    //Bools
+    public bool AutoGen = false;
     public bool AutoUpdate;
-
-    public Noise NoiseGenerator = new Noise();
-
-    public TerrainType[] Regions;
-
     public bool UseFalloff;
     [HideInInspector]public bool MapGenerated=false;
-    public bool AutoGen = false;
 
-    [Header("Floats"),Space(2)]
-    float[,] FalloffMap;
-    public static float MaxViewDst;
+    //Vectors
+    public Vector2 Offset;
+    public static Vector2 ViewerPosition;
+    public Dictionary<Vector2, Chunk> SavedChunks = new Dictionary<Vector2, Chunk>();
+
+    //Game obejcts and transfroms
     public static GameObject Current;
-
     public GameObject BasePlane;
+    public Transform Viewer;
 
 
     [Header("Scripts and Structs"),Space(2)]
     //Scripts and Structs
-    public LODInfoClass[] DetailLevels;
-    private TextureGenerator TextureGenScript;
     public static List<Chunk> AllVisableChunks = new List<Chunk>();
-
+    private MeshGenerator MeshGenerator = new MeshGenerator();
     public List<Chunk> CreatedChunks = new List<Chunk>();
+    public Noise NoiseGenerator = new Noise();
 
     Queue<MapThreadInfo<MapDisplayStruct>> MapDataThreadInfoQueue = new Queue<MapThreadInfo<MapDisplayStruct>>();
     Queue<MapThreadInfo<MeshGenerationData>> MeshDataInfoThread = new Queue<MapThreadInfo<MeshGenerationData>>();
-
-
-    public Transform Viewer;
-    public Material MapMaterial;
-
-    public static Vector2 ViewerPosition;
-    Vector2 ViewerPositionOld;
-
+    
+    public LODInfoClass[] DetailLevels;
+    public TerrainType[] Regions;
+    
+    //Meshes
     public MeshFilter GeneratedMesh;
-
-    public int ChunkSize;
-
-    MeshGenerator MeshGenerator = new MeshGenerator();
-    private TextureGenerator TextureGeneratorScript;
-
-    public Dictionary<Vector2, Chunk> SavedChunks = new Dictionary<Vector2, Chunk>();
+    public Material MapMaterial;
+    public AnimationCurve MeshHeightCurve;
 
 
     void Start()
     {
+        RandomizeTerrain();
 
+        MaxViewDst = DetailLevels[DetailLevels.Length - 1].VisibleDstThreshold;
+        ChunkSize = MapGenerator.MapChunkSize - 1;
+
+        StartCoroutine(UpdateVisibleChunks());
+        BasePlane.SetActive(false);
+    }
+
+    private void RandomizeTerrain()
+    {
         int RandomSeedChange = UnityEngine.Random.Range(-10, 50);
         Seed += Seed + RandomSeedChange;
         Offset.x = UnityEngine.Random.Range(-50, 50);
         Offset.x = UnityEngine.Random.Range(-10, 60);
 
-        MaxViewDst = DetailLevels[DetailLevels.Length - 1].VisibleDstThreshold;
-        ChunkSize = MapGenerator.MapChunkSize - 1;
-        //ChunksVisibleInViewDst = Mathf.RoundToInt(MaxViewDst / ChunkSize);
-
-        TextureGenScript = new TextureGenerator();
-
-        StartCoroutine(UpdateVisibleChunks());
-        BasePlane.SetActive(false);
     }
 
     IEnumerator UpdateVisibleChunks()
@@ -115,7 +107,7 @@ public class MapGenerator : MonoBehaviour
             {
                 yield return new WaitForSeconds(0.0015f);
                 Vector2 ViewedChunkCoord = new Vector2(CurrentChunkCoordX + XSpawn, CurrentChunkCoordY + YSpawn);
-                Debug.Log("rite");
+
                 if (SavedChunks.ContainsKey(ViewedChunkCoord))
                 {
                     SavedChunks[ViewedChunkCoord].UpdateTerrainChunk();
@@ -123,10 +115,11 @@ public class MapGenerator : MonoBehaviour
                 else
                 {
                     GameObject ChunkObject = new GameObject("terrain" + SavedChunks.Count);
+                    ChunkObject.layer = LayerMask.NameToLayer("Ground");
                     Current = ChunkObject;
                     Chunk MadeChunk = ChunkObject.AddComponent<Chunk>();
 
-                    Debug.Log("ChunkObject"+ChunkObject.name);
+                    //Debug.Log("ChunkObject"+ChunkObject.name);
                     MadeChunk.SetValues(ViewedChunkCoord, ChunkSize, DetailLevels, transform, MapMaterial);
 
                     //CreatedChunks.Add(MadeChunk);
@@ -146,8 +139,7 @@ public class MapGenerator : MonoBehaviour
 
         MapDisplay MapDisplayRef = FindObjectOfType<MapDisplay>();
         MapDisplayRef.DrawMesh(MeshGenerator.GenerateTerrainMesh(MapData.HeightMapValues, MeshHeightMultiplier, MeshHeightCurve, EditorPreviewLOD), TextureGenerator.ColourMapTextureGen(MapData.ColourMapValues, MapChunkSize, MapChunkSize));
-        //ChunkSpawn++;
-        //Debug.Log(ChunkSpawn);
+
     }
     public void RequestMapData(Vector2 ChunkCenter, Action<MapDisplayStruct> MapDisplayRef)
     {
@@ -182,15 +174,11 @@ public class MapGenerator : MonoBehaviour
 
         MeshGenerationData MeshData = MeshGenerator.GenerateTerrainMesh(MapDisplayRef.HeightMapValues, MeshHeightMultiplier, MeshHeightCurve, LODValue);
 
-        Debug.Log("right");
+        //Debug.Log("right");
         lock (MeshDataInfoThread)
         {
-            //ChunkSpawn++;
-            //Debug.Log(ChunkSpawn);
-            //Seed++;
             
             MeshDataInfoThread.Enqueue(new MapThreadInfo<MeshGenerationData>(MeshGenDataRef, MeshData));
-            //Debug.Log(MeshData.BorderVertices.Length + "     " + MeshData.VertsPerLine);
         }
     }
 

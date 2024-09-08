@@ -29,7 +29,7 @@ public class EnemySpawnerLogic : MonoBehaviour
         yield return new WaitForSeconds(1);
         for (int i = 0; i < 3; i++)
         {
-            if (ProgramManager.ProgramManagerInstance.EnemyCount.Count < 12)
+            if (ProgramManager.ProgramManagerInstance.EnemyCount.Count < 21)
             {
                 CreateEnemy("Normal", i);
                 Debug.Log("i nolonger dream, only nightmares of those whove died;");

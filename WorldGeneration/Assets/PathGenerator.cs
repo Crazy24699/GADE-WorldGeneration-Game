@@ -122,7 +122,7 @@ public class PathGenerator : MonoBehaviour
             && MatchingVectors.z >= Lower_Z_Range && MatchingVectors.z <= Upper_Z_Range);
         List<Vector3> UseableVectors = VectorsInRange.ToList();
 
-        Debug.Log(VectorsInRange.Count() + "      " + WorldVertices.Count());
+        //Debug.Log(VectorsInRange.Count() + "      " + WorldVertices.Count());
 
         foreach (var Point in VectorsInRange)
         {

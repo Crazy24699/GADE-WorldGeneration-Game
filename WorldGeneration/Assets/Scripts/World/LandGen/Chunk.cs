@@ -50,7 +50,7 @@ public class Chunk : MonoBehaviour
 
     public void SetValues(Vector2 CoordVar, int SizeVar, LODInfoClass[] DetailLevelsVar, Transform ParentVar, Material MaterialVar)
     {
-        Debug.Log("Live");
+        //Debug.Log("Live");
 
         TextureGenScript = new TextureGenerator();
 

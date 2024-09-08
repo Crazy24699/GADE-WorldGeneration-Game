@@ -5,8 +5,8 @@ using UnityEngine;
 public class BaseEnemy : MonoBehaviour
 {
 
-    [SerializeField]protected int MaxHealth;
-    protected int CurrentHealth;
+    protected int MaxHealth = 20;
+    [SerializeField]public int CurrentHealth;
 
     protected float MoveSpeed;
     [SerializeField] protected ParticleSystem TakenDamageEffect;
@@ -30,10 +30,11 @@ public class BaseEnemy : MonoBehaviour
             {
                 TakenDamage();
             }
-            return;
+            
         }
-        else if (CurrentHealth <= 0) 
+        if (CurrentHealth <= 0) 
         {
+
             Die();
         }
     }

@@ -32,7 +32,7 @@ public class SceneHandler : MonoBehaviour
         foreach (var GeneratorScript in PathGenerators)
         {
             GeneratorScript.HandleGeneration();
-            Debug.Log(GeneratorScript.gameObject.name);
+            //Debug.Log(GeneratorScript.gameObject.name);
         }
         yield return new WaitForSeconds(0.025f);
         //ProgramManager.ProgramManagerInstance.SpawnWave.Invoke();
