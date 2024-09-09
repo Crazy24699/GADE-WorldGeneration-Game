@@ -9,10 +9,17 @@ public class MainMenu : MonoBehaviour
     public GameObject OptionsMenuObject;
     public GameObject MainMenuObject;
 
-
-   public void PlayGame()
+    private void Start()
     {
-        SceneManager.LoadScene("Level 1 Greybox"); 
+        Time.timeScale = 1.0f;
+    }
+
+    public void PlayGame()
+    {
+        //SceneManager.UnloadScene("Restored"); 
+        
+        SceneManager.LoadScene("Restored"); 
+        
         Time.timeScale = 1.0f;
     }
 

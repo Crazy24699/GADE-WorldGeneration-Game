@@ -48,6 +48,10 @@ public class PlayerHandler : MonoBehaviour
         }
 
         Vector3[] AllLand = MapGenScript.GeneratedMesh.GetComponent<MeshFilter>().mesh.vertices;
+        if(AllLand.Length <= 0)
+        {
+            return;
+        }
         Vector3 MinLandValue = AllLand.OrderBy(V => V.y).First();
 
         IEnumerable<Vector3> UseableLand = AllLand.Where(V => V.y <= MinLandValue.y+0.35f);

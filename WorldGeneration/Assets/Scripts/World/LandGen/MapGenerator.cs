@@ -69,12 +69,13 @@ public class MapGenerator : MonoBehaviour
 
     void Start()
     {
+        Debug.Log("undone");
         RandomizeTerrain();
 
         MaxViewDst = DetailLevels[DetailLevels.Length - 1].VisibleDstThreshold;
         ChunkSize = MapGenerator.MapChunkSize - 1;
 
-        StartCoroutine(UpdateVisibleChunks());
+        UpdateVisibleChunks();
         BasePlane.SetActive(false);
     }
 
@@ -87,14 +88,14 @@ public class MapGenerator : MonoBehaviour
 
     }
 
-    private IEnumerator UpdateVisibleChunks()
+    private void UpdateVisibleChunks()
     {
 
         for (int i = 0; i < AllVisableChunks.Count; i++)
         {
             AllVisableChunks[i].SetVisible(false);
         }
-        SavedChunks.Clear();
+        //SavedChunks.Clear();
 
         int CurrentChunkCoordX = Mathf.RoundToInt(ViewerPosition.x / ChunkSize);
         int CurrentChunkCoordY = Mathf.RoundToInt(ViewerPosition.y / ChunkSize);
@@ -103,7 +104,7 @@ public class MapGenerator : MonoBehaviour
         {
             for (int XSpawn = 0; XSpawn < XSpawnNum; XSpawn++)
             {
-                yield return new WaitForSeconds(0.0015f);
+                
                 Vector2 ViewedChunkCoord = new Vector2(CurrentChunkCoordX + XSpawn, CurrentChunkCoordY + YSpawn);
 
                 if (SavedChunks.ContainsKey(ViewedChunkCoord))
@@ -280,6 +281,7 @@ public class LODMeshClass
     
     //The LOD that the mesh will be rendered in
     private int LODValue;
+
     //Actions used for threading and to update the mesh
     private System.Action UpdateMeshLOD;
 

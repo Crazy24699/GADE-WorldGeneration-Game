@@ -134,25 +134,6 @@ public class Chunk : MonoBehaviour
 
         ChunkInfoRef.AllVertices = VertexList.ToArray();
 
-        //foreach (var Vertex in VertexList)
-        //{
-        //    if (ChunkInfoRef.BorderVertices.Contains(Vertex))
-        //    {
-
-
-        //    }
-        //}
-
-        //for (int i = 0; i < ChunkInfoRef.AllVertices.Length; i++)
-        //{
-        //    //if (i< VertexList.l && VertexList[i] == ChunkInfoRef.AllVertices[i])
-        //    //{
-        //    //    Debug.Log("Das nothing");
-        //    //    ChunkInfoRef.AllVertices[i].y = 0;
-        //    //    ChunkInfoRef.AllVertices[i].z = 0;
-        //    //}
-        //    //VertexList[i].y = 0;
-        //}
         MeshFilterRef.sharedMesh.vertices = ChunkInfoRef.AllVertices;
     }
 
@@ -200,11 +181,11 @@ public class Chunk : MonoBehaviour
                 }
             }
 
-            MapGenerator.AllVisableChunks.Add(this);
+            //MapGenerator.AllVisableChunks.Add(this);
         }
         if (GenerationData != null)
         {
-            Debug.Log("hell make everyone bleed");
+            //Debug.Log("hell make everyone bleed");
         }
         this.GetComponent<MeshCollider>().sharedMesh = MeshFilterRef.sharedMesh;
 
@@ -222,9 +203,3 @@ public class Chunk : MonoBehaviour
     }
 }
 
-public class ChunkNeighbour
-{
-
-    HashSet<Vector3> Border;
-
-}
