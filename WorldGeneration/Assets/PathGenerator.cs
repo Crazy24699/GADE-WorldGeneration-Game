@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using Unity.AI.Navigation;
 using UnityEngine;
 
@@ -10,10 +11,6 @@ public class PathGenerator : MonoBehaviour
 
     public GameObject PathFinderRef;
 
-    public Vector3 MinVector;
-    public Vector3 MaxVector;
-
-    public Vector3 ChangeValue;
 
     public Transform StartPoint;
     public Transform EndPoint;
@@ -28,24 +25,33 @@ public class PathGenerator : MonoBehaviour
 
     private EnemySpawnerLogic SpawnerRef;
 
+    public Vector3 MinVector;
+    public Vector3 MaxVector;
+
+    public Vector3 ChangeValue;
     private List<Vector3> MeshVertices = new List<Vector3>();
     private List<Vector3> WorldVertices = new List<Vector3>();
-
-    public List<Vector3> WaypointList = new List<Vector3>();
+    
     public List<Vector3> EnemyWaypoints;
+    public List<Vector3> WaypointList = new List<Vector3>();
+
+    [SerializeField]private Vector3 CastingOffset;
+    [SerializeField] private Vector3 CastingSize;
 
     public int[] MeshTriangles;
     public int[] WorldTriangles;
+    public int PathResolution;
+    public int Resolution = 20;
 
     public Transform[] ControlPointTransforms;
-    public int Resolution = 20;
 
     public LayerMask GroundLayer;
 
-    public int PathResolution;
     public float Width;
+    [SerializeField]private float CastingDistance;
 
     public Material MaterialRef;
+
 
     private void Start()
     {
@@ -54,16 +60,14 @@ public class PathGenerator : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            //HandleFinding();
-        }
+
 
         if (Input.GetKeyDown(KeyCode.G))
         {
             HandleGeneration();
         }
     }
+
 
     public void HandleGeneration()
     {
@@ -75,15 +79,19 @@ public class PathGenerator : MonoBehaviour
 
         Vector3[] controlPoints = ControlPointTransforms.Select(t => t.position).ToArray();
         MeshFilterRef.mesh = CreateMeshFromSpline(controlPoints, Resolution, Width);
+        MeshCol.sharedMesh = MeshFilterRef.sharedMesh;
     }
 
     private void CreatePathObject()
     {
+        //adds the first waypoint as the start of the path
         WaypointList.Add(transform.position);
+
         MadePath = new GameObject("Path" + this.gameObject.name);
         MadePath.transform.position = Vector3.zero;
         MadePath.transform.parent = transform;
 
+        //adds components to create and discplay the mesh
         MadePath.AddComponent<MeshCollider>();
         MadePath.AddComponent<MeshRenderer>();
         MadePath.GetComponent<MeshRenderer>().material = MaterialRef;
@@ -197,6 +205,8 @@ public class PathGenerator : MonoBehaviour
 
         for (int i = 0; i < WorldPoints.Length - 1; i++)
         {
+            //Creates a mesh based off the spline points, each spline point having a min and max vector point
+            //translated from world values 
             Vector3 Point0 = WorldPoints[Mathf.Max(i - 1, 0)];
             Vector3 Point1 = WorldPoints[i];
             Vector3 Point2 = WorldPoints[i + 1];
@@ -217,8 +227,7 @@ public class PathGenerator : MonoBehaviour
     private Vector3 CatmullRomSpline(Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3, float t)
     {
         return 0.5f * (
-            (2f * p1) +
-            (-p0 + p2) * t +
+            (2f * p1) + (-p0 + p2) * t +
             (2f * p0 - 5f * p1 + 4f * p2 - p3) * (t * t) +
             (-p0 + 3f * p1 - 3f * p2 + p3) * (t * t * t)
         );

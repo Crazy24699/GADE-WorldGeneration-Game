@@ -4,15 +4,35 @@ using UnityEngine;
 
 public class HandleOverlap : MonoBehaviour
 {
-    public float Distance;
-    public Vector3 PathDirection;
-    private void OnTriggerEnter(Collider Collision)
+    public bool AreaClear = true;
+
+    public Material OpenOutline;
+    public Material BlockedOutline;
+
+    public Renderer OutlinerRenderer;
+
+    private void Start()
+    {
+        OutlinerRenderer=GetComponent<Renderer>();
+    }
+
+    private void OnTriggerStay(Collider Collision)
     {
         if (Collision.CompareTag("Pathway"))
         {
-            Distance = Vector2.Distance(Collision.gameObject.transform.position, transform.position);
-            Vector3 PathPos=Collision.gameObject.transform.position;
-            PathDirection = PathPos;
+            AreaClear = false;
+            OutlinerRenderer.material = BlockedOutline;
+            return;
+        }
+        
+    }
+    private void OnTriggerExit(Collider Collision)
+    {
+        if (Collision.CompareTag("Pathway"))
+        {
+            AreaClear = true;
+            OutlinerRenderer.material = OpenOutline;
+            return;
         }
     }
 }

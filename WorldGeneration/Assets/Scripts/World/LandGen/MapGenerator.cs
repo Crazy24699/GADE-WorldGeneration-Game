@@ -9,7 +9,6 @@ public class MapGenerator : MonoBehaviour
 {
     //Floats
     [Header("Floats"),Space(2)]
-    [Range(0, 6)]
     public float NoiseScale;
     [Range(0, 1)]
     public float Persistance;
@@ -24,6 +23,7 @@ public class MapGenerator : MonoBehaviour
     public const int MapChunkSize = 239;
     public int Octaves;
     public int Seed;
+    [Range(0, 6)]
     public int EditorPreviewLOD;
     public int ChunkSpawn;
     //How many chunks will spawn on the X Axis
@@ -35,8 +35,6 @@ public class MapGenerator : MonoBehaviour
 
     //Bools
     public bool AutoGen = false;
-    public bool AutoUpdate;
-    public bool UseFalloff;
     [HideInInspector]public bool MapGenerated=false;
 
     //Vectors
@@ -89,7 +87,7 @@ public class MapGenerator : MonoBehaviour
 
     }
 
-    IEnumerator UpdateVisibleChunks()
+    private IEnumerator UpdateVisibleChunks()
     {
 
         for (int i = 0; i < AllVisableChunks.Count; i++)
@@ -125,7 +123,7 @@ public class MapGenerator : MonoBehaviour
                     //CreatedChunks.Add(MadeChunk);
 
                     SavedChunks.Add(ViewedChunkCoord, MadeChunk);
-                    GeneratedMesh = MadeChunk.MeshFilterVar;
+                    GeneratedMesh = MadeChunk.MeshFilterRef;
                 }
             }
         }
@@ -150,7 +148,7 @@ public class MapGenerator : MonoBehaviour
         new Thread(ThreadScriptStart).Start();
     }
 
-    void MapDataThread(Vector2 MapCenterCord, Action<MapDisplayStruct> MapDisplayRef)
+    private void MapDataThread(Vector2 MapCenterCord, Action<MapDisplayStruct> MapDisplayRef)
     {
         MapDisplayStruct MapDisplayData = GenerateMapData(MapCenterCord);
         lock (MapDataThreadInfoQueue)
@@ -168,7 +166,7 @@ public class MapGenerator : MonoBehaviour
         new Thread(ThreadScriptStart).Start();
     }
 
-    void MeshDataThread(MapDisplayStruct MapDisplayRef, int LODValue, Action<MeshGenerationData> MeshGenDataRef)
+    private void MeshDataThread(MapDisplayStruct MapDisplayRef, int LODValue, Action<MeshGenerationData> MeshGenDataRef)
     {
         //where its generated. Look here
 
@@ -185,7 +183,12 @@ public class MapGenerator : MonoBehaviour
 
     void Update()
     {
+        HandleThreading();
+        
+    }
 
+    private void HandleThreading()
+    {
         if (MapDataThreadInfoQueue.Count > 0)
         {
             for (int i = 0; i < MapDataThreadInfoQueue.Count; i++)
@@ -205,29 +208,22 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
-    MapDisplayStruct GenerateMapData(Vector2 MapCenterCoord)
+    private MapDisplayStruct GenerateMapData(Vector2 MapCenterCoord)
     {
 
         float[,] GeneratedNoiseMap = NoiseGenerator.GenerateNoiseMap(MapChunkSize + 2, MapChunkSize + 2, Seed, NoiseScale, Octaves, Persistance, Lacunarity, MapCenterCoord + Offset);
-
-        //Debug.Log(NoiseGenerator.GetMaxHeight(GeneratedNoiseMap, MapChunkSize + 2));
 
         Color[] GeneratedColourMap = new Color[MapChunkSize * MapChunkSize];
         for (int y = 0; y < MapChunkSize; y++)
         {
             for (int x = 0; x < MapChunkSize; x++)
             {
-                if (UseFalloff)
-                {
-                    GeneratedNoiseMap[x, y] = Mathf.Clamp01(GeneratedNoiseMap[x, y] - FalloffMap[x, y]);
-                }
-
                 float currentHeight = GeneratedNoiseMap[x, y];
                 for (int i = 0; i < Regions.Length; i++)
                 {
                     if (currentHeight >= Regions[i].Height)
                     {
-                        GeneratedColourMap[y * MapChunkSize + x] = Regions[i].Colour;
+                        //GeneratedColourMap[y * MapChunkSize + x] = Regions[i].Colour;
                     }
                     else
                     {
@@ -246,12 +242,11 @@ public class MapGenerator : MonoBehaviour
         {
             Lacunarity = 1;
         }
+
         if (Octaves < 0)
         {
             Octaves = 0;
         }
-
-        //FalloffMap = FalloffGenerator.GenerateFalloffMap(MapChunkSize);
     }
 
     struct MapThreadInfo<T>
@@ -279,10 +274,16 @@ public class LODMeshClass
 {
     public GameObject MadeChunk;
     public Mesh MeshRef;
+
     public bool HasRequestedMesh;
     public bool HasMesh;
+    
+    //The LOD that the mesh will be rendered in
     private int LODValue;
+    //Actions used for threading and to update the mesh
     private System.Action UpdateMeshLOD;
+
+    //Reference to the script above, needed for requesting the mesh and generating it
     private MapGenerator MapGenScript;
 
     public LODMeshClass(int LodVar, System.Action UpdateCallbackVar, MapGenerator MapGeneratorScript)
@@ -332,6 +333,6 @@ public class MapDisplayStruct
     public MapDisplayStruct(float[,] heightMap, Color[] colourMap)
     {
         HeightMapValues = heightMap;
-        ColourMapValues = colourMap;
+        //ColourMapValues = colourMap;
     }
 }

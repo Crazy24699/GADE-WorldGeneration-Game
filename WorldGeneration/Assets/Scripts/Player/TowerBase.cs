@@ -8,17 +8,17 @@ public class TowerBase : MonoBehaviour
     [SerializeField] private Slider HealthBar;
     [SerializeField] protected ParticleSystem TakenDamageEffect;
 
-    [SerializeField] protected int MaxHealth;
+    protected int MaxHealth = 20;
     [SerializeField]protected int CurrentHealth;
     [SerializeField] protected int Damage;
 
-    [SerializeField] protected GameObject EnemiesInRange;
+    //[SerializeField] protected GameObject EnemiesInRange;
 
     // Start is called before the first frame update
     void Start()
     {
-        
 
+        CurrentHealth = MaxHealth;
         if(ProgramManager.ProgramManagerInstance.DevMode)
         {
             TowerStartup();
@@ -46,20 +46,24 @@ public class TowerBase : MonoBehaviour
     {
         if ((CurrentHealth > 0 || CurrentHealth <= MaxHealth))
         {
-
             CurrentHealth += HealthChange;
             if (HealthChange < CurrentHealth)
             {
-                ParticleSystem HitEffect = Instantiate(TakenDamageEffect, transform.position, Quaternion.identity);
-                HitEffect.Play();
+                TakeDamageEffect();
                 HealthBar.value = CurrentHealth;
+                
             }
-            return;
         }
-        else if (CurrentHealth <= 0)
+        if (CurrentHealth <= 0)
         {
-            Destroy(this.gameObject);
+            Destroy(this.transform.parent.gameObject);
         }
+    }
+
+    protected virtual void TakeDamageEffect()
+    {
+        ParticleSystem HitEffect = Instantiate(TakenDamageEffect, transform.position, Quaternion.identity);
+        HitEffect.Play();
     }
 
     protected void DetectEnemyUnits()

@@ -7,11 +7,11 @@ public class Chunk : MonoBehaviour
     public const float Scale = 1;
     public GameObject MeshObject;
     public Vector2 Position;
-    public Bounds BoundsVar;
+    public Bounds ChunkBounds;
 
-    public MeshRenderer MeshRendererVar;
-    public MeshFilter MeshFilterVar;
-    public MeshCollider MeshColliderVar;
+    public MeshRenderer MeshRendererRef;
+    public MeshFilter MeshFilterRef;
+    public MeshCollider MeshColliderRef;
 
     public LODInfoClass[] DetailLevels;
     public LODMeshClass[] LodMeshes;
@@ -24,7 +24,7 @@ public class Chunk : MonoBehaviour
 
     [SerializeField]private ChunkInfo ChunkInfoRef;
 
-    public MapDisplayStruct MapDataVar;
+    public MapDisplayStruct MapDataScript;
     public bool MapDataReceived;
     public int PreviousLodIndex = -1;
 
@@ -35,9 +35,9 @@ public class Chunk : MonoBehaviour
 
     public void ApplyMeshData(MeshGenerationData MeshData)
     {
-        MeshFilterVar = GetComponent<MeshFilter>();
+        MeshFilterRef = GetComponent<MeshFilter>();
         Debug.Log(MeshData.BorderVertices[5]);
-        MeshFilterVar.mesh=MeshData.CreateMesh();
+        MeshFilterRef.mesh=MeshData.CreateMesh();
         Debug.Log(MeshData.BorderVertices[5]);
         ChunkInfo Info = GetComponent<ChunkInfo>();
 
@@ -48,17 +48,18 @@ public class Chunk : MonoBehaviour
         Info.BorderVertices = MeshData.BorderVertices;
     }
 
-    public void SetValues(Vector2 CoordVar, int SizeVar, LODInfoClass[] DetailLevelsVar, Transform ParentVar, Material MaterialVar)
+    public void SetValues(Vector2 ChunkCord, int ChunkSize, LODInfoClass[] DetailLevels, Transform ParentObject, Material MaterialRef)
     {
         //Debug.Log("Live");
 
         TextureGenScript = new TextureGenerator();
 
-        DetailLevels = DetailLevelsVar;
+        this.DetailLevels = DetailLevels;
         MapGeneratorScript = GameObject.FindObjectOfType<MapGenerator>();
         //GenerationData=MapGeneratorScript.mesh
-        Position = CoordVar * SizeVar;
-        BoundsVar = new Bounds(Position, Vector2.one * SizeVar);
+
+        Position = ChunkCord * ChunkSize;
+        ChunkBounds = new Bounds(Position, Vector2.one * ChunkSize);
         Vector3 PositionV3 = new Vector3(Position.x, 0, Position.y);
 
         MeshObject = this.gameObject;
@@ -68,21 +69,22 @@ public class Chunk : MonoBehaviour
 
         ChunkInfoRef = GetComponent<ChunkInfo>();
 
-        MeshRendererVar = MeshObject.AddComponent<MeshRenderer>();
-        MeshFilterVar = MeshObject.AddComponent<MeshFilter>();
-        MeshColliderVar = MeshObject.AddComponent<MeshCollider>();
-        MeshRendererVar.material = MaterialVar;
+        MeshRendererRef = MeshObject.AddComponent<MeshRenderer>();
+        MeshFilterRef = MeshObject.AddComponent<MeshFilter>();
+        MeshColliderRef = MeshObject.AddComponent<MeshCollider>();
+
+        MeshRendererRef.material = MaterialRef;
 
         MeshObject.transform.position = PositionV3 * Scale;
-        MeshObject.transform.parent = ParentVar;
+        MeshObject.transform.parent = ParentObject;
         MeshObject.transform.localScale = Vector3.one * Scale;
         SetVisible(false);
 
-        LodMeshes = new LODMeshClass[DetailLevels.Length];
-        for (int i = 0; i < DetailLevels.Length; i++)
+        LodMeshes = new LODMeshClass[this.DetailLevels.Length];
+        for (int i = 0; i < this.DetailLevels.Length; i++)
         {
-            LodMeshes[i] = new LODMeshClass(DetailLevels[i].Lod, UpdateTerrainChunk, MapGeneratorScript);
-            if (DetailLevels[i].UseForCollider)
+            LodMeshes[i] = new LODMeshClass(this.DetailLevels[i].Lod, UpdateTerrainChunk, MapGeneratorScript);
+            if (this.DetailLevels[i].UseForCollider)
             {
                 CollisionLodMesh = LodMeshes[i];
             }
@@ -99,11 +101,11 @@ public class Chunk : MonoBehaviour
 
     void OnMapDataReceived(MapDisplayStruct MapDispalyDataRef)
     {
-        MapDataVar = MapDispalyDataRef;
+        MapDataScript = MapDispalyDataRef;
         MapDataReceived = true;
 
-        Texture2D TextureVar = TextureGenerator.ColourMapTextureGen(MapDataVar.ColourMapValues, MapGenerator.MapChunkSize, MapGenerator.MapChunkSize);
-        MeshRendererVar.material.mainTexture = TextureVar;
+        //Texture2D TextureVar = TextureGenerator.ColourMapTextureGen(MapDataScript.ColourMapValues, MapGenerator.MapChunkSize, MapGenerator.MapChunkSize);
+        //MeshRendererRef.material.mainTexture = TextureVar;
 
         UpdateTerrainChunk();
         
@@ -151,7 +153,7 @@ public class Chunk : MonoBehaviour
         //    //}
         //    //VertexList[i].y = 0;
         //}
-        MeshFilterVar.sharedMesh.vertices = ChunkInfoRef.AllVertices;
+        MeshFilterRef.sharedMesh.vertices = ChunkInfoRef.AllVertices;
     }
 
     public void UpdateTerrainChunk()
@@ -171,12 +173,12 @@ public class Chunk : MonoBehaviour
                 if (LODMeshVar.HasMesh)
                 {
                     PreviousLodIndex = LodIndexVar;
-                    MeshFilterVar.mesh = LODMeshVar.MeshRef;
+                    MeshFilterRef.mesh = LODMeshVar.MeshRef;
                 }
 
                 else if (!LODMeshVar.HasRequestedMesh)
                 {
-                    LODMeshVar.RequestMesh(MapDataVar);
+                    LODMeshVar.RequestMesh(MapDataScript);
                     LODMeshVar.MadeChunk = this.gameObject;
                     
                 }
@@ -190,7 +192,7 @@ public class Chunk : MonoBehaviour
             {
                 if (CollisionLodMesh.HasMesh)
                 {
-                    MeshColliderVar.sharedMesh = CollisionLodMesh.MeshRef;
+                    MeshColliderRef.sharedMesh = CollisionLodMesh.MeshRef;
                 }
                 else if (!CollisionLodMesh.HasRequestedMesh)
                 {
@@ -204,7 +206,7 @@ public class Chunk : MonoBehaviour
         {
             Debug.Log("hell make everyone bleed");
         }
-        this.GetComponent<MeshCollider>().sharedMesh = MeshFilterVar.sharedMesh;
+        this.GetComponent<MeshCollider>().sharedMesh = MeshFilterRef.sharedMesh;
 
         SetVisible(true);
     }

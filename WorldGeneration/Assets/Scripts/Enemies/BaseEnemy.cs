@@ -41,7 +41,13 @@ public class BaseEnemy : MonoBehaviour
     protected void Die()
     {
         ProgramManager.ProgramManagerInstance.EnemyCount.Remove(this.gameObject);
+        AlotMoney();
         Destroy(this.gameObject);
+    }
+
+    protected virtual void AlotMoney()
+    {
+
     }
 
     protected void TakenDamage()

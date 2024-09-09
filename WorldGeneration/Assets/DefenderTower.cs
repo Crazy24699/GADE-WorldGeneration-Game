@@ -3,20 +3,24 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class DefenderTower : MonoBehaviour
+public class DefenderTower : TowerBase
 {
 
     [SerializeField] private GameObject RotateObject;
     [SerializeField] private GameObject FirePoint;
+    [SerializeField] private Renderer TowerMeshRender;
     [SerializeField] private LayerMask EnemyLayer;
 
+
+    [SerializeField] private Material DamageMat;
+    [SerializeField] private Material NormalMat;
+    [SerializeField]private Material[] TowerMaterials;
     public GameObject Projectile;
 
     private bool CanShoot = true;
 
     public float FireRate = 0.95f;  
-    public int Damage = 10;  
-    public float MaxShootDistace = 100f; 
+
 
     private float ShotCooldownTime = 0f; 
 
@@ -25,11 +29,16 @@ public class DefenderTower : MonoBehaviour
 
     private void Start()
     {
-        
+        MaxHealth = 40;
+        TowerStartup();
+        NormalMat = TowerMeshRender.materials[0];
+        TowerMaterials = TowerMeshRender.materials;
     }
 
     private void Update()
     {
+        
+        //TowerMeshRender.materials = TowerMaterials;
 
         Debug.DrawRay(FirePoint.transform.position, FirePoint.transform.forward*3, Color.blue);
         for (int i = 0; i < TargetList.Count; i++)
@@ -37,7 +46,6 @@ public class DefenderTower : MonoBehaviour
             //Debug.Log(TargetList[i].name);
             if (TargetList[i]==null)
             {
-                Debug.Log("fuck");
                 TargetList.RemoveAt(i);
             }
         }
@@ -55,12 +63,30 @@ public class DefenderTower : MonoBehaviour
             // Check for player input and shoot if the cooldown has elapsed
             if (ShotCooldownTime >= FireRate)
             {
-                Debug.Log("aaaaa");
+
                 FireCannon();
                 ShotCooldownTime = 0f; // Reset cooldown timer
             }
 
         }
+    }
+
+    protected override void TakeDamageEffect()
+    {
+        base.TakeDamageEffect();
+
+        StartCoroutine(FlashRed());
+    }
+
+    private IEnumerator FlashRed()
+    {
+        TowerMaterials[0] = DamageMat;
+        TowerMeshRender.materials = TowerMaterials;
+        yield return new WaitForSeconds(0.25f);
+        TowerMaterials[0] = NormalMat;
+        TowerMeshRender.materials = TowerMaterials;
+        //Debug.Log("her");
+
     }
 
     private void FireCannon()

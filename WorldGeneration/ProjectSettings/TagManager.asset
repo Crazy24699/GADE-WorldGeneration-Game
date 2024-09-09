@@ -9,6 +9,9 @@ TagManager:
   - Ground
   - TowerArea
   - Pathway
+  - DefenderTower
+  - Projectile
+  - PlayerUI
   layers:
   - Default
   - TransparentFX

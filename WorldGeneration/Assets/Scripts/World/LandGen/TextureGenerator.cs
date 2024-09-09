@@ -5,11 +5,11 @@ public class TextureGenerator
     public static Texture2D ColourMapTextureGen(Color[] ColourMap, int TextureWidth, int TextureHeight)
     {
         Texture2D Texture2DRef = new Texture2D(TextureWidth, TextureHeight);
-        Texture2DRef.filterMode = FilterMode.Point;
-        Texture2DRef.wrapMode = TextureWrapMode.Clamp;
+        //Texture2DRef.filterMode = FilterMode.Point;
+        //Texture2DRef.wrapMode = TextureWrapMode.Clamp;
 
-        Texture2DRef.SetPixels(ColourMap);
-        Texture2DRef.Apply();
+        //Texture2DRef.SetPixels(ColourMap);
+        //Texture2DRef.Apply();
 
         return Texture2DRef;
     }
