@@ -56,7 +56,8 @@ public class TowerBase : MonoBehaviour
         }
         if (CurrentHealth <= 0)
         {
-            Destroy(this.transform.parent.gameObject);
+            Die();
+            
         }
     }
 
@@ -74,6 +75,11 @@ public class TowerBase : MonoBehaviour
     protected virtual void Attack()
     {
 
+    }
+
+    protected virtual void Die()
+    {
+        Destroy(this.transform.parent.gameObject);
     }
 
 }

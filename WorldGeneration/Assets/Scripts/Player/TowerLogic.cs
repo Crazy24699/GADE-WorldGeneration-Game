@@ -1,27 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class TowerLogic : TowerBase
 {
+    public PlayerUI PlayerUIScript;
 
-
-    public void DetermineAreaClearance(bool AreaClear)
+    protected override void Die()
     {
-        switch (AreaClear)
+        CurrentHealth = 0;
+        PlayerUIScript.Defeat();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.V))
         {
-            case true:
-                TowerStartup();
-                break;
-            
-            case false:
-                Destroy(this.gameObject);
-                break;
+            HandleHealth(-CurrentHealth);
         }
     }
 
-    
 
-    
+
 }

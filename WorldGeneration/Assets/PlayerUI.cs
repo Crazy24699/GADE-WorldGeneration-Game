@@ -6,10 +6,12 @@ using UnityEngine.SceneManagement;
 public class PlayerUI : MonoBehaviour
 {
     public GameObject PausePanel;
+    public GameObject DefeatPanel;
 
     private void Start()
     {
         PausePanel.SetActive(false);
+        DefeatPanel.SetActive(false);
     }
 
     public void Pause()
@@ -30,4 +32,22 @@ public class PlayerUI : MonoBehaviour
         SceneManager.LoadScene("Main Menu");
         Time.timeScale = 1.0f;
     }
+
+    public void Defeat()
+    {
+        Time.timeScale = 0.0f;
+        DefeatPanel.SetActive(true);
+    }
+
+    public void Quit()
+    {
+        Application.Quit();
+    }
+
+    public void Retry()
+    {
+        Time.timeScale = 1.0f;
+        SceneManager.LoadScene("Main Menu");
+    }
+
 }
