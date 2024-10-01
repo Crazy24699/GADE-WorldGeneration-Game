@@ -11,6 +11,10 @@ public class EnemySpawnerLogic : MonoBehaviour
     [SerializeField] private GameObject[] Spawns;
     //[SerializeField] private List<bool> ReadyPaths;
     private HashSet<PathGenerator> MadePaths = new HashSet<PathGenerator>();
+    private GameObject LastSpawn;
+
+    //remove this
+    public bool Spawn = true;
 
     private int CurrentSpawner = 0;
 
@@ -21,6 +25,7 @@ public class EnemySpawnerLogic : MonoBehaviour
 
     private void HandleWaves()
     {
+        if(!Spawn) { return; }
         StartCoroutine(SpawnEnemies());
     }
 

@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Restored.unity
     guid: c997326e948898647bbae103cf507f1b
   - enabled: 1
-    path: Assets/Scenes/GenerationScene.unity
+    path: Assets/Scenes/Depricated.unity
     guid: d55c1e092948f044bb92071e046a92c8
   - enabled: 1
     path: Assets/Scenes/Matt Scene.unity

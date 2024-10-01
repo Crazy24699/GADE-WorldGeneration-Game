@@ -43,12 +43,15 @@ public class PathGenerator : MonoBehaviour
     public int PathResolution;
     public int Resolution = 20;
 
+    public bool Generated = false;
+
     public Transform[] ControlPointTransforms;
 
     public LayerMask GroundLayer;
 
     public float Width;
     [SerializeField]private float CastingDistance;
+    public float HeightDiff;
 
     public Material MaterialRef;
 
@@ -60,7 +63,11 @@ public class PathGenerator : MonoBehaviour
 
     private void Update()
     {
-
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            FindBottom();
+        }
+        if(!Generated) { return; }
 
         if (Input.GetKeyDown(KeyCode.G))
         {
@@ -68,6 +75,27 @@ public class PathGenerator : MonoBehaviour
         }
     }
 
+    private void FindBottom()
+    {
+        Vector3[] NewCords = MeshFilterRef.mesh.vertices;
+        for (int i = 0; i < NewCords.Length; i++)
+        {
+            Ray Ray = new Ray(NewCords[i], Vector3.down);  // Create a downward ray
+            RaycastHit HitInfo;
+
+            if (Physics.Raycast(Ray, out HitInfo, 20, GroundLayer))
+            {
+                
+                NewCords[i] = new Vector3(HitInfo.point.x, HitInfo.point.y+HeightDiff, HitInfo.point.z);
+                Debug.Log("Hit an object on the target layer: AAAAAAAAAAAAAAAAAAAAAAAS" + HitInfo.collider.gameObject.name);
+                //Instantiate(Visualiser, HitInfo.point, Quaternion.identity);
+                // Perform any logic when a collision with the specified layer occurs
+            }
+
+        }
+        MeshFilterRef.mesh.vertices = NewCords;
+        MeshFilterRef.mesh.RecalculateNormals();
+    }
 
     public void HandleGeneration()
     {
