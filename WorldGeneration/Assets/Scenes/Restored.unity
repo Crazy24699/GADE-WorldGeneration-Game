@@ -523,11 +523,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EnemyOptions:
   - {fileID: 3963696320338096182, guid: afcc29b7c852c5145b6ca5443efc6301, type: 3}
+  - {fileID: 7518473881083515456, guid: 3a3cd327d1bd5d74286173846773cb97, type: 3}
   Spawns:
   - {fileID: 1722235546}
   - {fileID: 385682077}
   - {fileID: 43556796}
-  Spawn: 0
+  LastSpawn: {fileID: 0}
+  Spawn: 1
+  AliveEnemies: 0
+  CurrentSpawnNum: 0
 --- !u!4 &239845597
 Transform:
   m_ObjectHideFlags: 0
