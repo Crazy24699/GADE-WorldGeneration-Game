@@ -521,14 +521,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c129556aeeccff441ad99f5862157962, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnemyOptions:
-  - {fileID: 3963696320338096182, guid: afcc29b7c852c5145b6ca5443efc6301, type: 3}
-  - {fileID: 7518473881083515456, guid: 3a3cd327d1bd5d74286173846773cb97, type: 3}
+  EnemyOption: []
   Spawns:
   - {fileID: 1722235546}
   - {fileID: 385682077}
   - {fileID: 43556796}
   LastSpawn: {fileID: 0}
+  EnemyOptions: []
+  WaveChangeFunction:
+  - WaveNumber: 1
+    WaveCostMultiplier: 0
+    EnemyObject: {fileID: 0}
+    PrepTimeChange: 0
+  - WaveNumber: 2
+    WaveCostMultiplier: 0
+    EnemyObject: {fileID: 0}
+    PrepTimeChange: 0
+  - WaveNumber: 5
+    WaveCostMultiplier: 0
+    EnemyObject: {fileID: 0}
+    PrepTimeChange: 0
   Spawn: 1
   AliveEnemies: 0
   CurrentSpawnNum: 0
@@ -1629,6 +1641,15 @@ MonoBehaviour:
   WalkableLayers:
     serializedVersion: 2
     m_Bits: 256
+  WaveBeaten:
+    m_PersistentCalls:
+      m_Calls: []
+  EndGame:
+    m_PersistentCalls:
+      m_Calls: []
+  StartWave:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &1232202110
 Transform:
   m_ObjectHideFlags: 0

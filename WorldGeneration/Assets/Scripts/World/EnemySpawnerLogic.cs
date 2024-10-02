@@ -7,17 +7,28 @@ using UnityEngine.Events;
 public class EnemySpawnerLogic : MonoBehaviour
 {
 
-    [SerializeField] private GameObject[] EnemyOptions;
+    [SerializeField] private GameObject[] EnemyOption;
     [SerializeField] private GameObject[] Spawns;
     //[SerializeField] private List<bool> ReadyPaths;
-    private HashSet<PathGenerator> MadePaths = new HashSet<PathGenerator>();
     [SerializeField]private GameObject LastSpawn;
+
+
+    //Scripts   
+    private HashSet<PathGenerator> MadePaths = new HashSet<PathGenerator>();
+    public SpawnEnemyObject[] EnemyOptions;
+    public WaveFunctionality[] WaveChangeFunction;
+
 
     //remove this
     public bool Spawn = true;
+    private bool ProgressiveDifficulty;
+    private bool WaveBeaten;
+    
 
     [SerializeField]private int AliveEnemies = 0;
     public int CurrentSpawnNum;
+    private int SpawnCostAvaliable;
+    private int CurrentWave;
 
     private void Start()
     {
@@ -60,6 +71,14 @@ public class EnemySpawnerLogic : MonoBehaviour
 
     }
 
+    private void CheckWaveChange()
+    {
+        if (CurrentWave == 5) 
+        {
+
+        }
+    }
+
     public void HandleSpawningState(bool SpawnEnemies)
     {
         switch (SpawnEnemies)
@@ -100,7 +119,7 @@ public class EnemySpawnerLogic : MonoBehaviour
         {
             default:
             case "Normal":
-                ChosenEnemy = EnemyOptions[0].gameObject;
+                ChosenEnemy = EnemyOption[0].gameObject;
                 break;
         }
         EnemyCreated = Instantiate(ChosenEnemy, Spawns[SpawnLocation].transform.position + new Vector3(2.5f, 1.5f, 0), Quaternion.identity);
@@ -113,5 +132,27 @@ public class EnemySpawnerLogic : MonoBehaviour
         AliveEnemies++;
         LastSpawn = Spawns[SpawnLocation];
     }
+
+}
+
+
+[System.Serializable]
+public class SpawnEnemyObject
+{
+    [SerializeField] private int BaseCost;
+    [SerializeField] private GameObject EnemyObject;
+    [SerializeField] private int Living;
+}
+
+[System.Serializable]
+public class WaveFunctionality
+{
+
+    [SerializeField] private int WaveNumber;
+    [SerializeField] private int WaveCostMultiplier;
+
+    [SerializeField] private GameObject EnemyObject;
+    [SerializeField] private float PrepTimeChange;
+
 
 }

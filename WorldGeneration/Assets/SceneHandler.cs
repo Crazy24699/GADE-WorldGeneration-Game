@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class SceneHandler : MonoBehaviour
 {
@@ -11,8 +12,13 @@ public class SceneHandler : MonoBehaviour
     public EnemySpawnerLogic SpawnerScript;
 
     public bool PathsGenerated = false;
+    private bool GameOver = false;
 
     public LayerMask WalkableLayers;
+
+    public UnityEvent WaveBeaten;
+    public UnityEvent EndGame;
+    public UnityEvent StartWave;
 
     // Start is called before the first frame update
     void Start()
@@ -23,6 +29,8 @@ public class SceneHandler : MonoBehaviour
 
         SpawnerScript = FindObjectOfType<EnemySpawnerLogic>();
         InvokeRepeating(nameof(StartSpawning), 0.0f, .025f);
+
+        EndGame.AddListener(() => HandleGameOver());
     }
 
     private IEnumerator RunWorldSetup()
@@ -37,6 +45,12 @@ public class SceneHandler : MonoBehaviour
         yield return new WaitForSeconds(0.025f);
         //ProgramManager.ProgramManagerInstance.SpawnWave.Invoke();
 
+    }
+
+    private void HandleGameOver()
+    {
+        GameOver = true;
+        Time.timeScale = 0.0f;
     }
 
     private void StartSpawning()

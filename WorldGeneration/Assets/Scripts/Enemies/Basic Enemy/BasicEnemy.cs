@@ -12,7 +12,7 @@ public class BasicEnemy : BaseEnemy
     [SerializeField] public Transform ThrowPoint;
     [SerializeField] private NavMeshAgent AgentRef;
 
-
+    public int EnemyCost = 0;
     public int Damage = 5;
 
     private float ShotCooldownTime = 0f;
@@ -118,6 +118,10 @@ public class BasicEnemy : BaseEnemy
         AgentRef.SetDestination(FinalTarget.transform.position);
         CurrentTarget = FinalTarget;
         StartupRan = true;
+        if (EnemyCost == 0)
+        {
+            Debug.LogError("Cost not set        " + this.gameObject.name);
+        }
     }
 
     private void Update()
