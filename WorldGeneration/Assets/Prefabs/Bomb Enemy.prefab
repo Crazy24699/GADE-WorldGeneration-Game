@@ -732,12 +732,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CurrentHealth: 0
   TakenDamageEffect: {fileID: 5269410802817535968, guid: 1c7b93a4dc4d0d842acb62a5f9cbae16, type: 3}
+  EnemyCost: 0
+  KillReward: 5
+  Damage: 1
   FinalTarget: {fileID: 0}
   CurrentTarget: {fileID: 0}
   ThrowObject: {fileID: 3956548075952407274, guid: 2e303d04b1017414d82aead321d7aaff, type: 3}
   ThrowPoint: {fileID: 4457112575379298284}
   AgentRef: {fileID: 0}
-  Damage: 1
   FireRate: 2
   MaxAttackDistance: 15
   LookSpeed: 0

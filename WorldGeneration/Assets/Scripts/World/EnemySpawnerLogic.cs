@@ -15,7 +15,6 @@ public class EnemySpawnerLogic : MonoBehaviour
 
     //Scripts   
     private HashSet<PathGenerator> MadePaths = new HashSet<PathGenerator>();
-    public SpawnEnemyObject[] EnemyOptions;
     public WaveFunctionality[] WaveChangeFunction;
 
 
@@ -25,10 +24,13 @@ public class EnemySpawnerLogic : MonoBehaviour
     private bool WaveBeaten;
     
 
-    [SerializeField]private int AliveEnemies = 0;
-    public int CurrentSpawnNum;
-    private int SpawnCostAvaliable;
-    private int CurrentWave;
+    [SerializeField] private int AliveEnemies = 0;
+    [SerializeField] private int SpawnCostAvaliable;
+    [SerializeField] private int WaveSpawningCost;
+    [SerializeField] public int CurrentSpawnNum;
+    [SerializeField] private int EnemySpawnCap;
+
+    [SerializeField] private int CurrentWave;
 
     private void Start()
     {
@@ -61,7 +63,7 @@ public class EnemySpawnerLogic : MonoBehaviour
 
         }
 
-        if (CurrentSpawnNum > 2 && AliveEnemies <= 21)
+        if (CurrentSpawnNum > 2 && AliveEnemies <= EnemySpawnCap)
         {
             CurrentSpawnNum = 0;
         }
@@ -110,6 +112,8 @@ public class EnemySpawnerLogic : MonoBehaviour
         }
     }
 
+
+
     private void CreateEnemy(string EnemyType, int SpawnLocation)
     {
         Debug.Log("monseter     "+SpawnLocation);
@@ -136,13 +140,6 @@ public class EnemySpawnerLogic : MonoBehaviour
 }
 
 
-[System.Serializable]
-public class SpawnEnemyObject
-{
-    [SerializeField] private int BaseCost;
-    [SerializeField] private GameObject EnemyObject;
-    [SerializeField] private int Living;
-}
 
 [System.Serializable]
 public class WaveFunctionality

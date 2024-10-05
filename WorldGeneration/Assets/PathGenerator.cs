@@ -260,4 +260,5 @@ public class PathGenerator : MonoBehaviour
             (-p0 + 3f * p1 - 3f * p2 + p3) * (t * t * t)
         );
     }
+
 }

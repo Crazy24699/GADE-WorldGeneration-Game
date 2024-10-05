@@ -11,8 +11,17 @@ public class BaseEnemy : MonoBehaviour
     protected float MoveSpeed;
     [SerializeField] protected ParticleSystem TakenDamageEffect;
 
+    public int EnemyCost = 0;
+    public int KillReward;
+    public int Damage = 5;
+
     public virtual void Startup()
     {
+        if (KillReward <= 0)
+        {
+            Debug.LogError("Killreward not set");
+            KillReward = 1;
+        }
         HandleHealth(MaxHealth);
 
         if (MaxHealth <= 0)

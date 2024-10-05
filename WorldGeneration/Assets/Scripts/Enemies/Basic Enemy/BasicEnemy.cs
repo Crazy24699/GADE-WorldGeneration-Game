@@ -12,8 +12,7 @@ public class BasicEnemy : BaseEnemy
     [SerializeField] public Transform ThrowPoint;
     [SerializeField] private NavMeshAgent AgentRef;
 
-    public int EnemyCost = 0;
-    public int Damage = 5;
+
 
     private float ShotCooldownTime = 0f;
     public float FireRate = 0.95f;
@@ -32,6 +31,7 @@ public class BasicEnemy : BaseEnemy
 
     public override void Startup()
     {
+        KillReward = 5;
         base.Startup();
         //Debug.Log("startup");
         if (MaxAttackDistance <= 0) { MaxAttackDistance = 19.75f; }
