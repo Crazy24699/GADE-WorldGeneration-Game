@@ -7,7 +7,8 @@ public class PickNextEnemy : MonoBehaviour
     [SerializeField] public SpawnEnemyObject[] EnemyOptions;
     private SpawnEnemyObject NextSpawnEnemy;
     
-
+    //this is so i have soemthing to commit.
+    //The work was done on tartarus. The whole wave system seems to work perfectly
     public void HandleEnemyCost()
     {
 
