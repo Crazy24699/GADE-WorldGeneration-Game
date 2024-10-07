@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BaseEnemy : MonoBehaviour
 {
+    public EnemySpawnerLogic ParentSpawner;
+    [HideInInspector] public EnemyObject EnemyType;
 
     protected int MaxHealth = 20;
     [SerializeField]public int CurrentHealth;
@@ -17,6 +19,7 @@ public class BaseEnemy : MonoBehaviour
 
     public virtual void Startup()
     {
+        
         if (KillReward <= 0)
         {
             Debug.LogError("Killreward not set");
@@ -47,9 +50,17 @@ public class BaseEnemy : MonoBehaviour
             Die();
         }
     }
+
+    public void PopulateValues(EnemyObject SpawnedType)
+    {
+        EnemyType = SpawnedType.SpawnedEnemyObject();
+    }
+
+
     protected void Die()
     {
         ProgramManager.ProgramManagerInstance.EnemyCount.Remove(this.gameObject);
+        ParentSpawner.UpdateEnemies(EnemyType);
         AlotMoney();
         Destroy(this.gameObject);
     }

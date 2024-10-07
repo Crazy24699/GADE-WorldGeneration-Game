@@ -522,8 +522,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c129556aeeccff441ad99f5862157962, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnemyOption:
-  - {fileID: 3963696320338096182, guid: afcc29b7c852c5145b6ca5443efc6301, type: 3}
+  EnemyOptions:
+  - EnemyPrefabObject: {fileID: 3963696320338096182, guid: afcc29b7c852c5145b6ca5443efc6301, type: 3}
+    BaseCost: 2
+    CurrentSpawnCost: 0
+    TypeAlive: 0
+    MaxAliveType: 10
+    EnemySpawnedCount: 0
+    TestValue: 0
+    CanSpawn: 1
+    Alive: 0
+    EnemyType: t1
+  - EnemyPrefabObject: {fileID: 7518473881083515456, guid: 3a3cd327d1bd5d74286173846773cb97, type: 3}
+    BaseCost: 5
+    CurrentSpawnCost: 0
+    TypeAlive: 0
+    MaxAliveType: 6
+    EnemySpawnedCount: 0
+    TestValue: 0
+    CanSpawn: 1
+    Alive: 0
+    EnemyType: t2
+  NextSpawnEnemy:
+    EnemyPrefabObject: {fileID: 0}
+    BaseCost: 0
+    CurrentSpawnCost: 0
+    TypeAlive: 0
+    MaxAliveType: 0
+    EnemySpawnedCount: 0
+    TestValue: 0
+    CanSpawn: 0
+    Alive: 0
+    EnemyType: 
   Spawns:
   - {fileID: 1722235546}
   - {fileID: 385682077}
@@ -543,12 +573,15 @@ MonoBehaviour:
     EnemyObject: {fileID: 0}
     PrepTimeChange: 0
   Spawn: 1
-  AliveEnemies: 0
-  SpawnCostAvaliable: 30
-  WaveSpawningCost: 0
-  CurrentSpawnNum: 0
-  EnemySpawnCap: 21
+  EnemiesToSpawn: 21
+  RemainingEnemies: 0
+  LivingEnemies: 0
+  MaxLivingEnemies: 21
+  SpawnCostAvaliable: 0
+  WaveSpawnCost: 50
   CurrentWave: 0
+  MaxDownTime: 5
+  CurrentDownTime: 0
 --- !u!4 &239845597
 Transform:
   m_ObjectHideFlags: 0
@@ -579,7 +612,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8dc9c614a7457ac449d77fb9f7b74dfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnemyOptions: []
 --- !u!1 &276230718
 GameObject:
   m_ObjectHideFlags: 0
@@ -1470,6 +1502,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1232202110}
   - component: {fileID: 1232202109}
+  - component: {fileID: 1232202111}
   m_Layer: 0
   m_Name: Scene Handler
   m_TagString: Untagged
@@ -1518,6 +1551,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1232202111
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1232202108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a55ff8e72d17e814a98d72c97a05ac06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EnemyOptions: []
 --- !u!114 &1282261106 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7125964252385811666, guid: da751fe56f11ec449b887327772576d3, type: 3}

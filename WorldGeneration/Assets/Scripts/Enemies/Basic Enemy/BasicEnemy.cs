@@ -31,6 +31,8 @@ public class BasicEnemy : BaseEnemy
 
     public override void Startup()
     {
+        AgentRef = GetComponent<NavMeshAgent>();
+        AgentRef.enabled = true;
         KillReward = 5;
         base.Startup();
         //Debug.Log("startup");

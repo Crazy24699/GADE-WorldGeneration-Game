@@ -730,9 +730,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b46b418f641a6bb46b2074250e538218, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ParentSpawner: {fileID: 0}
+  EnemyType:
+    EnemyPrefabObject: {fileID: 0}
+    BaseCost: 0
+    CurrentSpawnCost: 0
+    TypeAlive: 0
+    MaxAliveType: 0
+    EnemySpawnedCount: 0
+    TestValue: 0
+    CanSpawn: 0
+    Alive: 0
+    EnemyType: 
   CurrentHealth: 0
   TakenDamageEffect: {fileID: 5269410802817535968, guid: 1c7b93a4dc4d0d842acb62a5f9cbae16, type: 3}
-  EnemyCost: 0
+  EnemyCost: 5
   KillReward: 5
   Damage: 1
   FinalTarget: {fileID: 0}
