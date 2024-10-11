@@ -4557,7 +4557,7 @@ GameObject:
   - component: {fileID: 1177295346120942593}
   - component: {fileID: 6304460591778897169}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: 'Body '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4664,10 +4664,10 @@ MonoBehaviour:
     CanSpawn: 0
     Alive: 0
     EnemyType: 
-  CurrentHealth: 0
-  TakenDamageEffect: {fileID: 0}
+  CurrentHealth: 50
+  TakenDamageEffect: {fileID: 5269410802817535968, guid: 1c7b93a4dc4d0d842acb62a5f9cbae16, type: 3}
   EnemyCost: 0
-  KillReward: 0
+  KillReward: 60
   Damage: 5
 --- !u!195 &3417354567846667745
 NavMeshAgent:
