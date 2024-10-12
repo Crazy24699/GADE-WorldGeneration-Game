@@ -698,8 +698,53 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7518473881083515456, guid: 3a3cd327d1bd5d74286173846773cb97, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 375720485}
   m_SourcePrefab: {fileID: 100100000, guid: 3a3cd327d1bd5d74286173846773cb97, type: 3}
+--- !u!1 &375720484 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7518473881083515456, guid: 3a3cd327d1bd5d74286173846773cb97, type: 3}
+  m_PrefabInstance: {fileID: 375720483}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &375720485
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 375720484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46fde60d2c4873c4883cfaacd87f617c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ParentSpawner: {fileID: 0}
+  EnemyType:
+    EnemyPrefabObject: {fileID: 0}
+    BaseCost: 0
+    CurrentSpawnCost: 0
+    TypeAlive: 0
+    MaxAliveType: 0
+    EnemySpawnedCount: 0
+    TestValue: 0
+    CanSpawn: 0
+    Alive: 0
+    EnemyType: 
+  CurrentHealth: 0
+  TakenDamageEffect: {fileID: 0}
+  EnemyCost: 0
+  KillReward: 0
+  Damage: 5
+  FinalTarget: {fileID: 0}
+  CurrentTarget: {fileID: 0}
+  ThrowObject: {fileID: 0}
+  ThrowPoint: {fileID: 0}
+  AgentRef: {fileID: 0}
+  FireRate: 0.95
+  MaxAttackDistance: 0
+  LookSpeed: 0
 --- !u!1 &385682077
 GameObject:
   m_ObjectHideFlags: 0

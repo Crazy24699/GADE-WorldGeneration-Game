@@ -41,29 +41,6 @@ public class BasicEnemy : BaseEnemy
         StartCoroutine(AdditionalStartup());
     }
 
-    private void FindNearestTower()
-    {
-        //PlayerTowers = GameObject.FindGameObjectsWithTag("PlayerTower");
-        //float MinDistance = 0;
-
-        //foreach (var Tower in PlayerTowers)
-        //{
-        //    float TowerDistance = Vector3.Distance(transform.position, Tower.transform.position);
-        //    TowerDistance = Mathf.Abs(TowerDistance);
-        //    if (MinDistance == 0)
-        //    {
-        //        MinDistance = TowerDistance;
-        //        TowerTarget = Tower;
-        //    }
-        //    if (TowerDistance < MinDistance)
-        //    {
-        //        TowerTarget = Tower;
-        //    }
-        //}
-
-
-    }
-
 
     private void AttackTower()
     {
@@ -106,7 +83,7 @@ public class BasicEnemy : BaseEnemy
     protected override void AlotMoney()
     {
         Debug.Log("aaaaaaaaaaaaa");
-        FindObjectOfType<PlayerHandler>().HandleMoney(+10);
+        FindObjectOfType<PlayerHandler>().HandleMoney(KillReward);
     }
 
     public IEnumerator AdditionalStartup()
@@ -114,7 +91,6 @@ public class BasicEnemy : BaseEnemy
         yield return new WaitForSeconds(0.25f);
         AgentRef = GetComponent<NavMeshAgent>();
         AgentRef.enabled = true;
-        FindNearestTower();
 
         yield return new WaitForSeconds(0.55f);
         AgentRef.SetDestination(FinalTarget.transform.position);
