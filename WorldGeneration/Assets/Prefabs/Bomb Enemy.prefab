@@ -555,6 +555,7 @@ GameObject:
   - component: {fileID: 6656025193100275148}
   - component: {fileID: 4831751707515481396}
   - component: {fileID: 2499766493183596918}
+  - component: {fileID: 8057852516711077690}
   m_Layer: 9
   m_Name: Bomb Enemy
   m_TagString: Enemy AI
@@ -687,6 +688,43 @@ MonoBehaviour:
   AgentRef: {fileID: 0}
   FireRate: 2
   MaxAttackDistance: 15
+  LookSpeed: 0
+--- !u!114 &8057852516711077690
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7518473881083515456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46fde60d2c4873c4883cfaacd87f617c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ParentSpawner: {fileID: 0}
+  EnemyType:
+    EnemyPrefabObject: {fileID: 0}
+    BaseCost: 0
+    CurrentSpawnCost: 0
+    TypeAlive: 0
+    MaxAliveType: 0
+    EnemySpawnedCount: 0
+    TestValue: 0
+    CanSpawn: 0
+    Alive: 0
+    EnemyType: 
+  CurrentHealth: 0
+  TakenDamageEffect: {fileID: 0}
+  EnemyCost: 0
+  KillReward: 0
+  Damage: 5
+  FinalTarget: {fileID: 0}
+  CurrentTarget: {fileID: 0}
+  ThrowObject: {fileID: 0}
+  ThrowPoint: {fileID: 0}
+  AgentRef: {fileID: 0}
+  FireRate: 0.95
+  MaxAttackDistance: 0
   LookSpeed: 0
 --- !u!1 &7527280581623714450
 GameObject:

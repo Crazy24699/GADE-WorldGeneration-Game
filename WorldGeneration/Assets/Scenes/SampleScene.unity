@@ -590,6 +590,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 187983787}
   m_CullTransparentMesh: 1
+--- !u!1 &194228512
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 194228513}
+  m_Layer: 0
+  m_Name: FirePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &194228513
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 194228512}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.000000029802319, y: -0.16558135, z: -0.000000014901159, w: 0.98619616}
+  m_LocalPosition: {x: -0.012, y: 0, z: 0.0754}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6209370217870389564}
+  m_LocalEulerAnglesHint: {x: 0, y: -19.062, z: 0}
 --- !u!1 &272127204
 GameObject:
   m_ObjectHideFlags: 0
@@ -1964,6 +1995,62 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 968184194}
   m_CullTransparentMesh: 1
+--- !u!1 &1025596766
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1025596768}
+  - component: {fileID: 1025596767}
+  m_Layer: 0
+  m_Name: 'Mortar '
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1025596767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1025596766}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9999af95b5ffa8840b1ce8b02330acf4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Target: {fileID: 1528613778}
+  MinLaunchSpeed: 10
+  MaxLaunchSpeed: 30
+  MaxRange: 100
+  CurrentLaunchSpeed: 0
+  Mortar: {fileID: 1025596768}
+  ProjectilePrefab: {fileID: 8712989936894205287, guid: 82df46f7df79bc546b4a2c359cb8c2a5, type: 3}
+  FirePoint: {fileID: 194228513}
+  MortarAngle: -20
+  ProjectileMass: 2.09
+  ProjectileDrag: 2.08
+--- !u!4 &1025596768
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1025596766}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0.412548, z: 0, w: 0.91093594}
+  m_LocalPosition: {x: -22.13, y: 1.5, z: 17.41}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 6209370217870389564}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 48.73, z: 0}
 --- !u!1 &1027627420
 GameObject:
   m_ObjectHideFlags: 0
@@ -2819,6 +2906,11 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!4 &1528613778 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 978430019327486108, guid: afcc29b7c852c5145b6ca5443efc6301, type: 3}
+  m_PrefabInstance: {fileID: 1457145256}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1565498717
 GameObject:
   m_ObjectHideFlags: 0
@@ -4669,6 +4761,14 @@ MonoBehaviour:
   EnemyCost: 0
   KillReward: 60
   Damage: 5
+  FinalTarget: {fileID: 0}
+  CurrentTarget: {fileID: 0}
+  ThrowObject: {fileID: 0}
+  ThrowPoint: {fileID: 0}
+  AgentRef: {fileID: 0}
+  FireRate: 0.95
+  MaxAttackDistance: 0
+  LookSpeed: 0
 --- !u!195 &3417354567846667745
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -6447,6 +6547,52 @@ Transform:
   - {fileID: 4300173479273957610}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!23 &5073077983411046995
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6730574650775808902}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: -6478536213147159724, guid: 3c6eaeb5df5feaf428fc155ea1a41e35, type: 3}
+  - {fileID: -6922793697723135513, guid: 3c6eaeb5df5feaf428fc155ea1a41e35, type: 3}
+  - {fileID: -3846018093981099296, guid: 3c6eaeb5df5feaf428fc155ea1a41e35, type: 3}
+  - {fileID: -6629797300637803691, guid: 3c6eaeb5df5feaf428fc155ea1a41e35, type: 3}
+  - {fileID: 4874126678125670354, guid: 3c6eaeb5df5feaf428fc155ea1a41e35, type: 3}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1001 &5093590285264357175
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6693,6 +6839,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!4 &6209370217870389564
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6730574650775808902}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.5, y: 0.5, z: 0.5, w: 0.5}
+  m_LocalPosition: {x: 0, y: 5.92, z: 0}
+  m_LocalScale: {x: 100, y: 100, z: 100}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 194228513}
+  m_Father: {fileID: 1025596768}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 90}
 --- !u!1 &6260343518285670102
 GameObject:
   m_ObjectHideFlags: 0
@@ -6937,6 +7099,24 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &6730574650775808902
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6209370217870389564}
+  - component: {fileID: 7026678396344270489}
+  - component: {fileID: 5073077983411046995}
+  m_Layer: 0
+  m_Name: GADE Mortar
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!114 &6761555049464273058
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7091,6 +7271,14 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!33 &7026678396344270489
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6730574650775808902}
+  m_Mesh: {fileID: 2534964839176971238, guid: 3c6eaeb5df5feaf428fc155ea1a41e35, type: 3}
 --- !u!1 &7144720681898552277
 GameObject:
   m_ObjectHideFlags: 0
@@ -7653,3 +7841,4 @@ SceneRoots:
   - {fileID: 8717389469421074546}
   - {fileID: 1457145256}
   - {fileID: 2605105280433749860}
+  - {fileID: 1025596768}
