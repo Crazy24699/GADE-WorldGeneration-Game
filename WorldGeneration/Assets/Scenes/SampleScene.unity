@@ -614,13 +614,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 194228512}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.000000029802319, y: -0.16558135, z: -0.000000014901159, w: 0.98619616}
+  m_LocalRotation: {x: 0, y: -0.17364825, z: 0, w: 0.9848078}
   m_LocalPosition: {x: -0.012, y: 0, z: 0.0754}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6209370217870389564}
-  m_LocalEulerAnglesHint: {x: 0, y: -19.062, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -20, z: 0}
 --- !u!1 &272127204
 GameObject:
   m_ObjectHideFlags: 0
@@ -2026,15 +2026,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Target: {fileID: 1528613778}
   MinLaunchSpeed: 10
-  MaxLaunchSpeed: 30
-  MaxRange: 100
+  MaxLaunchSpeed: 250
+  MaxRange: 250
   CurrentLaunchSpeed: 0
   Mortar: {fileID: 1025596768}
   ProjectilePrefab: {fileID: 8712989936894205287, guid: 82df46f7df79bc546b4a2c359cb8c2a5, type: 3}
   FirePoint: {fileID: 194228513}
   MortarAngle: -20
-  ProjectileMass: 2.09
-  ProjectileDrag: 2.08
+  ProjectileMass: 0
+  ExtraForce: 0
 --- !u!4 &1025596768
 Transform:
   m_ObjectHideFlags: 0
@@ -6848,7 +6848,7 @@ Transform:
   m_GameObject: {fileID: 6730574650775808902}
   serializedVersion: 2
   m_LocalRotation: {x: -0.5, y: 0.5, z: 0.5, w: 0.5}
-  m_LocalPosition: {x: 0, y: 5.92, z: 0}
+  m_LocalPosition: {x: 0, y: 0.06, z: 0}
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_ConstrainProportionsScale: 0
   m_Children:

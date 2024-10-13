@@ -6,7 +6,7 @@ public class CannonBallProjectile : MonoBehaviour
 {
     public int Damage;
 
-    private float ReductionTime = 0.45f;
+    private float ReductionTime = 0.1f;
     private float CurrentTime;
 
     public bool ApplyMoreGravity = false;
@@ -17,8 +17,8 @@ public class CannonBallProjectile : MonoBehaviour
     private void Start()
     {
         StartCoroutine(Lifetime());
-        //StartCoroutine(ReduceCooldown());
-        //CurrentTime = ReductionTime;
+        StartCoroutine(ReduceCooldown());
+        CurrentTime = ReductionTime;
     }
 
     private IEnumerator Lifetime()
@@ -27,25 +27,28 @@ public class CannonBallProjectile : MonoBehaviour
         Destroy(this.gameObject);
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
-        if(ApplyMoreGravity && CanReduce)
+        ExtraGravity();
+        if (ApplyMoreGravity && CanReduce)
         {
-            ExtraGravity();
+            
         }
     }
 
     private void ExtraGravity()
     {
+        CurrentTime = ReductionTime;
+        Vector3 VelocityRef = GetComponent<Rigidbody>().velocity;
+        GetComponent<Rigidbody>().AddForce(Vector3.down * 9.81f * GetComponent<Rigidbody>().mass, ForceMode.Force);
+        Debug.Log("She drove a thousand miles");
+
         if (CurrentTime > 0)
         {
-            CurrentTime -= Time.fixedDeltaTime;
+            CurrentTime -= Time.deltaTime;
             if(CurrentTime <= 0)
             {
-                CurrentTime = ReductionTime;
-                Vector3 VelocityRef = GetComponent<Rigidbody>().velocity;
-                GetComponent<Rigidbody>().velocity = new Vector3(VelocityRef.x, VelocityRef.y - 2.5f, VelocityRef.z);
-                Debug.Log("She drove a thousand miles");
+
             }
         }
     }

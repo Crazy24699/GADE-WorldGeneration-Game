@@ -87,7 +87,7 @@ public class DefenderTower : TowerBase
         TowerMeshRender.materials = TowerMaterials;
         //Debug.Log("her");
 
-    }
+    } 
 
     private void FireCannon()
     {

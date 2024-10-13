@@ -15,13 +15,12 @@ public class MortarDefender : MonoBehaviour
 
     public float MortarAngle = -20f; // Fixed shooting angle
     public float ProjectileMass = 1f; // Mass of the projectile
-    public float ProjectileDrag = 0.1f; // Drag of the projectile
-
+    public float ExtraForce = 1.25f; // Additional force factor for heavy projectiles
 
     private void Start()
     {
+        // Ensure mass is set from the prefab
         ProjectileMass = ProjectilePrefab.mass;
-        ProjectileDrag = ProjectilePrefab.drag;
     }
 
     private void Update()
@@ -50,36 +49,30 @@ public class MortarDefender : MonoBehaviour
 
     float CalculateLaunchSpeed(float horizontalDistance)
     {
+        // Ensure a minimum distance to avoid unrealistic cases
         if (horizontalDistance < 0.1f)
         {
             return MinLaunchSpeed;
         }
 
+        // Convert mortar angle to radians
         float angleInRadians = Mathf.Deg2Rad * Mathf.Abs(MortarAngle);
         float gravity = Mathf.Abs(Physics.gravity.y);
-        float sinOfAngle = Mathf.Sin(2 * angleInRadians);
 
-        // Avoid division by zero
-        if (Mathf.Abs(sinOfAngle) < 0.001f)
-        {
-            return MinLaunchSpeed;
-        }
+        // Simplified formula to calculate launch speed without drag (accounting for projectile mass and gravity)
+        float speedSquared = (horizontalDistance * gravity) / Mathf.Sin(2 * angleInRadians);
 
-        // Calculate the ideal launch speed without drag
-        float speedSquared = (horizontalDistance * gravity) / sinOfAngle;
-
-        if (speedSquared <= 0f)
+        if (speedSquared <= 0f || float.IsNaN(speedSquared))
         {
             return MinLaunchSpeed;
         }
 
         float idealLaunchSpeed = Mathf.Sqrt(speedSquared);
 
-        // Estimate the effect of drag
-        float dragFactor = 1 + (ProjectileDrag * horizontalDistance / ProjectileMass);
-        float adjustedLaunchSpeed = idealLaunchSpeed * dragFactor;
+        // Adjust the launch speed based on extra force (for heavier projectiles)
+        float adjustedLaunchSpeed = idealLaunchSpeed * ExtraForce;
 
-        // Clamp the launch speed between the minimum and maximum launch speeds
+        // Clamp the launch speed between minimum and maximum values
         return Mathf.Clamp(adjustedLaunchSpeed, MinLaunchSpeed, MaxLaunchSpeed);
     }
 
@@ -89,12 +82,14 @@ public class MortarDefender : MonoBehaviour
         {
             Rigidbody projectileInstance = Instantiate(ProjectilePrefab, FirePoint.position, FirePoint.rotation);
 
-            // Set the firing angle to the fixed angle (-20 degrees) and apply velocity
-            projectileInstance.velocity = Quaternion.AngleAxis(MortarAngle, FirePoint.forward) * FirePoint.forward * launchSpeed;
+            // Calculate the launch direction with a fixed angle
+            Vector3 launchDirection = Quaternion.AngleAxis(MortarAngle, FirePoint.forward) * FirePoint.forward;
 
-            // Set mass and drag for the projectile
+            // Set the velocity to fire the projectile
+            projectileInstance.velocity = launchDirection * launchSpeed;
+
+            // Apply mass to the projectile
             projectileInstance.mass = ProjectileMass;
-            projectileInstance.drag = ProjectileDrag;
         }
     }
 }
