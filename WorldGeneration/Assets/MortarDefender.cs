@@ -9,6 +9,8 @@ public class MortarDefender : MonoBehaviour
     public float MaxLaunchSpeed = 30f;
     public float MaxRange = 50f;
     public float CurrentLaunchSpeed;
+    public float CurrentRange;
+
     public Transform Mortar;
     public Rigidbody ProjectilePrefab;
     public Transform FirePoint;

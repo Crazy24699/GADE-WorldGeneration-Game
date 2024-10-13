@@ -1438,7 +1438,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1.25, z: -23.8}
-  m_LocalScale: {x: 9, y: 0.5, z: 15}
+  m_LocalScale: {x: 26.5005, y: 1.47225, z: 44.1675}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -2029,12 +2029,13 @@ MonoBehaviour:
   MaxLaunchSpeed: 250
   MaxRange: 250
   CurrentLaunchSpeed: 0
+  CurrentPlayerRange: 0
   Mortar: {fileID: 1025596768}
   ProjectilePrefab: {fileID: 8712989936894205287, guid: 82df46f7df79bc546b4a2c359cb8c2a5, type: 3}
   FirePoint: {fileID: 194228513}
   MortarAngle: -20
   ProjectileMass: 0
-  ExtraForce: 0
+  ExtraForce: 2.32
 --- !u!4 &1025596768
 Transform:
   m_ObjectHideFlags: 0

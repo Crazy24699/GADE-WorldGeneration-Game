@@ -8,6 +8,7 @@ public class CannonBallProjectile : MonoBehaviour
 
     private float ReductionTime = 0.1f;
     private float CurrentTime;
+    private float CurrentMass;
 
     public bool ApplyMoreGravity = false;
 
@@ -16,6 +17,7 @@ public class CannonBallProjectile : MonoBehaviour
 
     private void Start()
     {
+        CurrentMass = gameObject.GetComponent<Rigidbody>().mass;
         StartCoroutine(Lifetime());
         StartCoroutine(ReduceCooldown());
         CurrentTime = ReductionTime;
@@ -40,7 +42,7 @@ public class CannonBallProjectile : MonoBehaviour
     {
         CurrentTime = ReductionTime;
         Vector3 VelocityRef = GetComponent<Rigidbody>().velocity;
-        GetComponent<Rigidbody>().AddForce(Vector3.down * 9.81f * GetComponent<Rigidbody>().mass, ForceMode.Force);
+        GetComponent<Rigidbody>().AddForce(Vector3.down * 9.81f * CurrentMass, ForceMode.Force);
         Debug.Log("She drove a thousand miles");
 
         if (CurrentTime > 0)
