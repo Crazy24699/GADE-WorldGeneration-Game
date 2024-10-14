@@ -137,7 +137,7 @@ public class BasicEnemy : BaseEnemy
             NavMeshHit NavMeshHitInfo;
             if (NavMesh.SamplePosition(CurrentTarget.transform.position, out NavMeshHitInfo, 50.0f, NavMesh.AllAreas)) 
             {
-                AgentRef.SetDestination(NavMeshHitInfo.position);
+                //AgentRef.SetDestination(NavMeshHitInfo.position);
             }
         }
     }

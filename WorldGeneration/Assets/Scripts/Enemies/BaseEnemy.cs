@@ -35,6 +35,7 @@ public class BaseEnemy : MonoBehaviour
 
     public virtual void HandleHealth(int HealthChange)
     {
+        if(ParentSpawner == null) { return; }
         if ((CurrentHealth > 0 || CurrentHealth <= MaxHealth))
         {
             CurrentHealth += HealthChange;
@@ -44,6 +45,7 @@ public class BaseEnemy : MonoBehaviour
             }
             
         }
+
         if (CurrentHealth <= 0) 
         {
 
