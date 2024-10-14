@@ -22,7 +22,7 @@ public class DefenderTower : TowerBase
     public float FireRate = 0.95f;  
 
 
-    private float ShotCooldownTime = 0f; 
+    [SerializeField]private float ShotCooldownTime = 0f; 
 
 
     [SerializeField]private List<GameObject> TargetList = new List<GameObject>();
@@ -63,9 +63,9 @@ public class DefenderTower : TowerBase
             // Check for player input and shoot if the cooldown has elapsed
             if (ShotCooldownTime >= FireRate)
             {
-
-                FireCannon();
-                ShotCooldownTime = 0f; // Reset cooldown timer
+                Debug.Log("Dont remembver");
+                ShotCooldownTime = 0; // Reset cooldown timer
+                FireProjectile();
             }
 
         }
@@ -89,7 +89,7 @@ public class DefenderTower : TowerBase
 
     } 
 
-    private void FireCannon()
+    private void FireProjectile()
     {
         GameObject ProjectileInstance = Instantiate(Projectile, FirePoint.transform.position, FirePoint.transform.rotation);
 
