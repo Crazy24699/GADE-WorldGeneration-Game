@@ -4,94 +4,58 @@ using UnityEngine;
 
 public class MortarDefender : MonoBehaviour
 {
-    public Transform Target;
-    public float MinLaunchSpeed = 10f;
-    public float MaxLaunchSpeed = 30f;
-    public float MaxRange = 50f;
-    public float CurrentLaunchSpeed;
-    public float CurrentRange;
+    public GameObject projectilePrefab;
+    public float maximumRange = 100f;
+    public float angleOfAttack = -20f;
+    public float gravityMultiplier = 2f;
 
-    public Transform Mortar;
-    public Rigidbody ProjectilePrefab;
-    public Transform FirePoint;
+    public Transform target;
+    public Transform firePoint;
 
-    public float MortarAngle = -20f; // Fixed shooting angle
-    public float ProjectileMass = 1f; // Mass of the projectile
-    public float ExtraForce = 1.25f; // Additional force factor for heavy projectiles
+    private float gravity;
 
-    private void Start()
+    void Start()
     {
-        // Ensure mass is set from the prefab
-        ProjectileMass = ProjectilePrefab.mass;
+        gravity = Physics.gravity.y * gravityMultiplier;
     }
 
     private void Update()
     {
-        if (Target != null)
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            Vector3 targetPosition = Target.position;
-            Vector3 startPosition = Mortar.position;
-
-            Vector3 directionToTarget = new Vector3(targetPosition.x - startPosition.x, 0, targetPosition.z - startPosition.z).normalized;
-            Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
-            Mortar.rotation = Quaternion.Euler(0, targetRotation.eulerAngles.y, 0);
-
-            float horizontalDistance = Vector3.Distance(new Vector3(startPosition.x, 0, startPosition.z), new Vector3(targetPosition.x, 0, targetPosition.z));
-
-            // Calculate launch speed based on distance and angle
-            float launchSpeed = CalculateLaunchSpeed(horizontalDistance);
-            CurrentLaunchSpeed = launchSpeed;
-
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                FireProjectile(launchSpeed);
-            }
+            FireProjectile();
         }
     }
 
-    float CalculateLaunchSpeed(float horizontalDistance)
+    public void FireProjectile()
     {
-        // Ensure a minimum distance to avoid unrealistic cases
-        if (horizontalDistance < 0.1f)
+        // Calculate distance to the target
+        float distanceToTarget = Vector3.Distance(firePoint.position, target.position);
+
+        // Ensure the target is within the maximum range
+        if (distanceToTarget > maximumRange)
         {
-            return MinLaunchSpeed;
+            Debug.LogWarning("Target is out of maximum range.");
+            return;
         }
 
-        // Convert mortar angle to radians
-        float angleInRadians = Mathf.Deg2Rad * Mathf.Abs(MortarAngle);
-        float gravity = Mathf.Abs(Physics.gravity.y);
+        // Calculate firing force based on distance and angle
+        float firingForce = CalculateFiringForce(distanceToTarget);
 
-        // Simplified formula to calculate launch speed without drag (accounting for projectile mass and gravity)
-        float speedSquared = (horizontalDistance * gravity) / Mathf.Sin(2 * angleInRadians);
-
-        if (speedSquared <= 0f || float.IsNaN(speedSquared))
-        {
-            return MinLaunchSpeed;
-        }
-
-        float idealLaunchSpeed = Mathf.Sqrt(speedSquared);
-
-        // Adjust the launch speed based on extra force (for heavier projectiles)
-        float adjustedLaunchSpeed = idealLaunchSpeed * ExtraForce;
-
-        // Clamp the launch speed between minimum and maximum values
-        return Mathf.Clamp(adjustedLaunchSpeed, MinLaunchSpeed, MaxLaunchSpeed);
+        // Create projectile and apply initial velocity
+        GameObject projectile = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
+        projectile.GetComponent<MortarShell>().ShellStart(firePoint, target);
     }
 
-    void FireProjectile(float launchSpeed)
+    private float CalculateFiringForce(float distance)
     {
-        if (ProjectilePrefab != null && FirePoint != null)
-        {
-            Rigidbody projectileInstance = Instantiate(ProjectilePrefab, FirePoint.position, FirePoint.rotation);
+        // Adjust parameters as needed based on your specific projectile and environment
+        float initialVelocity = 50f; // Adjust initial velocity as necessary
+        float angleRadians = Mathf.Deg2Rad * angleOfAttack;
 
-            // Calculate the launch direction with a fixed angle
-            Vector3 launchDirection = Quaternion.AngleAxis(MortarAngle, FirePoint.forward) * FirePoint.forward;
-
-            // Set the velocity to fire the projectile
-            projectileInstance.velocity = launchDirection * launchSpeed;
-
-            // Apply mass to the projectile
-            projectileInstance.mass = ProjectileMass;
-        }
+        // Calculate firing force using projectile motion formulas
+        float firingForce = (distance * gravity) / (Mathf.Sin(2 * angleRadians) * initialVelocity);
+        return firingForce;
     }
+
 }
