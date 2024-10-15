@@ -502,7 +502,6 @@ GameObject:
   m_Component:
   - component: {fileID: 239845597}
   - component: {fileID: 239845596}
-  - component: {fileID: 239845598}
   m_Layer: 7
   m_Name: Path and enemy handler
   m_TagString: Untagged
@@ -533,7 +532,7 @@ MonoBehaviour:
     CanSpawn: 1
     Alive: 0
     EnemyType: t1
-  - EnemyPrefabObject: {fileID: 7518473881083515456, guid: 3a3cd327d1bd5d74286173846773cb97, type: 3}
+  - EnemyPrefabObject: {fileID: 325447197902550054, guid: 3a3cd327d1bd5d74286173846773cb97, type: 3}
     BaseCost: 5
     CurrentSpawnCost: 0
     TypeAlive: 0
@@ -600,18 +599,6 @@ Transform:
   - {fileID: 43556801}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &239845598
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 239845594}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8dc9c614a7457ac449d77fb9f7b74dfa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &276230718
 GameObject:
   m_ObjectHideFlags: 0

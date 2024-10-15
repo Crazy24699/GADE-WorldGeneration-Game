@@ -52,21 +52,100 @@ public class BomberOrc : BaseEnemy
         yield return new WaitForSeconds(0.55f);
         AgentRef.SetDestination(FinalTarget.transform.position);
         CurrentTarget = FinalTarget;
+
         StartupRan = true;
         if (EnemyCost == 0)
         {
             Debug.LogError("Cost not set        " + this.gameObject.name);
         }
     }
+
+    private void AttackTower()
+    {
+        if (AttackTarget == null)
+        {
+            return;
+        }
+
+        SetAnimationBool("Attack", true);
+        SetAnimationBool("Walk", false);
+
+        ShotCooldownTime += Time.deltaTime;
+        if (ShotCooldownTime >= FireRate)
+        {
+            Throw();
+            Debug.Log("aaaaa");
+            ShotCooldownTime = 0f;
+        }
+    }
+
+    private void TrackTarget()
+    {
+        if (CurrentTarget == null) { return; }
+
+        Vector3 TargetDirection = CurrentTarget.transform.position - this.transform.position;
+
+        //Sets the rotation of the 
+        Quaternion ViewingRotation = Quaternion.LookRotation(TargetDirection);
+        transform.rotation = ViewingRotation;
+    }
+
+    private void Throw()
+    {
+        GameObject ProjectileInstance = Instantiate(ThrowObject, ThrowPoint.transform.position, ThrowPoint.transform.rotation);
+
+        Rigidbody ProjectileRB = ProjectileInstance.GetComponent<Rigidbody>();
+
+        ProjectileRB.velocity = ThrowPoint.transform.forward * 50;
+        //TargetList[0].GetComponent<BaseEnemy>().HandleHealth(-10);
+
+
+    }
+
     protected override void AlotMoney()
     {
         Debug.Log("aaaaaaaaaaaaa");
         FindObjectOfType<PlayerHandler>().HandleMoney(KillReward);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+        if (!StartupRan)
+        {
+            return;
+        }
+
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            AgentRef.SetDestination(FinalTarget.transform.position);
+            Debug.Log("Nice try but two can play this game");
+        }
+        TrackTarget();
+        AttackTower();
+
+        if (CurrentTarget == null) { CurrentTarget = FinalTarget; AgentRef.SetDestination(FinalTarget.transform.position); }
+
+        //AgentRef.SetDestination(TowerTarget.transform.position);
     }
+
+    private void OnTriggerEnter(Collider Collision)
+    {
+        if (Collision.CompareTag("PlayerTower"))
+        {
+            Collision.GetComponent<TowerLogic>().HandleHealth(-CurrentHealth);
+            TakenDamage();
+            Destroy(this.gameObject);
+        }
+        if (Collision.CompareTag("DefenderTower"))
+        {
+            AttackTarget = Collision.GetComponent<DefenderTower>();
+            CurrentTarget = Collision.gameObject;
+            NavMeshHit NavMeshHitInfo;
+            if (NavMesh.SamplePosition(CurrentTarget.transform.position, out NavMeshHitInfo, 50.0f, NavMesh.AllAreas))
+            {
+                //AgentRef.SetDestination(NavMeshHitInfo.position);
+            }
+        }
+    }
+
 }

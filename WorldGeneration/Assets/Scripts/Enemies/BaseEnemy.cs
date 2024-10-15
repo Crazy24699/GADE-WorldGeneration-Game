@@ -6,6 +6,7 @@ public class BaseEnemy : MonoBehaviour
 {
     public EnemySpawnerLogic ParentSpawner;
     [HideInInspector] public EnemyObject EnemyType;
+    [SerializeField] protected Animator EnemyAnimator;
 
     protected int MaxHealth = 20;
     [SerializeField]public int CurrentHealth;
@@ -19,7 +20,12 @@ public class BaseEnemy : MonoBehaviour
 
     public virtual void Startup()
     {
-        
+        EnemyAnimator = GetComponent<Animator>();
+        if(EnemyAnimator == null)
+        {
+            EnemyAnimator = gameObject.transform.root.GetComponentInChildren<Animator>();
+        }
+
         if (KillReward <= 0)
         {
             Debug.LogError("Killreward not set");
@@ -31,6 +37,11 @@ public class BaseEnemy : MonoBehaviour
         {
             Debug.LogError("Health Not Set");
         }
+    }
+
+    protected void SetAnimationBool(string AnimationName, bool AnimationState)
+    {
+        EnemyAnimator.SetBool(AnimationName, AnimationState);
     }
 
     public virtual void HandleHealth(int HealthChange)

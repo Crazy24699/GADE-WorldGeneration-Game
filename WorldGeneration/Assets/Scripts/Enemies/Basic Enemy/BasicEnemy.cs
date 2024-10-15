@@ -14,6 +14,7 @@ public class BasicEnemy : BaseEnemy
 
 
 
+
     private float ShotCooldownTime = 0f;
     public float FireRate = 0.95f;
     [SerializeField] private float MaxAttackDistance;
@@ -32,6 +33,8 @@ public class BasicEnemy : BaseEnemy
     public override void Startup()
     {
         AgentRef = GetComponent<NavMeshAgent>();
+
+
         AgentRef.enabled = true;
         KillReward = 5;
         base.Startup();
@@ -42,12 +45,17 @@ public class BasicEnemy : BaseEnemy
     }
 
 
+
     private void AttackTower()
     {
         if(AttackTarget == null)
         {
             return;
         }
+
+        SetAnimationBool("Attack", true);
+        SetAnimationBool("Walk", false);
+
         ShotCooldownTime += Time.deltaTime;
         if(ShotCooldownTime>=FireRate)
         {
