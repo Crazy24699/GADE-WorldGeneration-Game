@@ -129,7 +129,7 @@ NavMeshAgent:
   m_Enabled: 0
   m_AgentTypeID: 0
   m_Radius: 1
-  m_Speed: 7.55
+  m_Speed: 8
   m_Acceleration: 15.5
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -166,12 +166,12 @@ MonoBehaviour:
     Alive: 0
     EnemyType: 
   EnemyAnimator: {fileID: 0}
+  FinalTarget: {fileID: 0}
   CurrentHealth: 0
   TakenDamageEffect: {fileID: 5269410802817535968, guid: 1c7b93a4dc4d0d842acb62a5f9cbae16, type: 3}
   EnemyCost: 0
   KillReward: 0
   Damage: 5
-  FinalTarget: {fileID: 0}
   CurrentTarget: {fileID: 0}
   ThrowObject: {fileID: 3956548075952407274, guid: 2e303d04b1017414d82aead321d7aaff, type: 3}
   ThrowPoint: {fileID: 9201824340694399299}

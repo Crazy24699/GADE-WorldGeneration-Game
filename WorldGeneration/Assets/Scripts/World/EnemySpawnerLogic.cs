@@ -295,8 +295,8 @@ public class EnemySpawnerLogic : MonoBehaviour
         EnemyObject EnemyScript = EnemyCreated.GetComponent<BaseEnemy>().EnemyType;
         int Index = Spawns[SpawnLocation].GetComponent<PathGenerator>().ControlPointTransforms.Count();
 
-        EnemyCreated.GetComponent<BasicEnemy>().FinalTarget = Spawns[SpawnLocation].GetComponent<PathGenerator>().ControlPointTransforms[Index - 1].gameObject;
-        EnemyCreated.gameObject.name = "Normal Enemy" + LivingEnemies + " " + EnemyScript.EnemyType + "   " + EnemyScript.TypeAlive;
+        EnemyCreated.GetComponent<BaseEnemy>().FinalTarget = Spawns[SpawnLocation].GetComponent<PathGenerator>().ControlPointTransforms[Index - 1].gameObject;
+        EnemyCreated.gameObject.name = EnemyCreated.name+"    Spawned Enemy" + LivingEnemies + " " + EnemyScript.EnemyType + "   " + EnemyScript.TypeAlive;
         //ProgramManager.ProgramManagerInstance.EnemyCount.Add(EnemyCreated);
         EnemyCreated.GetComponent<BaseEnemy>().ParentSpawner = this;
 

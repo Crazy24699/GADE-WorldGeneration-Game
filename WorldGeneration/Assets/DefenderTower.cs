@@ -95,8 +95,8 @@ public class DefenderTower : TowerBase
 
         Rigidbody ProjectileRB = ProjectileInstance.GetComponent<Rigidbody>();
 
-        ProjectileRB.velocity = FirePoint.transform.forward * -250;
-        TargetList[0].GetComponent<BaseEnemy>().HandleHealth(-10);
+        ProjectileRB.velocity = FirePoint.transform.forward * -350;
+        //TargetList[0].GetComponent<BaseEnemy>().HandleHealth(-10);
         if(TargetList[0].GetComponent<BaseEnemy>().CurrentHealth == 0)
         {
             TargetList.RemoveAt(0);

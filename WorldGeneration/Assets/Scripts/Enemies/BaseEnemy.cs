@@ -7,11 +7,12 @@ public class BaseEnemy : MonoBehaviour
     public EnemySpawnerLogic ParentSpawner;
     [HideInInspector] public EnemyObject EnemyType;
     [SerializeField] protected Animator EnemyAnimator;
+    [SerializeField] public GameObject FinalTarget;
 
-    protected int MaxHealth = 20;
+    protected int MaxHealth = 0;
     [SerializeField]public int CurrentHealth;
+    protected float MoveSpeed = 0;
 
-    protected float MoveSpeed;
     [SerializeField] protected ParticleSystem TakenDamageEffect;
 
     public int EnemyCost = 0;
@@ -31,11 +32,32 @@ public class BaseEnemy : MonoBehaviour
             Debug.LogError("Killreward not set");
             KillReward = 1;
         }
-        HandleHealth(MaxHealth);
 
         if (MaxHealth <= 0)
         {
             Debug.LogError("Health Not Set");
+            MaxHealth = 20;
+        }
+
+        if(MoveSpeed <= 0)
+        {
+            MoveSpeed = 8;
+            Debug.LogError("Movespeed Not Set:  " + this.gameObject.name);
+        }
+
+        CheckVariable(MaxHealth.ToString());
+
+        HandleHealth(MaxHealth);
+
+        
+
+    }
+
+    protected void CheckVariable(string Value)
+    {
+        if (Value == "0")
+        {
+            Debug.LogError(Value+"  Not set at:     " + this.gameObject.name);
         }
     }
 

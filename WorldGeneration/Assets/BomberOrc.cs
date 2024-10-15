@@ -6,8 +6,6 @@ using UnityEngine.AI;
 public class BomberOrc : BaseEnemy
 {
 
-
-    [SerializeField] public GameObject FinalTarget;
     [SerializeField] public GameObject CurrentTarget;
     [SerializeField] private GameObject ThrowObject;
 
@@ -36,7 +34,10 @@ public class BomberOrc : BaseEnemy
     {
         AgentRef = GetComponent<NavMeshAgent>();
         AgentRef.enabled = true;
-        KillReward = 5;
+        KillReward = 10;
+        MaxHealth = 12;
+        MoveSpeed = 15;
+
         base.Startup();
         //Debug.Log("startup");
         if (MaxAttackDistance <= 0) { MaxAttackDistance = 19.75f; }
@@ -48,15 +49,15 @@ public class BomberOrc : BaseEnemy
         yield return new WaitForSeconds(0.25f);
         AgentRef = GetComponent<NavMeshAgent>();
         AgentRef.enabled = true;
-
-        yield return new WaitForSeconds(0.55f);
         AgentRef.SetDestination(FinalTarget.transform.position);
+        AgentRef.speed = MoveSpeed;
+
         CurrentTarget = FinalTarget;
 
         StartupRan = true;
         if (EnemyCost == 0)
         {
-            Debug.LogError("Cost not set        " + this.gameObject.name);
+            //Debug.LogError("Cost not set        " + this.gameObject.name);
         }
     }
 

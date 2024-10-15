@@ -5,7 +5,7 @@ using UnityEngine.AI;
 public class BasicEnemy : BaseEnemy
 {
 
-    [SerializeField] public GameObject FinalTarget;
+
     [SerializeField] public GameObject CurrentTarget;
     [SerializeField] private GameObject ThrowObject;
 
@@ -37,6 +37,9 @@ public class BasicEnemy : BaseEnemy
 
         AgentRef.enabled = true;
         KillReward = 5;
+        MaxHealth = 25;
+        MoveSpeed = 5f;
+
         base.Startup();
         //Debug.Log("startup");
         if (MaxAttackDistance <= 0) { MaxAttackDistance = 19.75f; }
@@ -99,14 +102,14 @@ public class BasicEnemy : BaseEnemy
         yield return new WaitForSeconds(0.25f);
         AgentRef = GetComponent<NavMeshAgent>();
         AgentRef.enabled = true;
-
-        yield return new WaitForSeconds(0.55f);
         AgentRef.SetDestination(FinalTarget.transform.position);
+        AgentRef.speed = MoveSpeed;
+
         CurrentTarget = FinalTarget;
         StartupRan = true;
         if (EnemyCost == 0)
         {
-            Debug.LogError("Cost not set        " + this.gameObject.name);
+            //Debug.LogError("Cost not set        " + this.gameObject.name);
         }
     }
 
