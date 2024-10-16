@@ -8,8 +8,14 @@ public class TowerLogic : TowerBase
 {
     public PlayerUI PlayerUIScript;
 
+    private void Start()
+    {
+        MaxHealth = 50;
+    }
+
     protected override void Die()
     {
+
         CurrentHealth = 0;
         PlayerUIScript.Defeat();
     }

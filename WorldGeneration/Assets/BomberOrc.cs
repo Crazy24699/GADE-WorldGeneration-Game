@@ -6,23 +6,6 @@ using UnityEngine.AI;
 public class BomberOrc : BaseEnemy
 {
 
-    [SerializeField] public GameObject CurrentTarget;
-    [SerializeField] private GameObject ThrowObject;
-
-    [SerializeField] public Transform ThrowPoint;
-    [SerializeField] private NavMeshAgent AgentRef;
-
-
-
-    private float ShotCooldownTime = 0f;
-    public float FireRate = 0.95f;
-    [SerializeField] private float MaxAttackDistance;
-    public float LookSpeed;
-
-    private DefenderTower AttackTarget;
-
-    private bool StartupRan = false;
-
 
     // Start is called before the first frame update
     void Start()
@@ -37,6 +20,7 @@ public class BomberOrc : BaseEnemy
         KillReward = 10;
         MaxHealth = 12;
         MoveSpeed = 15;
+        AttackRange = 10;
 
         base.Startup();
         //Debug.Log("startup");
@@ -59,48 +43,6 @@ public class BomberOrc : BaseEnemy
         {
             //Debug.LogError("Cost not set        " + this.gameObject.name);
         }
-    }
-
-    private void AttackTower()
-    {
-        if (AttackTarget == null)
-        {
-            return;
-        }
-
-        SetAnimationBool("Attack", true);
-        SetAnimationBool("Walk", false);
-
-        ShotCooldownTime += Time.deltaTime;
-        if (ShotCooldownTime >= FireRate)
-        {
-            Throw();
-            Debug.Log("aaaaa");
-            ShotCooldownTime = 0f;
-        }
-    }
-
-    private void TrackTarget()
-    {
-        if (CurrentTarget == null) { return; }
-
-        Vector3 TargetDirection = CurrentTarget.transform.position - this.transform.position;
-
-        //Sets the rotation of the 
-        Quaternion ViewingRotation = Quaternion.LookRotation(TargetDirection);
-        transform.rotation = ViewingRotation;
-    }
-
-    private void Throw()
-    {
-        GameObject ProjectileInstance = Instantiate(ThrowObject, ThrowPoint.transform.position, ThrowPoint.transform.rotation);
-
-        Rigidbody ProjectileRB = ProjectileInstance.GetComponent<Rigidbody>();
-
-        ProjectileRB.velocity = ThrowPoint.transform.forward * 50;
-        //TargetList[0].GetComponent<BaseEnemy>().HandleHealth(-10);
-
-
     }
 
     protected override void AlotMoney()
@@ -144,9 +86,15 @@ public class BomberOrc : BaseEnemy
             NavMeshHit NavMeshHitInfo;
             if (NavMesh.SamplePosition(CurrentTarget.transform.position, out NavMeshHitInfo, 50.0f, NavMesh.AllAreas))
             {
-                //AgentRef.SetDestination(NavMeshHitInfo.position);
+                AgentRef.SetDestination(NavMeshHitInfo.position);
             }
         }
     }
-
+    private void OnTriggerExit(Collider Collision)
+    {
+        if (Collision.CompareTag("DefenderTower"))
+        {
+            CurrentTarget = FinalTarget;
+        }
+    }
 }

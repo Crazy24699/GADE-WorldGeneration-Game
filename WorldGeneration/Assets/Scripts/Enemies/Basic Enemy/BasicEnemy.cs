@@ -5,25 +5,6 @@ using UnityEngine.AI;
 public class BasicEnemy : BaseEnemy
 {
 
-
-    [SerializeField] public GameObject CurrentTarget;
-    [SerializeField] private GameObject ThrowObject;
-
-    [SerializeField] public Transform ThrowPoint;
-    [SerializeField] private NavMeshAgent AgentRef;
-
-
-
-
-    private float ShotCooldownTime = 0f;
-    public float FireRate = 0.95f;
-    [SerializeField] private float MaxAttackDistance;
-    public float LookSpeed;
-
-    private DefenderTower AttackTarget;
-
-    private bool StartupRan = false;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -49,47 +30,7 @@ public class BasicEnemy : BaseEnemy
 
 
 
-    private void AttackTower()
-    {
-        if(AttackTarget == null)
-        {
-            return;
-        }
-
-        SetAnimationBool("Attack", true);
-        SetAnimationBool("Walk", false);
-
-        ShotCooldownTime += Time.deltaTime;
-        if(ShotCooldownTime>=FireRate)
-        {
-            Throw();
-            Debug.Log("aaaaa");
-            ShotCooldownTime = 0f;
-        }
-    }
-
-    private void TrackTarget()
-    {
-        if (CurrentTarget == null) {  return; }
-        
-        Vector3 TargetDirection = CurrentTarget.transform.position - this.transform.position;
-
-        //Sets the rotation of the 
-        Quaternion ViewingRotation = Quaternion.LookRotation(TargetDirection);
-        transform.rotation = ViewingRotation;
-    }
-
-    private void Throw()
-    {
-        GameObject ProjectileInstance = Instantiate(ThrowObject, ThrowPoint.transform.position, ThrowPoint.transform.rotation);
-
-        Rigidbody ProjectileRB = ProjectileInstance.GetComponent<Rigidbody>();
-
-        ProjectileRB.velocity = ThrowPoint.transform.forward * 50;
-        //TargetList[0].GetComponent<BaseEnemy>().HandleHealth(-10);
-
-
-    }
+    
 
     protected override void AlotMoney()
     {
@@ -150,6 +91,14 @@ public class BasicEnemy : BaseEnemy
             {
                 AgentRef.SetDestination(NavMeshHitInfo.position);
             }
+        }
+    }
+
+    private void OnTriggerExit(Collider Collision)
+    {
+        if (Collision.CompareTag("DefenderTower"))
+        {
+            CurrentTarget = FinalTarget;
         }
     }
 

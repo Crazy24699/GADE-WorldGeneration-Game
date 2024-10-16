@@ -20,6 +20,7 @@ public class DefenderTower : TowerBase
     private bool CanShoot = true;
 
     public float FireRate = 0.95f;  
+    public float RotationOffset;  
 
 
     [SerializeField]private float ShotCooldownTime = 0f; 
@@ -56,7 +57,8 @@ public class DefenderTower : TowerBase
     {
         if(TargetList.Count > 0)
         {
-            RotateObject.transform.rotation = Quaternion.LookRotation(TargetList[0].transform.position-RotateObject.transform.position);
+            //Vector3 RotationChange = RotateObject.transform.position-new Vector3(0,2.55f,0);
+            RotateObject.transform.rotation = Quaternion.LookRotation(TargetList[0].transform.position- RotateObject.transform.position);
 
             ShotCooldownTime += Time.deltaTime;
 

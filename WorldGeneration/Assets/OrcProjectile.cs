@@ -6,6 +6,12 @@ public class OrcProjectile : MonoBehaviour
 {
 
     public int Damage;
+
+    private void Start()
+    {
+        StartCoroutine(Lifetime());
+    }
+
     private void OnTriggerEnter(Collider Collider)
     {
         if (Collider.CompareTag("TowerArea"))
@@ -19,4 +25,11 @@ public class OrcProjectile : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    private IEnumerator Lifetime()
+    {
+        yield return new WaitForSeconds(10);
+        Destroy(this.gameObject);
+    }
+
 }

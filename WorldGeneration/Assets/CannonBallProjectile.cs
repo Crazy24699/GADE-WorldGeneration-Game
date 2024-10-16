@@ -42,7 +42,7 @@ public class CannonBallProjectile : MonoBehaviour
     {
         CurrentTime = ReductionTime;
         Vector3 VelocityRef = GetComponent<Rigidbody>().velocity;
-        GetComponent<Rigidbody>().AddForce(Vector3.down * 9.81f * 2, ForceMode.Force);
+        //GetComponent<Rigidbody>().AddForce(Vector3.down * 9.81f * 2, ForceMode.Force);
         Debug.Log("She drove a thousand miles");
 
         if (CurrentTime > 0)
@@ -66,6 +66,7 @@ public class CannonBallProjectile : MonoBehaviour
         if (Collider.CompareTag("Enemy AI"))
         {
             Collider.GetComponent<BaseEnemy>().HandleHealth(-Damage);
+            Debug.Log("dance a hunt");
             Destroy(gameObject);
         }
         if (Collider.CompareTag("Ground") )
