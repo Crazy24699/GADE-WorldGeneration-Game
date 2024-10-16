@@ -66,6 +66,13 @@ public class BasicEnemy : BaseEnemy
             AgentRef.SetDestination(FinalTarget.transform.position);
             Debug.Log("Nice try but two can play this game");
         }
+
+        if (!Attacking)
+        {
+            SetAnimationBool("Walking", true);
+            SetAnimationBool("Attacking", false);
+        }
+
         TrackTarget();
         AttackTower();
 

@@ -8,7 +8,7 @@ public class TowerBase : MonoBehaviour
     [SerializeField] private Slider HealthBar;
     [SerializeField] protected ParticleSystem TakenDamageEffect;
 
-    protected int MaxHealth = 20;
+    [SerializeField] protected int MaxHealth = 20;
     [SerializeField]protected int CurrentHealth;
     [SerializeField] protected int Damage;
 

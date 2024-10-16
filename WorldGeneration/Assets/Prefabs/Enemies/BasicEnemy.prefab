@@ -360,7 +360,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7530684589179228540}
   - component: {fileID: 4185033403039163087}
-  - component: {fileID: 1089660559221910094}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -454,27 +453,6 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.008607551, y: 0.008747205, z: 0.002283887}
     m_Extent: {x: 0.023041073, y: 0.024336584, z: 0.022102822}
   m_DirtyAABB: 0
---- !u!95 &1089660559221910094
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3740988096495924423}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 0ae980e88859a8940bed8b5345b3c343, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &3963696320338096182
 GameObject:
   m_ObjectHideFlags: 0
@@ -571,16 +549,16 @@ NavMeshAgent:
   m_GameObject: {fileID: 3963696320338096182}
   m_Enabled: 0
   m_AgentTypeID: 0
-  m_Radius: 1.31
+  m_Radius: 1.99
   m_Speed: 7.55
-  m_Acceleration: 15.5
-  avoidancePriority: 50
+  m_Acceleration: 20
+  avoidancePriority: 5
   m_AngularSpeed: 120
-  m_StoppingDistance: 0
+  m_StoppingDistance: 8
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 3.49
+  m_Height: 4.54
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
@@ -611,17 +589,21 @@ MonoBehaviour:
   EnemyAnimator: {fileID: 0}
   FinalTarget: {fileID: 0}
   CurrentTarget: {fileID: 0}
+  ThrowObject: {fileID: 3956548075952407274, guid: 2e303d04b1017414d82aead321d7aaff, type: 3}
+  ThrowPoint: {fileID: 6347849263545250717}
+  AgentRef: {fileID: 0}
+  Distance: 0
+  FireRate: 2
+  MaxAttackDistance: 15
+  LookSpeed: 0
+  AttackTarget: {fileID: 0}
+  Attacking: 0
   CurrentHealth: 0
+  AttackRange: 0
   TakenDamageEffect: {fileID: 5269410802817535968, guid: 1c7b93a4dc4d0d842acb62a5f9cbae16, type: 3}
   EnemyCost: 2
   KillReward: 0
   Damage: 1
-  ThrowObject: {fileID: 3956548075952407274, guid: 2e303d04b1017414d82aead321d7aaff, type: 3}
-  ThrowPoint: {fileID: 6347849263545250717}
-  AgentRef: {fileID: 0}
-  FireRate: 2
-  MaxAttackDistance: 15
-  LookSpeed: 0
 --- !u!1 &4110259084008320409
 GameObject:
   m_ObjectHideFlags: 0

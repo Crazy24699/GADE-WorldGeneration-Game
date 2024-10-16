@@ -62,7 +62,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 12.89, y: 2.55, z: 33.63}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.75, y: 0.75, z: 0.75}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8532003420559332253}
@@ -128,12 +128,12 @@ NavMeshAgent:
   m_GameObject: {fileID: 325447197902550054}
   m_Enabled: 0
   m_AgentTypeID: 0
-  m_Radius: 1.24
+  m_Radius: 1.55
   m_Speed: 8
-  m_Acceleration: 15.5
-  avoidancePriority: 50
+  m_Acceleration: 40
+  avoidancePriority: 7
   m_AngularSpeed: 120
-  m_StoppingDistance: 0
+  m_StoppingDistance: 17.85
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -168,17 +168,21 @@ MonoBehaviour:
   EnemyAnimator: {fileID: 0}
   FinalTarget: {fileID: 0}
   CurrentTarget: {fileID: 0}
+  ThrowObject: {fileID: 272733650526201061, guid: 9a09794587063f04599b50cabe8e8190, type: 3}
+  ThrowPoint: {fileID: 9201824340694399299}
+  AgentRef: {fileID: 0}
+  Distance: 0
+  FireRate: 0.95
+  MaxAttackDistance: 0
+  LookSpeed: 0
+  AttackTarget: {fileID: 0}
+  Attacking: 0
   CurrentHealth: 0
+  AttackRange: 0
   TakenDamageEffect: {fileID: 5269410802817535968, guid: 1c7b93a4dc4d0d842acb62a5f9cbae16, type: 3}
   EnemyCost: 0
   KillReward: 0
   Damage: 5
-  ThrowObject: {fileID: 3956548075952407274, guid: 2e303d04b1017414d82aead321d7aaff, type: 3}
-  ThrowPoint: {fileID: 9201824340694399299}
-  AgentRef: {fileID: 0}
-  FireRate: 0.95
-  MaxAttackDistance: 0
-  LookSpeed: 0
 --- !u!1 &354849451933102513
 GameObject:
   m_ObjectHideFlags: 0
@@ -362,15 +366,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1951280726616591997}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.45, z: 0}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 1.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 895668313741626037}
   - {fileID: 7249540166165356750}
   m_Father: {fileID: 7956134059519101392}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!95 &3012188461501758864
 Animator:
   serializedVersion: 5

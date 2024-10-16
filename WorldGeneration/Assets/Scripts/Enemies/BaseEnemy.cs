@@ -17,7 +17,7 @@ public class BaseEnemy : MonoBehaviour
     [SerializeField] public Transform ThrowPoint;
     [SerializeField] protected NavMeshAgent AgentRef;
 
-
+    [SerializeField] protected float Distance;
 
 
     protected float ShotCooldownTime = 0f;
@@ -28,12 +28,12 @@ public class BaseEnemy : MonoBehaviour
     [SerializeField] protected DefenderTower AttackTarget;
 
     protected bool StartupRan = false;
-
+    [SerializeField]protected bool Attacking = false;
 
     protected int MaxHealth = 0;
     [SerializeField]public int CurrentHealth;
     protected float MoveSpeed = 0;
-    protected float AttackRange = 0;
+    [SerializeField]protected float AttackRange = 0;
 
     [SerializeField] protected ParticleSystem TakenDamageEffect;
 
@@ -43,7 +43,6 @@ public class BaseEnemy : MonoBehaviour
 
     public virtual void Startup()
     {
-
         if (KillReward <= 0)
         {
             Debug.LogError("Killreward not set");
@@ -55,6 +54,13 @@ public class BaseEnemy : MonoBehaviour
         {
             Debug.LogError("Health Not Set");
         }
+        SetAgentValues();
+        EnemyAnimator = GetComponent<Animator>();
+        if(EnemyAnimator == null)
+        {
+            EnemyAnimator = transform.root.GetComponentInChildren<Animator>();
+        }
+        SetAnimationBool("Walking", true);
     }
 
     public virtual void HandleHealth(int HealthChange)
@@ -75,17 +81,35 @@ public class BaseEnemy : MonoBehaviour
         }
     }
 
+    protected void SetAgentValues()
+    {
+        AgentRef.speed = MoveSpeed;
+        AttackRange = AgentRef.stoppingDistance;
+    }
+
     protected void AttackTower()
     {
         if (AttackTarget == null)
         {
             return;
         }
+
+        Distance = Vector3.Distance(transform.position, AttackTarget.transform.position);
+        if(Distance > AttackRange+10)
+        {
+            return;
+        }
+
+        SetAnimationBool("Walking", false);
+
+
+        Attacking = true;
         ShotCooldownTime += Time.deltaTime;
         if (ShotCooldownTime >= FireRate)
         {
+            SetAnimationBool("Attacking", true);
             Throw();
-            Debug.Log("aaaaa");
+            Debug.Log("Attacking"+this.gameObject.name);
             ShotCooldownTime = 0f;
         }
     }
@@ -108,6 +132,7 @@ public class BaseEnemy : MonoBehaviour
         Rigidbody ProjectileRB = ProjectileInstance.GetComponent<Rigidbody>();
 
         ProjectileRB.velocity = ThrowPoint.transform.forward * 50;
+
         //TargetList[0].GetComponent<BaseEnemy>().HandleHealth(-10);
 
 

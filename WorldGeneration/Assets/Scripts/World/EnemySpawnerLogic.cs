@@ -39,7 +39,9 @@ public class EnemySpawnerLogic : MonoBehaviour
 
     [SerializeField] private int CurrentWave; 
     [SerializeField] private int MaxDownTime = 5;
+
     [SerializeField] private float CurrentDownTime;
+    private float BaseWaveMultiplier = 1.5f;
 
     private void Start()
     {
@@ -269,7 +271,15 @@ public class EnemySpawnerLogic : MonoBehaviour
     private void StartWave()
     {
         CurrentWave++;
-        SpawnCostAvaliable = WaveSpawnCost * (CurrentWave* 2);
+        if (WaveChangeFunction.Any(Wave => Wave.WaveNumber == CurrentWave))
+        {
+            SpawnCostAvaliable = WaveSpawnCost * (Mathf.RoundToInt((CurrentWave * BaseWaveMultiplier) * WaveChangeFunction[CurrentWave].WaveCostMultiplier));
+        }
+        else
+        {
+            SpawnCostAvaliable = WaveSpawnCost * (Mathf.RoundToInt((CurrentWave * BaseWaveMultiplier)));
+        }
+        
 
         if (MaxLivingEnemies <= 0)
         {
@@ -296,7 +306,7 @@ public class EnemySpawnerLogic : MonoBehaviour
         int Index = Spawns[SpawnLocation].GetComponent<PathGenerator>().ControlPointTransforms.Count();
 
         EnemyCreated.GetComponent<BaseEnemy>().FinalTarget = Spawns[SpawnLocation].GetComponent<PathGenerator>().ControlPointTransforms[Index - 1].gameObject;
-        EnemyCreated.gameObject.name = EnemyCreated.name+"    Spawned Enemy" + LivingEnemies + " " + EnemyScript.EnemyType + "   " + EnemyScript.TypeAlive;
+        EnemyCreated.gameObject.name = EnemyCreated.name + "    Spawned Enemy" + LivingEnemies + " " + EnemyScript.EnemyType + "   " + EnemyScript.TypeAlive + "" + Random.Range(0, 800);
         //ProgramManager.ProgramManagerInstance.EnemyCount.Add(EnemyCreated);
         EnemyCreated.GetComponent<BaseEnemy>().ParentSpawner = this;
 
@@ -380,12 +390,24 @@ public class EnemyObject
 public class WaveFunctionality
 {
 
-    [SerializeField] private int WaveNumber;
-    [SerializeField] private int WaveCostMultiplier;
+    [SerializeField] public int WaveNumber;
+    [SerializeField] public float WaveCostMultiplier;
 
     [SerializeField] private GameObject EnemyObject;
     [SerializeField] private float PrepTimeChange;
+    [SerializeField] public readonly bool ChangeCostMultiplier;
+    
+    public float NewCostMuliplier()
+    {
+        float NewMultiplier = 0.0f;
 
+        NewMultiplier = WaveNumber + 5;
+        NewMultiplier = (WaveNumber / (WaveNumber - 0.75f));
+
+
+
+        return 0;
+    }
 
 }
 

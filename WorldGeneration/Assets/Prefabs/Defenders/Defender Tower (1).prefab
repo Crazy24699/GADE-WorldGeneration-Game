@@ -154,6 +154,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HealthBar: {fileID: 3016739919105563159}
   TakenDamageEffect: {fileID: 5269410802817535968, guid: 1c7b93a4dc4d0d842acb62a5f9cbae16, type: 3}
+  MaxHealth: 30
   CurrentHealth: 0
   Damage: 10
   RotateObject: {fileID: 431047082401048554}
@@ -167,6 +168,8 @@ MonoBehaviour:
   TowerMaterials: []
   Projectile: {fileID: 5747039161091635797, guid: ba4df3af0d387604e962f891456779c6, type: 3}
   FireRate: 1
+  RotationOffset: 0
+  ShotCooldownTime: 0
   TargetList: []
 --- !u!64 &4358068847138314045
 MeshCollider:

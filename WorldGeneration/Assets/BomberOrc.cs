@@ -20,7 +20,7 @@ public class BomberOrc : BaseEnemy
         KillReward = 10;
         MaxHealth = 12;
         MoveSpeed = 15;
-        AttackRange = 10;
+        //AttackRange = 10;
 
         base.Startup();
         //Debug.Log("startup");
@@ -62,6 +62,11 @@ public class BomberOrc : BaseEnemy
         {
             AgentRef.SetDestination(FinalTarget.transform.position);
             Debug.Log("Nice try but two can play this game");
+        }
+        if (!Attacking)
+        {
+            SetAnimationBool("Walking", true);
+            SetAnimationBool("Attacking", false);
         }
         TrackTarget();
         AttackTower();

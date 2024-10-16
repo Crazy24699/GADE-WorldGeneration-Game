@@ -30,7 +30,7 @@ public class DefenderTower : TowerBase
 
     private void Start()
     {
-        MaxHealth = 40;
+        //MaxHealth = 40;
         TowerStartup();
         NormalMat = TowerMeshRender.materials[0];
         TowerMaterials = TowerMeshRender.materials;
@@ -97,7 +97,7 @@ public class DefenderTower : TowerBase
 
         Rigidbody ProjectileRB = ProjectileInstance.GetComponent<Rigidbody>();
 
-        ProjectileRB.velocity = FirePoint.transform.forward * -350;
+        ProjectileRB.velocity = FirePoint.transform.forward * -150;
         //TargetList[0].GetComponent<BaseEnemy>().HandleHealth(-10);
         if(TargetList[0].GetComponent<BaseEnemy>().CurrentHealth == 0)
         {
