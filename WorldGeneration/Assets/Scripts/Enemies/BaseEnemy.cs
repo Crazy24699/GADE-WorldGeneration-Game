@@ -91,6 +91,7 @@ public class BaseEnemy : MonoBehaviour
     {
         if (AttackTarget == null)
         {
+            Attacking = false;
             return;
         }
 

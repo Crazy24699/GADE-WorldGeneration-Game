@@ -550,7 +550,7 @@ NavMeshAgent:
   m_Enabled: 0
   m_AgentTypeID: 0
   m_Radius: 1.99
-  m_Speed: 7.55
+  m_Speed: 10
   m_Acceleration: 20
   avoidancePriority: 5
   m_AngularSpeed: 120
@@ -593,7 +593,7 @@ MonoBehaviour:
   ThrowPoint: {fileID: 6347849263545250717}
   AgentRef: {fileID: 0}
   Distance: 0
-  FireRate: 2
+  FireRate: 1.25
   MaxAttackDistance: 15
   LookSpeed: 0
   AttackTarget: {fileID: 0}

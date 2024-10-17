@@ -366,7 +366,7 @@ MonoBehaviour:
   GroundLayer:
     serializedVersion: 2
     m_Bits: 128
-  Width: 4.67
+  Width: 10
   CastingDistance: 0
   HeightDiff: 1.05
   MaterialRef: {fileID: 2100000, guid: 30d9de49bd273e141a1056bd8bd6e048, type: 2}
@@ -526,7 +526,7 @@ MonoBehaviour:
     BaseCost: 2
     CurrentSpawnCost: 0
     TypeAlive: 0
-    MaxAliveType: 10
+    MaxAliveType: 12
     EnemySpawnedCount: 0
     TestValue: 0
     CanSpawn: 1
@@ -536,7 +536,7 @@ MonoBehaviour:
     BaseCost: 5
     CurrentSpawnCost: 0
     TypeAlive: 0
-    MaxAliveType: 6
+    MaxAliveType: 8
     EnemySpawnedCount: 0
     TestValue: 0
     CanSpawn: 1
@@ -550,6 +550,16 @@ MonoBehaviour:
     EnemySpawnedCount: 0
     TestValue: 0
     CanSpawn: 1
+    Alive: 0
+    EnemyType: t3
+  - EnemyPrefabObject: {fileID: 8213456456119566102, guid: fa25a326bae39f542a98db1f17474c39, type: 3}
+    BaseCost: 16
+    CurrentSpawnCost: 0
+    TypeAlive: 0
+    MaxAliveType: 4
+    EnemySpawnedCount: 0
+    TestValue: 0
+    CanSpawn: 0
     Alive: 0
     EnemyType: t3
   NextSpawnEnemy:
@@ -702,7 +712,7 @@ MonoBehaviour:
   GroundLayer:
     serializedVersion: 2
     m_Bits: 128
-  Width: 4.67
+  Width: 10
   CastingDistance: 4.16
   HeightDiff: 1.05
   MaterialRef: {fileID: 2100000, guid: 30d9de49bd273e141a1056bd8bd6e048, type: 2}
@@ -2435,7 +2445,7 @@ MonoBehaviour:
   GroundLayer:
     serializedVersion: 2
     m_Bits: 128
-  Width: 4.67
+  Width: 10
   CastingDistance: 1
   HeightDiff: 1.05
   MaterialRef: {fileID: 2100000, guid: 30d9de49bd273e141a1056bd8bd6e048, type: 2}

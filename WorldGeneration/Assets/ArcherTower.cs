@@ -94,7 +94,7 @@ public class ArcherTower : TowerBase
         Rigidbody ProjectileRB = ProjectileInstance.GetComponent<Rigidbody>();
 
         ProjectileInstance.GetComponent<Bolt>().Startup(TargetList[0].transform.position - transform.position);
-        TargetList[0].GetComponent<BaseEnemy>().HandleHealth(-10);
+        //TargetList[0].GetComponent<BaseEnemy>().HandleHealth(-10);
         if (TargetList[0].GetComponent<BaseEnemy>().CurrentHealth == 0)
         {
             TargetList.RemoveAt(0);
