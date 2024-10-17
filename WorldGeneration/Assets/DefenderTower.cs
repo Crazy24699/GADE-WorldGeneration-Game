@@ -40,7 +40,7 @@ public class DefenderTower : TowerBase
     {
         
         //TowerMeshRender.materials = TowerMaterials;
-
+        if(TargetList.Count <= 0) { return; }
         Debug.DrawRay(FirePoint.transform.position, FirePoint.transform.forward*3, Color.blue);
         for (int i = 0; i < TargetList.Count; i++)
         {
@@ -93,7 +93,7 @@ public class DefenderTower : TowerBase
 
     private void FireProjectile()
     {
-        GameObject ProjectileInstance = Instantiate(Projectile, FirePoint.transform.position, FirePoint.transform.rotation);
+        GameObject ProjectileInstance = Instantiate(Projectile, FirePoint.transform.position, Quaternion.Euler(FirePoint.transform.forward));
 
         Rigidbody ProjectileRB = ProjectileInstance.GetComponent<Rigidbody>();
 
@@ -107,6 +107,7 @@ public class DefenderTower : TowerBase
 
     private void OnTriggerEnter(Collider Collision)
     {
+        if (!StartupRan) { return; }
         if(Collision.CompareTag("Enemy AI"))
         {
             if (!TargetList.Contains(Collision.gameObject))

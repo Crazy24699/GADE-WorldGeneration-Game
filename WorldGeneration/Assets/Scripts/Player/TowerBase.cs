@@ -11,6 +11,7 @@ public class TowerBase : MonoBehaviour
     [SerializeField] protected int MaxHealth = 20;
     [SerializeField]protected int CurrentHealth;
     [SerializeField] protected int Damage;
+     protected bool  StartupRan=false;
 
     //[SerializeField] protected GameObject EnemiesInRange;
 
@@ -28,6 +29,7 @@ public class TowerBase : MonoBehaviour
 
     public virtual void TowerStartup()
     {
+        StartupRan = false;
         if (HealthBar == null)
         {
             HealthBar = transform.GetComponentInChildren<Slider>();
@@ -40,6 +42,7 @@ public class TowerBase : MonoBehaviour
         HealthBar.maxValue = MaxHealth;
         CurrentHealth = MaxHealth;
         HealthBar.value = CurrentHealth;
+        StartupRan = true;
     }
 
     public virtual void HandleHealth(int HealthChange)
