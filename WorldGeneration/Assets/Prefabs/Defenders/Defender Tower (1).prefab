@@ -156,7 +156,7 @@ MonoBehaviour:
   TakenDamageEffect: {fileID: 5269410802817535968, guid: 1c7b93a4dc4d0d842acb62a5f9cbae16, type: 3}
   MaxHealth: 30
   CurrentHealth: 0
-  Damage: 10
+  Damage: 7
   RotateObject: {fileID: 431047082401048554}
   FirePoint: {fileID: 3831573237396818833}
   TowerMeshRender: {fileID: 8282012575808896004}
