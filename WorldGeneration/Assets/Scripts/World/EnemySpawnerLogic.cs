@@ -41,7 +41,7 @@ public class EnemySpawnerLogic : MonoBehaviour
     [SerializeField] private int MaxDownTime = 5;
 
     [SerializeField] private float CurrentDownTime;
-    private float BaseWaveMultiplier = 1.5f;
+    private float BaseWaveMultiplier = 1.25f;
 
     private void Start()
     {
@@ -273,11 +273,13 @@ public class EnemySpawnerLogic : MonoBehaviour
         CurrentWave++;
         if (WaveChangeFunction.Any(Wave => Wave.WaveNumber == CurrentWave))
         {
-            SpawnCostAvaliable = WaveSpawnCost * (Mathf.RoundToInt((CurrentWave * BaseWaveMultiplier) * WaveChangeFunction[CurrentWave].WaveCostMultiplier));
+            SpawnCostAvaliable = Mathf.RoundToInt(WaveSpawnCost * (CurrentWave * 0.75f));
+            //SpawnCostAvaliable = WaveSpawnCost * (Mathf.RoundToInt((CurrentWave * BaseWaveMultiplier) * WaveChangeFunction[CurrentWave].WaveCostMultiplier));
         }
         else
         {
-            SpawnCostAvaliable = WaveSpawnCost * (Mathf.RoundToInt((CurrentWave * BaseWaveMultiplier)));
+            Debug.Log("hell");
+            SpawnCostAvaliable = Mathf.RoundToInt(WaveSpawnCost * (CurrentWave * 0.75f));
         }
         
 

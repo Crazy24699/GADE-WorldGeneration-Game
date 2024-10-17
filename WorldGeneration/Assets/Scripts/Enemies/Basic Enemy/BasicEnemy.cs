@@ -50,6 +50,8 @@ public class BasicEnemy : BaseEnemy
         }
     }
 
+
+
     private void Update()
     {
         if (!StartupRan)

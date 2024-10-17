@@ -7,7 +7,7 @@ using UnityEngine;
 public class PlayerHandler : MonoBehaviour
 {
     public GameObject UseablePoint;
-    [SerializeField] private GameObject DefenderTower;
+    [SerializeField] private GameObject ChosenTower;
     public GameObject Outliner;
 
     private MapGenerator MapGenScript;
@@ -19,7 +19,10 @@ public class PlayerHandler : MonoBehaviour
 
     private bool TowerSelected = false;
 
-    [SerializeField]private List<DefenderTower> DefenderTowers= new List<DefenderTower>();
+    [SerializeField]private List<GameObject> DefenderTowers= new List<GameObject>();
+    [SerializeField]private List<Defenders> DefenderOptions= new List<Defenders>();
+    
+
 
     [SerializeField]private float MaxPlacementHeight;
 
@@ -70,13 +73,16 @@ public class PlayerHandler : MonoBehaviour
 
     }
 
-    public void SelectTower()
+    public void SelectTower(string Name)
     {
-        if (Money < 40) 
+        Defenders ChosenDefender = DefenderOptions.FirstOrDefault(Twr => Twr.Name == Name);
+        int TowerCost = ChosenDefender.Cost;
+        if (Money < TowerCost) 
         {
             return;
         }
 
+        ChosenTower = ChosenDefender.TowerObject;
         TowerSelected = true;
     }
 
@@ -126,10 +132,10 @@ public class PlayerHandler : MonoBehaviour
                 }
                 if(HitInfo.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
                 {
-                    GameObject SpawnedTower = Instantiate(DefenderTower, HitInfo.point + Vector3.up * 10, Quaternion.identity);
+                    GameObject SpawnedTower = Instantiate(ChosenTower, HitInfo.point + Vector3.up * 10, Quaternion.identity);
                     SpawnedTower.gameObject.name = "Defender Tower " + SpawnedTowerCount;
                     Debug.Log(HitInfo.collider.name + HitInfo.collider.gameObject.layer);
-                    DefenderTowers.Add(SpawnedTower.transform.GetComponentInChildren<DefenderTower>());
+                    DefenderTowers.Add(SpawnedTower.transform.GetComponentInChildren<DefenderTower>().gameObject);
                     HandleMoney(-40);
 
                     TowerSelected = false;
@@ -139,6 +145,14 @@ public class PlayerHandler : MonoBehaviour
             
         }
 
+    }
+
+    [System.Serializable]
+    private class Defenders
+    {
+        [SerializeField]public string Name;
+        [SerializeField] public int Cost;
+        [SerializeField] public GameObject TowerObject;
     }
 
 }

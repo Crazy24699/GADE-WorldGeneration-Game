@@ -87,6 +87,24 @@ public class BaseEnemy : MonoBehaviour
         AttackRange = AgentRef.stoppingDistance;
     }
 
+    protected void HandleStoppingDistance()
+    {
+        if (!StartupRan) { return; }
+        if(CurrentTarget==FinalTarget)
+        {
+            AgentRef.stoppingDistance = 0;
+        }
+        else if (CurrentTarget!=FinalTarget)
+        {
+            AgentRef.stoppingDistance = AttackRange;
+        }
+    }
+
+    private void LateUpdate()
+    {
+        HandleStoppingDistance();
+    }
+
     protected void AttackTower()
     {
         if (AttackTarget == null)

@@ -542,16 +542,6 @@ MonoBehaviour:
     CanSpawn: 1
     Alive: 0
     EnemyType: t2
-  - EnemyPrefabObject: {fileID: 325447197902550054, guid: 3a3cd327d1bd5d74286173846773cb97, type: 3}
-    BaseCost: 10
-    CurrentSpawnCost: 0
-    TypeAlive: 0
-    MaxAliveType: 6
-    EnemySpawnedCount: 0
-    TestValue: 0
-    CanSpawn: 1
-    Alive: 0
-    EnemyType: t3
   - EnemyPrefabObject: {fileID: 8213456456119566102, guid: fa25a326bae39f542a98db1f17474c39, type: 3}
     BaseCost: 16
     CurrentSpawnCost: 0
@@ -2125,13 +2115,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UseablePoint: {fileID: 4869510682687493274, guid: 4cc60c1aeda16754fa5d5279ef7806a5, type: 3}
-  DefenderTower: {fileID: 2525056309174436526, guid: fe8566290d1145149ac85dbe95e7088b, type: 3}
+  ChosenTower: {fileID: 0}
   Outliner: {fileID: 2710178}
   GroundLayer:
     serializedVersion: 2
     m_Bits: 384
   ViewingCamera: {fileID: 0}
   DefenderTowers: []
+  DefenderOptions:
+  - Name: Canoon
+    Cost: 40
+    TowerObject: {fileID: 2525056309174436526, guid: fe8566290d1145149ac85dbe95e7088b, type: 3}
+  - Name: Archer
+    Cost: 80
+    TowerObject: {fileID: 5531555258970135682, guid: 08c7c6cddb4328a42aa3dd57a12b2f2e, type: 3}
+  - Name: Mortar
+    Cost: 120
+    TowerObject: {fileID: 4291816866028445724, guid: a7afead012058c54596d74f510891e6d, type: 3}
   MaxPlacementHeight: 0
   PlacedTowersText: {fileID: 1282261106}
   MoneyCount: {fileID: 0}
@@ -3103,9 +3103,37 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2546464636236025482, guid: da751fe56f11ec449b887327772576d3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2546464636236025482, guid: da751fe56f11ec449b887327772576d3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2546464636236025482, guid: da751fe56f11ec449b887327772576d3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2546464636236025482, guid: da751fe56f11ec449b887327772576d3, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1650550535}
+    - target: {fileID: 2546464636236025482, guid: da751fe56f11ec449b887327772576d3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2546464636236025482, guid: da751fe56f11ec449b887327772576d3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: PlayerHandler, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2546464636236025482, guid: da751fe56f11ec449b887327772576d3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 2546464636236025482, guid: da751fe56f11ec449b887327772576d3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
+      value: Cannon
+      objectReference: {fileID: 0}
     - target: {fileID: 2765568487363119776, guid: da751fe56f11ec449b887327772576d3, type: 3}
       propertyPath: m_Name
       value: PlayerUI
@@ -3190,6 +3218,56 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5299416054461442924, guid: da751fe56f11ec449b887327772576d3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5299416054461442924, guid: da751fe56f11ec449b887327772576d3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1650550535}
+    - target: {fileID: 5299416054461442924, guid: da751fe56f11ec449b887327772576d3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SelectTower
+      objectReference: {fileID: 0}
+    - target: {fileID: 5299416054461442924, guid: da751fe56f11ec449b887327772576d3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
+      value: Mortar
+      objectReference: {fileID: 0}
+    - target: {fileID: 5607196300496828949, guid: da751fe56f11ec449b887327772576d3, type: 3}
+      propertyPath: m_text
+      value: 'Mortar
+
+        $120'
+      objectReference: {fileID: 0}
+    - target: {fileID: 7667537689289016521, guid: da751fe56f11ec449b887327772576d3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7667537689289016521, guid: da751fe56f11ec449b887327772576d3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1650550535}
+    - target: {fileID: 7667537689289016521, guid: da751fe56f11ec449b887327772576d3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SelectTower
+      objectReference: {fileID: 0}
+    - target: {fileID: 7667537689289016521, guid: da751fe56f11ec449b887327772576d3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
+      value: Archer
+      objectReference: {fileID: 0}
+    - target: {fileID: 8949534846019953902, guid: da751fe56f11ec449b887327772576d3, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: -15.841215
+      objectReference: {fileID: 0}
+    - target: {fileID: 8949534846019953902, guid: da751fe56f11ec449b887327772576d3, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0.000030517578
+      objectReference: {fileID: 0}
+    - target: {fileID: 8949534846019953902, guid: da751fe56f11ec449b887327772576d3, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -7.9205933
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3213,7 +3291,7 @@ SceneRoots:
   - {fileID: 1727762715}
   - {fileID: 1802879438}
   - {fileID: 1461358365}
-  - {fileID: 4869112173973053071}
   - {fileID: 506903380}
   - {fileID: 1548795547262290284}
   - {fileID: 2710182}
+  - {fileID: 4869112173973053071}
