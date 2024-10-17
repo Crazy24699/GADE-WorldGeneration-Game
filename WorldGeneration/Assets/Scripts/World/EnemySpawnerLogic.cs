@@ -46,7 +46,8 @@ public class EnemySpawnerLogic : MonoBehaviour
     private void Start()
     {
         ProgramManager.ProgramManagerInstance.SpawnWave.AddListener(() => HandleWaves());
-        
+        //CurrentWave = 1;
+        ProgramManager.ProgramManagerInstance.WaveNum = CurrentWave;
     }
 
     private void HandleWaves()
@@ -164,7 +165,7 @@ public class EnemySpawnerLogic : MonoBehaviour
         //Debug.Log(MadePaths.Count);
         if (MadePaths.Count >= 3)
         {
-            ProgramManager.ProgramManagerInstance.SpawnWave.Invoke();
+            //ProgramManager.ProgramManagerInstance.SpawnWave.Invoke();
         }
     }
 

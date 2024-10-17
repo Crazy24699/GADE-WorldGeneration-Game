@@ -46,6 +46,7 @@ public class PathGenerator : MonoBehaviour
     public bool Generated = false;
 
     public Transform[] ControlPointTransforms;
+    public NavMeshSurface PathSurface;
 
     public LayerMask GroundLayer;
 
@@ -65,7 +66,8 @@ public class PathGenerator : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.P))
         {
-            FindBottom();
+            PathSurface.RemoveData();
+            PathSurface.BuildNavMesh();
         }
         if(!Generated) { return; }
 
@@ -95,6 +97,14 @@ public class PathGenerator : MonoBehaviour
         }
         MeshFilterRef.mesh.vertices = NewCords;
         MeshFilterRef.mesh.RecalculateNormals();
+        MeshCol.sharedMesh = MeshFilterRef.mesh;
+        //StartCoroutine(BuildDelay());
+    }
+
+    private IEnumerator BuildDelay()
+    {
+        yield return new WaitForSeconds(0.5f);
+        //PathSurface.BuildNavMesh();
     }
 
     public void HandleGeneration()
@@ -108,6 +118,10 @@ public class PathGenerator : MonoBehaviour
         Vector3[] controlPoints = ControlPointTransforms.Select(t => t.position).ToArray();
         MeshFilterRef.mesh = CreateMeshFromSpline(controlPoints, Resolution, Width);
         MeshCol.sharedMesh = MeshFilterRef.sharedMesh;
+        //FindBottom();
+        //this.gameObject.tag = "Pathway";
+        //PathSurface.BuildNavMesh();
+        Debug.Log("Amadeus");
     }
 
     private void CreatePathObject()
@@ -166,15 +180,16 @@ public class PathGenerator : MonoBehaviour
         }
         //MeshVertices.AddRange(VectorsInRange.ToList());
 
-        NavMeshSurface NavSurface = MadePath.AddComponent<NavMeshSurface>();
         MadePath.layer = 8;
 
-        NavSurface.layerMask = SceneHandler.SceneInstance.WalkableLayers;
-
-        MadePath.tag = "Pathway";
-        NavSurface.BuildNavMesh();
+        //FindBottom();
+        PathSurface = MadePath.AddComponent<NavMeshSurface>();
+        PathSurface.layerMask = SceneHandler.SceneInstance.WalkableLayers;
+        PathSurface.tag = "Pathway";
+        PathSurface.BuildNavMesh();
 
         SceneHandler.SceneInstance.PathsGenerated = true;
+        //PathSurface.BuildNavMesh();
     }
 
     private Mesh CreateMeshFromSpline(Vector3[] WorldPoints, int SplineResolution, float Width)

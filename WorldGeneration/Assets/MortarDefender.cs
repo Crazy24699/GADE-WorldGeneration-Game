@@ -96,6 +96,7 @@ public class MortarDefender : TowerBase
     private void TrackTarget()
     {
         if (!StartupRan) { return; }
+        if(TargetList.Count <= 0) { return; }
         Vector3 TargetRotation = TargetList[0].transform.position - transform.position;
         TargetRotation.y = 0;
         transform.rotation = Quaternion.LookRotation(TargetRotation);

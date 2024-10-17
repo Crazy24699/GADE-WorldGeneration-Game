@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class MortarShell : MonoBehaviour
 {
-    public Transform FirePoint;      // The point where the projectile starts
-    public Transform TargetPoint;    // The point the projectile is aiming for
+    public Transform FirePoint;      
+    public Transform TargetPoint;    
     public Vector3 EndPosition;
-    public float TravelTime = 0.25f;    // Time it takes to travel from fire point to target
-    private float ElapsedTime = 0f;  // Tracks the time passed for interpolation
-    private int Damage;
+    public float TravelTime = 2;    
+    [SerializeField]private float ElapsedTime = 0f; 
+    private int Damage=50;
 
-    private Vector3 ArcMidPoint;     // A calculated midpoint to simulate the arc
+    private Vector3 ArcMidPoint;     
 
     private void Start()
     {
@@ -32,19 +32,15 @@ public class MortarShell : MonoBehaviour
 
     private void Update()
     {
+        ElapsedTime += Time.deltaTime;
         if (ElapsedTime < TravelTime)
         {
-            // Increment the elapsed time
-            ElapsedTime += Time.deltaTime;
-
             Debug.Log("Slerp");
 
-            // Interpolate between the fire point and the target point using Slerp
-            Vector3 startToMid = Vector3.Slerp(FirePoint.position, ArcMidPoint, ElapsedTime / TravelTime);
-            Vector3 midToTarget = Vector3.Slerp(ArcMidPoint, EndPosition, ElapsedTime / TravelTime);
+            Vector3 StartToMidPoint = Vector3.Slerp(FirePoint.position, ArcMidPoint, ElapsedTime / TravelTime);
+            Vector3 MidPointToEndPoint = Vector3.Slerp(ArcMidPoint, EndPosition, ElapsedTime / TravelTime);
 
-            // Set the shell's position to interpolate along the arc
-            transform.position = Vector3.Slerp(startToMid, midToTarget, ElapsedTime / TravelTime);
+            transform.position = Vector3.Slerp(StartToMidPoint, MidPointToEndPoint, ElapsedTime / TravelTime);
         }
     }
     private void OnTriggerEnter(Collider Collider)
@@ -54,7 +50,7 @@ public class MortarShell : MonoBehaviour
             Collider.GetComponent<BaseEnemy>().HandleHealth(-Damage);
             Destroy(gameObject);
         }
-        if (Collider.CompareTag("Ground"))
+        if (Collider.CompareTag("Ground") || Collider.CompareTag("Pathway"))
         {
             Destroy(gameObject);
         }

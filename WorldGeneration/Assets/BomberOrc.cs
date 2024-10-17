@@ -92,9 +92,27 @@ public class BomberOrc : BaseEnemy
             if (NavMesh.SamplePosition(CurrentTarget.transform.position, out NavMeshHitInfo, 50.0f, NavMesh.AllAreas))
             {
                 AgentRef.SetDestination(NavMeshHitInfo.position);
+                AttackPoint = NavMeshHitInfo.position;
             }
         }
     }
+
+    private void OnTriggerStay(Collider Collision)
+    {
+        if (CurrentHealth <= 1) { return; }
+        if (Collision.CompareTag("DefenderTower"))
+        {
+            AttackTarget = Collision.GetComponent<TowerBase>();
+            CurrentTarget = Collision.gameObject;
+            NavMeshHit NavMeshHitInfo;
+            if (NavMesh.SamplePosition(CurrentTarget.transform.position, out NavMeshHitInfo, 50.0f, NavMesh.AllAreas))
+            {
+                AgentRef.SetDestination(NavMeshHitInfo.position);
+                AttackPoint = NavMeshHitInfo.position;
+            }
+        }
+    }
+
     private void OnTriggerExit(Collider Collision)
     {
         if (Collision.CompareTag("DefenderTower"))

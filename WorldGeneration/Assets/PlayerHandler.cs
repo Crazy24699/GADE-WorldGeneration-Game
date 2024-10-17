@@ -8,6 +8,7 @@ public class PlayerHandler : MonoBehaviour
 {
     public GameObject UseablePoint;
     [SerializeField] private GameObject ChosenTower;
+    [SerializeField] private Defenders ChosenTowerInfo;
     public GameObject Outliner;
 
     private MapGenerator MapGenScript;
@@ -38,7 +39,17 @@ public class PlayerHandler : MonoBehaviour
         CheckTowerClearance = FindObjectOfType<HandleOverlap>();
         //RequestUseableLand();
         InvokeRepeating(nameof(RequestUseableLand), 0.0f, 0.5f);
+        ProgramManager.ProgramManagerInstance.SpawnWave.AddListener(() => AddMoreMoney());
         Money = 120;
+    }
+
+    private void AddMoreMoney()
+    {
+        if (ProgramManager.ProgramManagerInstance.WaveNum == 0)
+        {
+            ProgramManager.ProgramManagerInstance.WaveNum = 1;
+        }
+        Money = Money * ProgramManager.ProgramManagerInstance.WaveNum;
     }
 
     private void RequestUseableLand()
@@ -83,6 +94,7 @@ public class PlayerHandler : MonoBehaviour
         }
 
         ChosenTower = ChosenDefender.TowerObject;
+        ChosenTowerInfo = ChosenDefender;
         TowerSelected = true;
     }
 
@@ -133,10 +145,10 @@ public class PlayerHandler : MonoBehaviour
                 if(HitInfo.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
                 {
                     GameObject SpawnedTower = Instantiate(ChosenTower, HitInfo.point + Vector3.up * 10, Quaternion.identity);
-                    SpawnedTower.gameObject.name = "Defender Tower " + SpawnedTowerCount;
+                    SpawnedTower.gameObject.name = "Defender Tower " + SpawnedTowerCount + ChosenTower.gameObject.name;
                     Debug.Log(HitInfo.collider.name + HitInfo.collider.gameObject.layer);
-                    DefenderTowers.Add(SpawnedTower.transform.GetComponentInChildren<DefenderTower>().gameObject);
-                    HandleMoney(-40);
+                    DefenderTowers.Add(SpawnedTower.transform.GetComponentInChildren<TowerBase>().gameObject);
+                    HandleMoney(-ChosenTowerInfo.Cost);
 
                     TowerSelected = false;
                 }

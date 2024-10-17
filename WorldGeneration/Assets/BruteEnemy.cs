@@ -91,6 +91,7 @@ public class BruteEnemy : BaseEnemy
             if (NavMesh.SamplePosition(CurrentTarget.transform.position, out NavMeshHitInfo, 50.0f, NavMesh.AllAreas))
             {
                 AgentRef.SetDestination(NavMeshHitInfo.position);
+                AttackPoint = NavMeshHitInfo.position;
             }
         }
     }

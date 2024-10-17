@@ -12,6 +12,8 @@ public class ProgramManager : MonoBehaviour
 
     public bool StartSpawning;
 
+    public int WaveNum = 1;
+
 
     public UnityEvent SpawnWave;
     public List<GameObject> EnemyCount;
@@ -27,6 +29,8 @@ public class ProgramManager : MonoBehaviour
         }
 
         Destroy(ProgramManagerInstance);
+        WaveNum=1;
+        SpawnWave.AddListener(() => WaveNum++);
         //SpawnWave.Invoke();
     }
 

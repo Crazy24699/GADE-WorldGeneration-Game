@@ -363,6 +363,7 @@ MonoBehaviour:
   - {fileID: 477632706}
   - {fileID: 1077437501}
   - {fileID: 2143820230}
+  PathSurface: {fileID: 0}
   GroundLayer:
     serializedVersion: 2
     m_Bits: 128
@@ -581,7 +582,7 @@ MonoBehaviour:
     WaveCostMultiplier: 2.5
     EnemyObject: {fileID: 0}
     PrepTimeChange: 0
-  Spawn: 1
+  Spawn: 0
   EnemiesToSpawn: 21
   RemainingEnemies: 0
   LivingEnemies: 0
@@ -699,6 +700,7 @@ MonoBehaviour:
   - {fileID: 1475809269}
   - {fileID: 1891099871}
   - {fileID: 752181142}
+  PathSurface: {fileID: 0}
   GroundLayer:
     serializedVersion: 2
     m_Bits: 128
@@ -1499,7 +1501,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1232202110}
   - component: {fileID: 1232202109}
-  - component: {fileID: 1232202111}
   m_Layer: 0
   m_Name: Scene Handler
   m_TagString: Untagged
@@ -1548,19 +1549,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1232202111
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1232202108}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a55ff8e72d17e814a98d72c97a05ac06, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  EnemyOptions: []
 --- !u!114 &1282261106 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7125964252385811666, guid: da751fe56f11ec449b887327772576d3, type: 3}
@@ -2116,6 +2104,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UseablePoint: {fileID: 4869510682687493274, guid: 4cc60c1aeda16754fa5d5279ef7806a5, type: 3}
   ChosenTower: {fileID: 0}
+  ChosenTowerInfo:
+    Name: 
+    Cost: 0
+    TowerObject: {fileID: 0}
   Outliner: {fileID: 2710178}
   GroundLayer:
     serializedVersion: 2
@@ -2442,6 +2434,7 @@ MonoBehaviour:
   - {fileID: 448132866}
   - {fileID: 541193964}
   - {fileID: 1336334405}
+  PathSurface: {fileID: 0}
   GroundLayer:
     serializedVersion: 2
     m_Bits: 128
@@ -2587,6 +2580,7 @@ MonoBehaviour:
   GamePaused: 0
   DevMode: 1
   StartSpawning: 0
+  WaveNum: 0
   SpawnWave:
     m_PersistentCalls:
       m_Calls:

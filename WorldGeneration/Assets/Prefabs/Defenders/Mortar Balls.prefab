@@ -122,7 +122,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FirePoint: {fileID: 0}
   TargetPoint: {fileID: 0}
-  TravelTime: 2
+  EndPosition: {x: 0, y: 0, z: 0}
+  TravelTime: 0.75
+  ElapsedTime: 0
 --- !u!54 &1166439666262695975
 Rigidbody:
   m_ObjectHideFlags: 0

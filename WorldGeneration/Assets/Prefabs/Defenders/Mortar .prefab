@@ -233,10 +233,11 @@ GameObject:
   m_Component:
   - component: {fileID: 359478967767660231}
   - component: {fileID: 3823189071548257161}
-  - component: {fileID: 3064762856883289336}
+  - component: {fileID: 5598216551234126917}
+  - component: {fileID: 9074138172920909302}
   m_Layer: 0
   m_Name: 'Mortar '
-  m_TagString: Untagged
+  m_TagString: DefenderTower
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -290,7 +291,28 @@ MonoBehaviour:
   DamageMat: {fileID: 2100000, guid: 74b47b6dbbfe7a14c87660f789de9373, type: 2}
   NormalMat: {fileID: -6629797300637803691, guid: e85496584f3d69f46a2353a8916eb468, type: 3}
   TowerMaterials: []
---- !u!65 &3064762856883289336
+--- !u!135 &5598216551234126917
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4291816866028445724}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 100
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!65 &9074138172920909302
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -309,7 +331,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 100, y: 4.05, z: 100}
+  m_Size: {x: 7, y: 15, z: 7}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4313179605898039693
 GameObject:

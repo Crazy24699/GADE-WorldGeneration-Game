@@ -10,6 +10,7 @@ public class BaseEnemy : MonoBehaviour
     [SerializeField] protected Animator EnemyAnimator;
     [SerializeField] public GameObject FinalTarget;
     [SerializeField] public GameObject CurrentTarget;
+    [SerializeField] protected Vector3 AttackPoint;
 
 
     [SerializeField] protected GameObject ThrowObject;
@@ -25,7 +26,7 @@ public class BaseEnemy : MonoBehaviour
     [SerializeField] protected float MaxAttackDistance;
     public float LookSpeed;
 
-    [SerializeField] protected DefenderTower AttackTarget;
+    [SerializeField] protected TowerBase AttackTarget;
 
     protected bool StartupRan = false;
     [SerializeField]protected bool Attacking = false;
@@ -114,7 +115,12 @@ public class BaseEnemy : MonoBehaviour
         }
 
         Distance = Vector3.Distance(transform.position, AttackTarget.transform.position);
-        if(Distance > AttackRange+10)
+        float WayPointDist = Vector3.Distance(transform.position, AttackPoint);
+        if(WayPointDist<= AttackRange+5)
+        {
+            Attacking = true;
+        }
+        if(Distance > AttackRange+10 && WayPointDist > AttackRange + 5)
         {
             return;
         }
