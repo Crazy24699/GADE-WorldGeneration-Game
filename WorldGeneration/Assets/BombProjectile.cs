@@ -13,10 +13,10 @@ public class BombProjectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider Collider)
     {
-        if (Collider.CompareTag("TowerArea") || Collider.CompareTag("DefenderTower")) 
+        if (Collider.CompareTag("TowerArea") ) 
         {
             Debug.Log(Collider.transform.parent);
-            Collider.transform.parent.GetComponentInChildren<DefenderTower>().HandleHealth(-Damage);
+            Collider.transform.parent.GetComponentInChildren<TowerBase>().HandleHealth(-Damage);
             Destroy(gameObject);
         }
         if (Collider.CompareTag("Ground"))

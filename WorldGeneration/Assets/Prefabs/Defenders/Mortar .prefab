@@ -232,9 +232,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 359478967767660231}
-  - component: {fileID: 3823189071548257161}
-  - component: {fileID: 5598216551234126917}
-  - component: {fileID: 9074138172920909302}
   m_Layer: 0
   m_Name: 'Mortar '
   m_TagString: DefenderTower
@@ -256,83 +253,11 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1647339360255514978}
+  - {fileID: 6068651459157023968}
   - {fileID: 6452607156311540464}
+  - {fileID: 4503895610298011951}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 48.73, z: 0}
---- !u!114 &3823189071548257161
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4291816866028445724}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9999af95b5ffa8840b1ce8b02330acf4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  HealthBar: {fileID: 2294172158972222757}
-  TakenDamageEffect: {fileID: 5269410802817535968, guid: 1c7b93a4dc4d0d842acb62a5f9cbae16, type: 3}
-  MaxHealth: 20
-  CurrentHealth: 0
-  Damage: 0
-  MaxRange: 100
-  FiringAngle: -20
-  GravityMultiplier: 2
-  FireRate: 0.95
-  ShotCooldownTime: 0.48
-  ProjectileRef: {fileID: 5747039161091635797, guid: 82df46f7df79bc546b4a2c359cb8c2a5, type: 3}
-  TargetList: []
-  FirePoint: {fileID: 1313776727479200046}
-  TowerMeshRender: {fileID: 5477754288295322603}
-  EnemyLayer:
-    serializedVersion: 2
-    m_Bits: 512
-  DamageMat: {fileID: 2100000, guid: 74b47b6dbbfe7a14c87660f789de9373, type: 2}
-  NormalMat: {fileID: -6629797300637803691, guid: e85496584f3d69f46a2353a8916eb468, type: 3}
-  TowerMaterials: []
---- !u!135 &5598216551234126917
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4291816866028445724}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 100
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!65 &9074138172920909302
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4291816866028445724}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 7, y: 15, z: 7}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4313179605898039693
 GameObject:
   m_ObjectHideFlags: 0
@@ -496,6 +421,59 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 10
+--- !u!1 &6206086696918903226
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4503895610298011951}
+  - component: {fileID: 3504654613749844570}
+  m_Layer: 0
+  m_Name: TowerArea
+  m_TagString: TowerArea
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4503895610298011951
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6206086696918903226}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 359478967767660231}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &3504654613749844570
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6206086696918903226}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 10.732126, y: 15.727348, z: 11.42227}
+  m_Center: {x: 0, y: -1.1193478, z: 0}
 --- !u!1 &7896097976623712881
 GameObject:
   m_ObjectHideFlags: 0
@@ -584,3 +562,89 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &8087589613147783669
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6068651459157023968}
+  - component: {fileID: 5692883950538735734}
+  - component: {fileID: 7367293766171451486}
+  m_Layer: 0
+  m_Name: Detector
+  m_TagString: DefenderTower
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6068651459157023968
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8087589613147783669}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 359478967767660231}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5692883950538735734
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8087589613147783669}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9999af95b5ffa8840b1ce8b02330acf4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HealthBar: {fileID: 2294172158972222757}
+  TakenDamageEffect: {fileID: 5269410802817535968, guid: 1c7b93a4dc4d0d842acb62a5f9cbae16, type: 3}
+  MaxHealth: 20
+  CurrentHealth: 0
+  Damage: 0
+  MaxRange: 100
+  FiringAngle: -20
+  GravityMultiplier: 2
+  FireRate: 0.95
+  ShotCooldownTime: 0.48
+  ProjectileRef: {fileID: 5747039161091635797, guid: 82df46f7df79bc546b4a2c359cb8c2a5, type: 3}
+  TargetList: []
+  FirePoint: {fileID: 1313776727479200046}
+  TowerMeshRender: {fileID: 5477754288295322603}
+  EnemyLayer:
+    serializedVersion: 2
+    m_Bits: 512
+  DamageMat: {fileID: 2100000, guid: 74b47b6dbbfe7a14c87660f789de9373, type: 2}
+  NormalMat: {fileID: -6629797300637803691, guid: e85496584f3d69f46a2353a8916eb468, type: 3}
+  TowerMaterials: []
+--- !u!135 &7367293766171451486
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8087589613147783669}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 100
+  m_Center: {x: 0, y: 0, z: 0}

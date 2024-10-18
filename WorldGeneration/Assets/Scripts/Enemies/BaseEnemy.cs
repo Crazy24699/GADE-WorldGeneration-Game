@@ -163,6 +163,22 @@ public class BaseEnemy : MonoBehaviour
 
     }
 
+    private void OnTriggerStay(Collider Collision)
+    {
+        if (CurrentHealth <= 1) { return; }
+        if (Collision.CompareTag("DefenderTower"))
+        {
+            AttackTarget = Collision.GetComponent<TowerBase>();
+            CurrentTarget = Collision.gameObject;
+            NavMeshHit NavMeshHitInfo;
+            if (NavMesh.SamplePosition(CurrentTarget.transform.position, out NavMeshHitInfo, 50.0f, NavMesh.AllAreas))
+            {
+                AgentRef.SetDestination(NavMeshHitInfo.position);
+                AttackPoint = NavMeshHitInfo.position;
+            }
+        }
+    }
+
     public void PopulateValues(EnemyObject SpawnedType)
     {
         EnemyType = SpawnedType.SpawnedEnemyObject();
