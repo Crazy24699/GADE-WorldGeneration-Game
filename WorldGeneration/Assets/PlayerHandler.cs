@@ -86,8 +86,11 @@ public class PlayerHandler : MonoBehaviour
 
     public void SelectTower(string Name)
     {
+        //ChosenTower = null;
+        //ChosenTowerInfo = null;
         Defenders ChosenDefender = DefenderOptions.FirstOrDefault(Twr => Twr.Name == Name);
         int TowerCost = ChosenDefender.Cost;
+
         if (Money < TowerCost) 
         {
             return;
