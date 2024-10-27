@@ -18,6 +18,7 @@ public class EnemySpawnerLogic : MonoBehaviour
     //Scripts   
     private HashSet<PathGenerator> MadePaths = new HashSet<PathGenerator>();
     public WaveFunctionality[] WaveChangeFunction;
+    private PlayerHandler PlayerHandleScript;
 
 
     //remove this
@@ -37,17 +38,23 @@ public class EnemySpawnerLogic : MonoBehaviour
     [SerializeField] private int WaveSpawnCost;
     private int CurrentSpawnLocation = 0;
 
-    [SerializeField] private int CurrentWave; 
+    [SerializeField] private int CurrentWave;
     [SerializeField] private int MaxDownTime = 5;
+    [SerializeField] private int RegenReduction;
 
     [SerializeField] private float CurrentDownTime;
     private float BaseWaveMultiplier = 1.25f;
+
+    [SerializeField] private float MaxRegenTime = 1.25f;
+    [SerializeField] private float CurrentRegenTime;
 
     private void Start()
     {
         ProgramManager.ProgramManagerInstance.SpawnWave.AddListener(() => HandleWaves());
         //CurrentWave = 1;
         ProgramManager.ProgramManagerInstance.WaveNum = CurrentWave;
+
+        PlayerHandleScript = FindObjectOfType<PlayerHandler>();
     }
 
     private void HandleWaves()
@@ -99,6 +106,20 @@ public class EnemySpawnerLogic : MonoBehaviour
     //    yield return new WaitForSeconds(1);
 
     //}
+
+
+    private void HandleUI_Info()
+    {
+        PlayerHandleScript.WaveNum.text = "Current Number: "+CurrentWave.ToString();
+        PlayerHandleScript.RemaningEnemies.text = "Enemies Left: " + RemainingEnemies.ToString();
+        PlayerHandleScript.WaveDownTime.text = "Down time: " + CurrentDownTime.ToString();
+
+    }
+
+    private void PassiveRegen()
+    {
+
+    }
 
     public void HandleEnemyCost()
     {
@@ -245,7 +266,7 @@ public class EnemySpawnerLogic : MonoBehaviour
         {
             yield return new WaitForSeconds(0.5f);
             //Debug.Log("How long ");
-
+            HandleUI_Info();
             EnemyOptions[EnemyIndex].CheckSpawning();
 
             NextSpawnEnemy = FindLowestCost();
@@ -263,14 +284,19 @@ public class EnemySpawnerLogic : MonoBehaviour
     {
         if (!WaveBeaten) return;
         CurrentDownTime -= Time.deltaTime;
+        HandleUI_Info();
+
         if (CurrentDownTime < 0)
         {
             StartWave();
+            CurrentDownTime = 0;
         }
     }
 
     private void StartWave()
     {
+        HandleUI_Info();
+
         CurrentWave++;
         if (WaveChangeFunction.Any(Wave => Wave.WaveNumber == CurrentWave))
         {

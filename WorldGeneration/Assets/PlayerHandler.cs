@@ -30,6 +30,10 @@ public class PlayerHandler : MonoBehaviour
     public TextMeshProUGUI PlacedTowersText;
     public TextMeshProUGUI MoneyCount;
 
+    [SerializeField] public TextMeshProUGUI WaveNum;
+    [SerializeField] public TextMeshProUGUI RemaningEnemies;
+    [SerializeField] public TextMeshProUGUI WaveDownTime;
+
     [SerializeField]private HandleOverlap CheckTowerClearance;
 
     private void Start()

@@ -619,9 +619,9 @@ MonoBehaviour:
   LivingEnemies: 0
   MaxLivingEnemies: 21
   SpawnCostAvaliable: 0
-  WaveSpawnCost: 50
+  WaveSpawnCost: 75
   CurrentWave: 0
-  MaxDownTime: 5
+  MaxDownTime: 10
   CurrentDownTime: 0
 --- !u!4 &239845597
 Transform:
@@ -2055,7 +2055,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1385297441}
-  - component: {fileID: 1385297444}
   - component: {fileID: 1385297443}
   - component: {fileID: 1385297442}
   m_Layer: 0
@@ -2094,20 +2093,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HealthBar: {fileID: 2096070045}
   TakenDamageEffect: {fileID: 5269410802817535968, guid: 1c7b93a4dc4d0d842acb62a5f9cbae16, type: 3}
-  MaxHealth: 50
+  MaxHealth: 150
   CurrentHealth: 0
   Damage: 0
   PlayerUIScript: {fileID: 1983433613}
-  RotateObject: {fileID: 0}
-  FirePoint: {fileID: 0}
-  TowerMeshRender: {fileID: 0}
+  RotateObject: {fileID: 551380982}
+  FirePoint: {fileID: 118764689}
+  TowerMeshRender: {fileID: 1461358366}
   EnemyLayer:
     serializedVersion: 2
     m_Bits: 512
   DamageMat: {fileID: 2100000, guid: 30d9de49bd273e141a1056bd8bd6e048, type: 2}
   NormalMat: {fileID: 0}
   TowerMaterials: []
-  Projectile: {fileID: 0}
+  Projectile: {fileID: 5747039161091635797, guid: ba4df3af0d387604e962f891456779c6, type: 3}
   FireRate: 0.95
   RotationOffset: 0
   ShotCooldownTime: 0
@@ -2134,37 +2133,6 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &1385297444
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1385297440}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09501c6590808144c9ceacf9fbcbf647, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  HealthBar: {fileID: 0}
-  TakenDamageEffect: {fileID: 5269410802817535968, guid: 1c7b93a4dc4d0d842acb62a5f9cbae16, type: 3}
-  MaxHealth: 35
-  CurrentHealth: 0
-  Damage: 7
-  RotateObject: {fileID: 551380982}
-  FirePoint: {fileID: 118764689}
-  TowerMeshRender: {fileID: 0}
-  EnemyLayer:
-    serializedVersion: 2
-    m_Bits: 512
-  DamageMat: {fileID: 2100000, guid: 30d9de49bd273e141a1056bd8bd6e048, type: 2}
-  NormalMat: {fileID: 0}
-  TowerMaterials: []
-  Projectile: {fileID: 5747039161091635797, guid: ba4df3af0d387604e962f891456779c6, type: 3}
-  FireRate: 1.25
-  RotationOffset: 0
-  ShotCooldownTime: 0
-  TargetList: []
 --- !u!1 &1456743750
 GameObject:
   m_ObjectHideFlags: 0
@@ -2394,6 +2362,11 @@ PrefabInstance:
       addedObject: {fileID: 1385297441}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fab0694045ce60142945a4e5271646df, type: 3}
+--- !u!23 &1461358366 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 6742826115500764860, guid: fab0694045ce60142945a4e5271646df, type: 3}
+  m_PrefabInstance: {fileID: 1461358365}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1475809268
 GameObject:
   m_ObjectHideFlags: 0
@@ -2752,6 +2725,9 @@ MonoBehaviour:
   MaxPlacementHeight: 0
   PlacedTowersText: {fileID: 1282261106}
   MoneyCount: {fileID: 0}
+  WaveNum: {fileID: 2117049630}
+  RemaningEnemies: {fileID: 444312744}
+  WaveDownTime: {fileID: 772355675}
   CheckTowerClearance: {fileID: 0}
 --- !u!114 &1650550536
 MonoBehaviour:
