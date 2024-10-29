@@ -83,7 +83,7 @@ public class BasicEnemy : BaseEnemy
     {
         if (Collision.CompareTag("PlayerTower"))
         {
-            Collision.GetComponent<TowerLogic>().HandleHealth(-CurrentHealth);
+            Collision.GetComponent<TowerBase>().HandleHealth(-CurrentHealth);
             TakenDamage();
             Destroy(this.gameObject);
         }

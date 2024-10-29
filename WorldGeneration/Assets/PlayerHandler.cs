@@ -16,7 +16,7 @@ public class PlayerHandler : MonoBehaviour
     [SerializeField] private Camera ViewingCamera;
     private int SpawnedTowerCount;
 
-    private int Money;
+    [SerializeField]private int Money;
 
     private bool TowerSelected = false;
 
@@ -53,7 +53,7 @@ public class PlayerHandler : MonoBehaviour
         {
             ProgramManager.ProgramManagerInstance.WaveNum = 1;
         }
-        Money = Money * ProgramManager.ProgramManagerInstance.WaveNum;
+        Money += Money * ProgramManager.ProgramManagerInstance.WaveNum;
     }
 
     private void RequestUseableLand()
