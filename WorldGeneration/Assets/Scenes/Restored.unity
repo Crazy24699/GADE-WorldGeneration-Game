@@ -622,7 +622,10 @@ MonoBehaviour:
   WaveSpawnCost: 75
   CurrentWave: 0
   MaxDownTime: 10
+  RegenReduction: 0
   CurrentDownTime: 0
+  MaxRegenTime: 1.25
+  CurrentRegenTime: 0
 --- !u!4 &239845597
 Transform:
   m_ObjectHideFlags: 0
@@ -2292,7 +2295,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5085739345464494648, guid: fab0694045ce60142945a4e5271646df, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 100.9
+      value: 101.8
       objectReference: {fileID: 0}
     - target: {fileID: 5085739345464494648, guid: fab0694045ce60142945a4e5271646df, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2300,7 +2303,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5085739345464494648, guid: fab0694045ce60142945a4e5271646df, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -16.6
+      value: -17.6
       objectReference: {fileID: 0}
     - target: {fileID: 5085739345464494648, guid: fab0694045ce60142945a4e5271646df, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2711,6 +2714,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 384
   ViewingCamera: {fileID: 0}
+  Money: 0
   DefenderTowers: []
   DefenderOptions:
   - Name: Cannon
