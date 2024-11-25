@@ -75,7 +75,7 @@ public class PlayerHandler : MonoBehaviour
         IEnumerable<Vector3> UseableLand = AllLand.Where(V => V.y <= MinLandValue.y+0.35f);
         foreach (Vector3 Point in UseableLand)
         {
-            Instantiate(UseablePoint, Point + Vector3.up * 1.5f, Quaternion.Euler(90, 0, 0)).transform.parent = GroundParent.transform;
+            //Instantiate(UseablePoint, Point + Vector3.up * 1.5f, Quaternion.Euler(90, 0, 0)).transform.parent = GroundParent.transform;
         }
 
         MaxPlacementHeight = Mathf.Abs(MinLandValue.y) + 0.35f;
