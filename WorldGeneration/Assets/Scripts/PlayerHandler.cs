@@ -22,7 +22,7 @@ public class PlayerHandler : MonoBehaviour
 
     [SerializeField]private List<GameObject> DefenderTowers= new List<GameObject>();
     [SerializeField]private List<Defenders> DefenderOptions= new List<Defenders>();
-    
+
 
 
     [SerializeField]private float MaxPlacementHeight;
@@ -45,7 +45,11 @@ public class PlayerHandler : MonoBehaviour
         InvokeRepeating(nameof(RequestUseableLand), 0.0f, 0.5f);
         ProgramManager.ProgramManagerInstance.SpawnWave.AddListener(() => AddMoreMoney());
         Money = 120;
+
+        
     }
+
+    
 
     private void AddMoreMoney()
     {
@@ -82,6 +86,8 @@ public class PlayerHandler : MonoBehaviour
         CancelInvoke();
     }
 
+
+
     public void HandleMoney(int MoneyDifference)
     {
         Money += MoneyDifference;
@@ -109,6 +115,9 @@ public class PlayerHandler : MonoBehaviour
     {
         HandleTower();
         HandleUI();
+
+
+
     }
 
     private void HandleUI()
