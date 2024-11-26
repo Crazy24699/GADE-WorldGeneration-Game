@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-1308328257955544624
+--- !u!114 &-2417179244722074284
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
@@ -20,13 +20,13 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: CanonPowerUp
+  m_Name: L2PowerUp
   m_Shader: {fileID: -6465566751694194690, guid: e51e0679f7bd51c49818b634d3778d9c, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
   m_InvalidKeywords: []
-  m_LightmapFlags: 0
+  m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -54,10 +54,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _FresnelPower: 100
+    - _FresnelPower: 1.5
     - _QueueControl: 0
     - _QueueOffset: 0
     m_Colors:
     - _FresnelColourPower: {r: 1, g: 0.2371134, b: 0, a: 0}
-    - _PowerColour: {r: 0.07058824, g: 0.07058824, b: 0.07058824, a: 0}
+    - _PowerColour: {r: 0.6784314, g: 0.3515474, b: 0, a: 1}
   m_BuildTextureStacks: []

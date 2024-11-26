@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: DefenderHealthUp
+  m_Name: L2HealthUp
   m_Shader: {fileID: -6465566751694194690, guid: 2d503c91f0845aa4bb02bcb0034c3936, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -59,6 +59,6 @@ Material:
     - _QueueOffset: 0
     m_Colors:
     - _FresnelColourPower: {r: 0.4091228, g: 1, b: 0, a: 0}
-    - _HealthColour: {r: 0.3083526, g: 0.509434, b: 0.2859559, a: 1}
+    - _HealthColour: {r: 0.43854567, g: 0.8962264, b: 0.38470095, a: 1}
     - _PowerColour: {r: 0.38431376, g: 0.31764707, b: 0.04705883, a: 1}
   m_BuildTextureStacks: []
