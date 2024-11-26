@@ -73,7 +73,7 @@ public class TowerBase : MonoBehaviour
         }
     }
 
-    protected void SelectUpgrade()
+    protected void SelectUpgrade(UpgradeOptions SelectedUpgrade)
     {
 
     }
