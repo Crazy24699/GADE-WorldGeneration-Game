@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-1308328257955544624
+--- !u!114 &-1818665218352155085
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
@@ -20,13 +20,13 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: CanonPowerUp
-  m_Shader: {fileID: -6465566751694194690, guid: e51e0679f7bd51c49818b634d3778d9c, type: 3}
+  m_Name: CannonBulge
+  m_Shader: {fileID: -6465566751694194690, guid: 9bff9596ddb09e949a87b045a93d634d, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
   m_InvalidKeywords: []
-  m_LightmapFlags: 0
+  m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -54,10 +54,27 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _FresnelPower: 100
+    - _AlphaClip: 0
+    - _AlphaToMask: 0
+    - _Blend: 0
+    - _BlendModePreserveSpecular: 1
+    - _BulgePower: 0.15
+    - _BulgeWidth: 6
+    - _CastShadows: 1
+    - _Cull: 2
+    - _DstBlend: 0
+    - _FresnelPower: 1.5
+    - _Panner: 0.5
     - _QueueControl: 0
     - _QueueOffset: 0
+    - _ReceiveShadows: 1
+    - _SrcBlend: 1
+    - _Surface: 0
+    - _WorkflowMode: 1
+    - _ZTest: 4
+    - _ZWrite: 1
+    - _ZWriteControl: 0
     m_Colors:
     - _FresnelColourPower: {r: 1, g: 0.2371134, b: 0, a: 0}
-    - _PowerColour: {r: 0.07058824, g: 0.07058824, b: 0.07058824, a: 0}
+    - _PowerColour: {r: 0.1132075, g: 0.1132075, b: 0.1132075, a: 1}
   m_BuildTextureStacks: []
