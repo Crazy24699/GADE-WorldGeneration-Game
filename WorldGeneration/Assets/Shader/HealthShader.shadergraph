@@ -392,7 +392,7 @@
     "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
     "m_ObjectId": "069f903034d1493084004c2b0e08d11b",
     "m_Id": 0,
-    "m_DisplayName": "PowerColour",
+    "m_DisplayName": "HealthColour",
     "m_SlotType": 1,
     "m_Hidden": false,
     "m_ShaderOutputName": "Out",
@@ -936,10 +936,10 @@
     "m_Guid": {
         "m_GuidSerialized": "518af2b3-5c2a-4ae4-a1e4-e4f6234bd5e2"
     },
-    "m_Name": "PowerColour",
+    "m_Name": "HealthColour",
     "m_DefaultRefNameVersion": 1,
-    "m_RefNameGeneratedByDisplayName": "PowerColour",
-    "m_DefaultReferenceName": "_PowerColour",
+    "m_RefNameGeneratedByDisplayName": "HealthColour",
+    "m_DefaultReferenceName": "_HealthColour",
     "m_OverrideReferenceName": "",
     "m_GeneratePropertyBlock": true,
     "m_UseCustomSlotLabel": false,
@@ -950,9 +950,9 @@
     "hlslDeclarationOverride": 0,
     "m_Hidden": false,
     "m_Value": {
-        "r": 0.11320751905441284,
-        "g": 0.11320751905441284,
-        "b": 0.11320751905441284,
+        "r": 0.30835258960723879,
+        "g": 0.5094339847564697,
+        "b": 0.28595587611198428,
         "a": 1.0
     },
     "isMainColor": false,
