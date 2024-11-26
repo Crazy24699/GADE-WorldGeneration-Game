@@ -13,6 +13,15 @@ public class TowerBase : MonoBehaviour
     [SerializeField] protected int Damage;
      protected bool  StartupRan=false;
 
+    public enum UpgradeOptions
+    {
+        None,
+        Health,
+        Damage
+    }
+
+    public UpgradeOptions ChosenUpgradePath;
+
     //[SerializeField] protected GameObject EnemiesInRange;
 
     // Start is called before the first frame update
@@ -63,6 +72,18 @@ public class TowerBase : MonoBehaviour
             
         }
     }
+
+    protected void SelectUpgrade()
+    {
+
+    }
+
+    public virtual void UpgradeTower()
+    {
+
+    }
+
+
 
     protected virtual void TakeDamageEffect()
     {
