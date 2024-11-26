@@ -102,7 +102,7 @@ Material:
     - _BumpScale: 1
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
-    - _ColourThreshold: 0.1
+    - _ColourThreshold: 1.61
     - _Cull: 2
     - _Cutoff: 0.5
     - _DetailAlbedoMapScale: 1
