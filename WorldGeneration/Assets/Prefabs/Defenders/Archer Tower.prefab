@@ -353,6 +353,7 @@ MonoBehaviour:
   MaxHealth: 20
   CurrentHealth: 0
   Damage: 10
+  ChosenUpgradePath: 0
   RotateObject: {fileID: 7118042745781354464}
   FirePoint: {fileID: 1686446937803047534}
   TowerMeshRender: {fileID: 7484954495619935799}
@@ -514,9 +515,41 @@ Transform:
   m_Children:
   - {fileID: 2144675431774443299}
   - {fileID: 234700305422571883}
+  - {fileID: 7571124695247839950}
   - {fileID: 1324162839708627600}
   - {fileID: 5608711904206135384}
   m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5739096014823277067
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7571124695247839950}
+  m_Layer: 0
+  m_Name: Defender UI
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7571124695247839950
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5739096014823277067}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9051623135522926915}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7118042745781354464
 GameObject:

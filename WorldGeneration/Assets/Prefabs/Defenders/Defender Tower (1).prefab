@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5267336853411609187}
   - component: {fileID: 2296394438228532405}
   - component: {fileID: 2406620841989312906}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -84,7 +84,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4433858486331529728}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -118,7 +118,7 @@ GameObject:
   - component: {fileID: 8962601601876880046}
   - component: {fileID: 9053797952520070008}
   - component: {fileID: 4358068847138314045}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Detector
   m_TagString: DefenderTower
   m_Icon: {fileID: 0}
@@ -157,6 +157,12 @@ MonoBehaviour:
   MaxHealth: 35
   CurrentHealth: 0
   Damage: 7
+  TowerUpgradeScript: {fileID: 0}
+  DamageUpShader: {fileID: 0}
+  HealthUpShader: {fileID: 0}
+  BasePrice: 40
+  CurrentUpgradeCost: 40
+  ChosenUpgradePath: 0
   RotateObject: {fileID: 431047082401048554}
   FirePoint: {fileID: 3831573237396818833}
   TowerMeshRender: {fileID: 8282012575808896004}
@@ -203,7 +209,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8866503479166888627}
   - component: {fileID: 3016739919105563159}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -290,7 +296,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6793685247430916132}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Defender Tower (1)
   m_TagString: DefenderTower
   m_Icon: {fileID: 0}
@@ -327,7 +333,7 @@ GameObject:
   - component: {fileID: 5492736867642108919}
   - component: {fileID: 4001164161794736259}
   - component: {fileID: 4256739276355374359}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -400,7 +406,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6586183635540593444}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Fire Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -435,7 +441,7 @@ GameObject:
   - component: {fileID: 2060423660658300256}
   - component: {fileID: 3579075757430420466}
   - component: {fileID: 1539458726870365264}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: Healthbar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -551,7 +557,7 @@ GameObject:
   - component: {fileID: 6128108022133213390}
   - component: {fileID: 8282012575808896004}
   - component: {fileID: 3228374719258907344}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: GADE Tower
   m_TagString: TowerArea
   m_Icon: {fileID: 0}
@@ -714,6 +720,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 1de7331590d46d64aa9f9edfb3fee691, type: 3}
       propertyPath: m_Name
       value: GADE Part 1 Cannon
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 1de7331590d46d64aa9f9edfb3fee691, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

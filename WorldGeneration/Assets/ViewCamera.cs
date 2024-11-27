@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HealthBarfunctionality : MonoBehaviour
+public class ViewCamera : MonoBehaviour
 {
-
     public Camera MainCamera;
 
     // Start is called before the first frame update

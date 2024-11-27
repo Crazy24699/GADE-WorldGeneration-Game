@@ -5,7 +5,7 @@ using UnityEngine;
 public class Bolt : MonoBehaviour
 {
     [SerializeField] private float LaunchForce = 30;
-    [SerializeField] private int Damage = 30;
+    [SerializeField] public int Damage = 30;
     private Rigidbody RigidbodyRef;
 
     public void Startup(Vector3 Direction)

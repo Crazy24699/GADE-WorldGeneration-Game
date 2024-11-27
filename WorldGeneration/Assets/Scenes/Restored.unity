@@ -185,7 +185,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 74b47b6dbbfe7a14c87660f789de9373, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2240,63 +2240,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1722235551}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &1575440933
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 2584168378586160509, guid: 1ed99dc665aaeb64d8cf0dc73a970131, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -81.436584
-      objectReference: {fileID: 0}
-    - target: {fileID: 2584168378586160509, guid: 1ed99dc665aaeb64d8cf0dc73a970131, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 11.45
-      objectReference: {fileID: 0}
-    - target: {fileID: 2584168378586160509, guid: 1ed99dc665aaeb64d8cf0dc73a970131, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -60.09334
-      objectReference: {fileID: 0}
-    - target: {fileID: 2584168378586160509, guid: 1ed99dc665aaeb64d8cf0dc73a970131, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2584168378586160509, guid: 1ed99dc665aaeb64d8cf0dc73a970131, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2584168378586160509, guid: 1ed99dc665aaeb64d8cf0dc73a970131, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2584168378586160509, guid: 1ed99dc665aaeb64d8cf0dc73a970131, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2584168378586160509, guid: 1ed99dc665aaeb64d8cf0dc73a970131, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2584168378586160509, guid: 1ed99dc665aaeb64d8cf0dc73a970131, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2584168378586160509, guid: 1ed99dc665aaeb64d8cf0dc73a970131, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3526330007419288591, guid: 1ed99dc665aaeb64d8cf0dc73a970131, type: 3}
-      propertyPath: m_Name
-      value: 'Tree '
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 1ed99dc665aaeb64d8cf0dc73a970131, type: 3}
 --- !u!1 &1705211784
 GameObject:
   m_ObjectHideFlags: 0
@@ -3418,4 +3361,3 @@ SceneRoots:
   - {fileID: 1548795547262290284}
   - {fileID: 2710182}
   - {fileID: 399044324}
-  - {fileID: 1575440933}

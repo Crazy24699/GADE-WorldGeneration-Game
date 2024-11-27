@@ -20,6 +20,8 @@ public class ArcherTower : TowerBase
     public float FireRate = 0.95f;
 
 
+
+
     [SerializeField] private float ShotCooldownTime = 0f;
 
 
@@ -94,6 +96,7 @@ public class ArcherTower : TowerBase
         Rigidbody ProjectileRB = ProjectileInstance.GetComponent<Rigidbody>();
 
         ProjectileInstance.GetComponent<Bolt>().Startup(TargetList[0].transform.position - transform.position);
+        ProjectileInstance.GetComponent<Bolt>().Damage = Damage;
         //TargetList[0].GetComponent<BaseEnemy>().HandleHealth(-10);
         if (TargetList[0].GetComponent<BaseEnemy>().CurrentHealth == 0)
         {

@@ -12,6 +12,13 @@ public class TowerBase : MonoBehaviour
     [SerializeField]protected int CurrentHealth;
     [SerializeField] protected int Damage;
      protected bool  StartupRan=false;
+    public TowerUpgradeFunctionality TowerUpgradeScript;
+
+    public Material DamageUpShader;
+    public Material HealthUpShader;
+
+    public int BasePrice;
+    public int CurrentUpgradeCost;
 
     public enum UpgradeOptions
     {
@@ -34,10 +41,12 @@ public class TowerBase : MonoBehaviour
             TowerStartup();
             Debug.Log("Dev Mode enabled");
         }
+        
     }
 
     public virtual void TowerStartup()
     {
+        TowerUpgradeScript = this.gameObject.GetComponent<TowerUpgradeFunctionality>();
         StartupRan = false;
         if (HealthBar == null)
         {
@@ -73,14 +82,19 @@ public class TowerBase : MonoBehaviour
         }
     }
 
-    protected void SelectUpgrade(UpgradeOptions SelectedUpgrade)
+    public void UpgradeTowerDamage()
     {
-
+        CurrentUpgradeCost += BasePrice;
+        Damage += 10;
     }
 
-    public virtual void UpgradeTower()
+    public void UpgradeTowerHealth()
     {
+        CurrentUpgradeCost += BasePrice;
 
+        MaxHealth += 15;
+        CurrentHealth = MaxHealth;
+        HealthBar.value = CurrentHealth;
     }
 
 
