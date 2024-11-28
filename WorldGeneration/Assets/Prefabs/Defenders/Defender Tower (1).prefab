@@ -596,7 +596,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6793685247430916132}
-  m_Layer: 10
+  - component: {fileID: 977613028200396333}
+  m_Layer: 11
   m_Name: Defender Tower (1)
   m_TagString: DefenderTower
   m_Icon: {fileID: 0}
@@ -622,6 +623,27 @@ Transform:
   - {fileID: 7108002178940782443}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &977613028200396333
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2525056309174436526}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 10, y: 15, z: 10}
+  m_Center: {x: 0, y: 0.2934513, z: 0}
 --- !u!1 &2843443591561039327
 GameObject:
   m_ObjectHideFlags: 0
@@ -1449,7 +1471,6 @@ GameObject:
   - component: {fileID: 7108002178940782443}
   - component: {fileID: 6128108022133213390}
   - component: {fileID: 8282012575808896004}
-  - component: {fileID: 3228374719258907344}
   m_Layer: 10
   m_Name: GADE Tower
   m_TagString: TowerArea
@@ -1525,27 +1546,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &3228374719258907344
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7633428740517109201}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.024239685, y: 0.024239684, z: 0.041319765}
-  m_Center: {x: -8.081346e-17, y: -0.000000007450581, z: 0.010659886}
 --- !u!1 &7738361766614991992
 GameObject:
   m_ObjectHideFlags: 0
