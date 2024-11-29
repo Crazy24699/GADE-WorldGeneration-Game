@@ -6,13 +6,12 @@ public class ArcherTower : TowerBase
 {
     [SerializeField] private GameObject RotateObject;
     [SerializeField] private GameObject FirePoint;
-    [SerializeField] private Renderer TowerMeshRender;
+
     [SerializeField] private LayerMask EnemyLayer;
 
 
     [SerializeField] private Material DamageMat;
     [SerializeField] private Material NormalMat;
-    [SerializeField] private Material[] TowerMaterials;
     public GameObject Projectile;
 
     private bool CanShoot = true;
@@ -31,8 +30,7 @@ public class ArcherTower : TowerBase
     {
         MaxHealth = 40;
         TowerStartup();
-        NormalMat = TowerMeshRender.materials[0];
-        TowerMaterials = TowerMeshRender.materials;
+        //NormalMat = TowerMeshRender.materials[0];
     }
 
     private void Update()

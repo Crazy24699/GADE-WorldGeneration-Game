@@ -16,7 +16,9 @@ public class TowerBase : MonoBehaviour
 
     public Material DamageUpShader;
     public Material HealthUpShader;
-
+    public Material[] TowerMaterials;
+    public List<Material> DumbMaterials;
+    [SerializeField] public MeshRenderer TowerMeshRender;
     public int BasePrice;
     public int CurrentUpgradeCost;
 
@@ -36,16 +38,23 @@ public class TowerBase : MonoBehaviour
     {
 
         CurrentHealth = MaxHealth;
-        if(ProgramManager.ProgramManagerInstance.DevMode)
+        //TowerMaterials = new Material[5];
+        //TowerMaterials = TowerMeshRender.materials;
+        if (ProgramManager.ProgramManagerInstance.DevMode)
         {
             TowerStartup();
             Debug.Log("Dev Mode enabled");
         }
-        
+
     }
 
     public virtual void TowerStartup()
     {
+        Material[] materials = TowerMeshRender.materials;
+        Debug.Log(materials.Length);
+        DumbMaterials = new List<Material>(materials);
+
+
         TowerUpgradeScript = this.gameObject.GetComponent<TowerUpgradeFunctionality>();
         StartupRan = false;
         if (HealthBar == null)
@@ -61,6 +70,25 @@ public class TowerBase : MonoBehaviour
         CurrentHealth = MaxHealth;
         HealthBar.value = CurrentHealth;
         StartupRan = true;
+    }
+
+    public void SetShader(UpgradeOptions Upgrade)
+    {
+        switch (Upgrade)
+        {
+            case UpgradeOptions.Health:
+                DumbMaterials[2] = HealthUpShader;
+                Debug.Log("unspoken");
+                break;
+
+            case UpgradeOptions.Damage:
+                DumbMaterials[2] = DamageUpShader;
+                Debug.Log("deserve the silence of a disconnected life");
+                break;
+
+        }
+
+        TowerMeshRender.materials = DumbMaterials.ToArray();
     }
 
     public virtual void HandleHealth(int HealthChange)
@@ -86,6 +114,7 @@ public class TowerBase : MonoBehaviour
     {
         CurrentUpgradeCost += BasePrice;
         Damage += 10;
+        //TowerMaterials[1] = DamageUpShader;
     }
 
     public void UpgradeTowerHealth()
@@ -95,6 +124,7 @@ public class TowerBase : MonoBehaviour
         MaxHealth += 15;
         CurrentHealth = MaxHealth;
         HealthBar.value = CurrentHealth;
+        //TowerMaterials[2] = HealthUpShader;
     }
 
 

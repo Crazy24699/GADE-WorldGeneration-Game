@@ -19,12 +19,10 @@ public class MortarDefender : TowerBase
     
     public Transform FirePoint;
 
-    [SerializeField] private Renderer TowerMeshRender;
     [SerializeField] private LayerMask EnemyLayer;
 
     [SerializeField] private Material DamageMat;
     [SerializeField] private Material NormalMat;
-    [SerializeField] private Material[] TowerMaterials;
 
 
 
@@ -37,7 +35,7 @@ public class MortarDefender : TowerBase
         MaxHealth = 50;
         TowerStartup();
         NormalMat = TowerMeshRender.materials[0];
-        TowerMaterials = TowerMeshRender.materials;
+        Damage = 50;
     }
 
     private void Update()
@@ -90,6 +88,7 @@ public class MortarDefender : TowerBase
         float AppliedForce = CalculateFiringForce(TargetDistance);
 
         GameObject MortarShell = Instantiate(ProjectileRef, FirePoint.position, Quaternion.identity);
+        MortarShell.GetComponent<MortarShell>().Damage = Damage;
         MortarShell.GetComponent<MortarShell>().ShellStart(FirePoint, TargetList[0].transform);
     }
 

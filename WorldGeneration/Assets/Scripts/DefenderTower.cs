@@ -8,13 +8,14 @@ public class DefenderTower : TowerBase
 
     [SerializeField] private GameObject RotateObject;
     [SerializeField] private GameObject FirePoint;
-    [SerializeField] private Renderer TowerMeshRender;
+
     [SerializeField] private LayerMask EnemyLayer;
 
 
     [SerializeField] private Material DamageMat;
     [SerializeField] private Material NormalMat;
-    [SerializeField]private Material[] TowerMaterials;
+
+
     public GameObject Projectile;
 
     private bool CanShoot = true;
@@ -33,7 +34,7 @@ public class DefenderTower : TowerBase
         //MaxHealth = 40;
         TowerStartup();
         NormalMat = TowerMeshRender.materials[0];
-        TowerMaterials = TowerMeshRender.materials;
+        
     }
 
     private void Update()
@@ -52,6 +53,8 @@ public class DefenderTower : TowerBase
         }
         AttackTargets();
     }
+
+
 
     private void AttackTargets()
     {

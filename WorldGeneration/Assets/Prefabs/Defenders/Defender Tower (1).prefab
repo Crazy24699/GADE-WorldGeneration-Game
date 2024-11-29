@@ -151,6 +151,7 @@ GameObject:
   - component: {fileID: 8962601601876880046}
   - component: {fileID: 9053797952520070008}
   - component: {fileID: 4358068847138314045}
+  - component: {fileID: 3182179940125783401}
   m_Layer: 10
   m_Name: Detector
   m_TagString: DefenderTower
@@ -191,20 +192,21 @@ MonoBehaviour:
   CurrentHealth: 0
   Damage: 7
   TowerUpgradeScript: {fileID: 0}
-  DamageUpShader: {fileID: 0}
-  HealthUpShader: {fileID: 0}
+  DamageUpShader: {fileID: 2100000, guid: 1f0d376828b18fb4186aa6c8466cd5bc, type: 2}
+  HealthUpShader: {fileID: 2100000, guid: f7d0aff3763134f44b099c43f4efbce9, type: 2}
+  TowerMaterials: []
+  DumbMaterials: []
+  TowerMeshRender: {fileID: 8282012575808896004}
   BasePrice: 40
   CurrentUpgradeCost: 40
   ChosenUpgradePath: 0
   RotateObject: {fileID: 431047082401048554}
   FirePoint: {fileID: 3831573237396818833}
-  TowerMeshRender: {fileID: 8282012575808896004}
   EnemyLayer:
     serializedVersion: 2
     m_Bits: 512
   DamageMat: {fileID: 2100000, guid: 30d9de49bd273e141a1056bd8bd6e048, type: 2}
   NormalMat: {fileID: 0}
-  TowerMaterials: []
   Projectile: {fileID: 5747039161091635797, guid: ba4df3af0d387604e962f891456779c6, type: 3}
   FireRate: 1.25
   RotationOffset: 0
@@ -232,6 +234,25 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &3182179940125783401
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 780829021026362291}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c4d904d9cd7a4140b35a15e15cad768, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HealthCost: {fileID: 2965984460733976384}
+  DamageCost: {fileID: 863608733052435136}
+  HealthButton: {fileID: 7015737388001624489}
+  DamageButton: {fileID: 8402204940479098497}
+  UpgradePanel: {fileID: 2843443591561039327}
+  TowerBaseScriptLink: {fileID: 0}
+  ChosenOption: 0
 --- !u!1 &1155226378273590159
 GameObject:
   m_ObjectHideFlags: 0
@@ -575,9 +596,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 9053797952520070008}
-        m_TargetAssemblyTypeName: TowerBase, Assembly-CSharp
-        m_MethodName: UpgradeTowerHealth
+      - m_Target: {fileID: 3182179940125783401}
+        m_TargetAssemblyTypeName: TowerUpgradeFunctionality, Assembly-CSharp
+        m_MethodName: UpgradeHealth
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1411,9 +1432,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 9053797952520070008}
-        m_TargetAssemblyTypeName: TowerBase, Assembly-CSharp
-        m_MethodName: UpgradeTowerDamage
+      - m_Target: {fileID: 3182179940125783401}
+        m_TargetAssemblyTypeName: TowerUpgradeFunctionality, Assembly-CSharp
+        m_MethodName: UpgradeDamage
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

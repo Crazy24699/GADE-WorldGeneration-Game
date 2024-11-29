@@ -9,7 +9,7 @@ public class MortarShell : MonoBehaviour
     public Vector3 EndPosition;
     public float TravelTime = 2;    
     [SerializeField]private float ElapsedTime = 0f; 
-    private int Damage=50;
+    public int Damage=50;
 
     private Vector3 ArcMidPoint;     
 

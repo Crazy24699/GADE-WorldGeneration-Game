@@ -40,23 +40,28 @@ public class TowerUpgradeFunctionality : MonoBehaviour
         if (ChosenOption == TowerBase.UpgradeOptions.None)
         {
             ChosenOption = TowerBase.UpgradeOptions.Damage;
+            TowerBaseScriptLink.ChosenUpgradePath = TowerBase.UpgradeOptions.Damage;
             HealthButton.SetActive(false);
+            TowerBaseScriptLink.SetShader(TowerBase.UpgradeOptions.Damage);
         }
 
         TowerBaseScriptLink.UpgradeTowerDamage();
-
+        DeselectTower();
     }
 
     public void UpgradeHealth()
     {
         if (ChosenOption == TowerBase.UpgradeOptions.None)
         {
+            Debug.Log("disconnect");
             ChosenOption = TowerBase.UpgradeOptions.Health;
+            TowerBaseScriptLink.ChosenUpgradePath = TowerBase.UpgradeOptions.Health;
             DamageButton.SetActive(false);
+            TowerBaseScriptLink.SetShader(TowerBase.UpgradeOptions.Health);
         }
 
         TowerBaseScriptLink.UpgradeTowerHealth();
-
+        DeselectTower();
     }
 
     public void DeselectTower()

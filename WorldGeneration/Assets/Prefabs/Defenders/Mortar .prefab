@@ -196,9 +196,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5692883950538735734}
-        m_TargetAssemblyTypeName: TowerBase, Assembly-CSharp
-        m_MethodName: UpgradeTowerHealth
+      - m_Target: {fileID: 5656405471512814753}
+        m_TargetAssemblyTypeName: TowerUpgradeFunctionality, Assembly-CSharp
+        m_MethodName: UpgradeHealth
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -723,9 +723,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5692883950538735734}
-        m_TargetAssemblyTypeName: TowerBase, Assembly-CSharp
-        m_MethodName: UpgradeTowerDamage
+      - m_Target: {fileID: 5656405471512814753}
+        m_TargetAssemblyTypeName: TowerUpgradeFunctionality, Assembly-CSharp
+        m_MethodName: UpgradeDamage
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -781,7 +781,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 359478967767660231}
-  m_Layer: 10
+  - component: {fileID: 429210789251431392}
+  m_Layer: 11
   m_Name: 'Mortar '
   m_TagString: DefenderTower
   m_Icon: {fileID: 0}
@@ -808,6 +809,27 @@ Transform:
   - {fileID: 4503895610298011951}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 48.73, z: 0}
+--- !u!65 &429210789251431392
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4291816866028445724}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4313179605898039693
 GameObject:
   m_ObjectHideFlags: 0
@@ -1285,8 +1307,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4503895610298011951}
-  - component: {fileID: 3504654613749844570}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: TowerArea
   m_TagString: TowerArea
   m_Icon: {fileID: 0}
@@ -1308,27 +1329,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 359478967767660231}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &3504654613749844570
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6206086696918903226}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 10.732126, y: 15.727348, z: 11.42227}
-  m_Center: {x: 0, y: -1.1193478, z: 0}
 --- !u!1 &6206803355696669326
 GameObject:
   m_ObjectHideFlags: 0
@@ -1546,6 +1546,7 @@ GameObject:
   - component: {fileID: 6068651459157023968}
   - component: {fileID: 5692883950538735734}
   - component: {fileID: 7367293766171451486}
+  - component: {fileID: 5656405471512814753}
   m_Layer: 10
   m_Name: Detector
   m_TagString: DefenderTower
@@ -1586,8 +1587,11 @@ MonoBehaviour:
   CurrentHealth: 0
   Damage: 0
   TowerUpgradeScript: {fileID: 0}
-  DamageUpShader: {fileID: 0}
-  HealthUpShader: {fileID: 0}
+  DamageUpShader: {fileID: 2100000, guid: 1f0d376828b18fb4186aa6c8466cd5bc, type: 2}
+  HealthUpShader: {fileID: 2100000, guid: f7d0aff3763134f44b099c43f4efbce9, type: 2}
+  TowerMaterials: []
+  DumbMaterials: []
+  TowerMeshRender: {fileID: 5477754288295322603}
   BasePrice: 120
   CurrentUpgradeCost: 120
   ChosenUpgradePath: 0
@@ -1599,13 +1603,11 @@ MonoBehaviour:
   ProjectileRef: {fileID: 5747039161091635797, guid: 82df46f7df79bc546b4a2c359cb8c2a5, type: 3}
   TargetList: []
   FirePoint: {fileID: 1313776727479200046}
-  TowerMeshRender: {fileID: 5477754288295322603}
   EnemyLayer:
     serializedVersion: 2
     m_Bits: 512
   DamageMat: {fileID: 2100000, guid: 74b47b6dbbfe7a14c87660f789de9373, type: 2}
   NormalMat: {fileID: -6629797300637803691, guid: e85496584f3d69f46a2353a8916eb468, type: 3}
-  TowerMaterials: []
 --- !u!135 &7367293766171451486
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1627,6 +1629,25 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 100
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5656405471512814753
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8087589613147783669}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c4d904d9cd7a4140b35a15e15cad768, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HealthCost: {fileID: 7843112479196090696}
+  DamageCost: {fileID: 8616920831656698252}
+  HealthButton: {fileID: 2014197421865764209}
+  DamageButton: {fileID: 3680327294303058090}
+  UpgradePanel: {fileID: 6206803355696669326}
+  TowerBaseScriptLink: {fileID: 0}
+  ChosenOption: 0
 --- !u!1 &8712150300382772107
 GameObject:
   m_ObjectHideFlags: 0

@@ -1757,20 +1757,21 @@ MonoBehaviour:
   CurrentHealth: 0
   Damage: 10
   TowerUpgradeScript: {fileID: 0}
-  DamageUpShader: {fileID: 0}
-  HealthUpShader: {fileID: 0}
+  DamageUpShader: {fileID: 2100000, guid: 1f0d376828b18fb4186aa6c8466cd5bc, type: 2}
+  HealthUpShader: {fileID: 2100000, guid: f7d0aff3763134f44b099c43f4efbce9, type: 2}
+  TowerMaterials: []
+  DumbMaterials: []
+  TowerMeshRender: {fileID: 904714381381643529}
   BasePrice: 80
   CurrentUpgradeCost: 80
   ChosenUpgradePath: 0
   RotateObject: {fileID: 8081364366070233944}
   FirePoint: {fileID: 566116690895377734}
-  TowerMeshRender: {fileID: 904714381381643529}
   EnemyLayer:
     serializedVersion: 2
     m_Bits: 512
   DamageMat: {fileID: 2100000, guid: 30d9de49bd273e141a1056bd8bd6e048, type: 2}
   NormalMat: {fileID: 0}
-  TowerMaterials: []
   Projectile: {fileID: 6500804045830207199, guid: 730e9bbcbe96a4442bcbb80fab18cedb, type: 3}
   FireRate: 0.475
   ShotCooldownTime: 0
@@ -2022,9 +2023,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2838921458365307481}
-        m_TargetAssemblyTypeName: TowerBase, Assembly-CSharp
-        m_MethodName: UpgradeTowerHealth
+      - m_Target: {fileID: 7402695056928265274}
+        m_TargetAssemblyTypeName: TowerUpgradeFunctionality, Assembly-CSharp
+        m_MethodName: UpgradeHealth
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
