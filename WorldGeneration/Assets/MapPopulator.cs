@@ -33,6 +33,16 @@ public class MapPopulator : MonoBehaviour
     void Start()
     {
         MapGenScript = FindObjectOfType<MapGenerator>();
+        
+        StartCoroutine(PopulationDelay());
+        
+    }
+
+    private IEnumerator PopulationDelay()
+    {
+        yield return new WaitForSeconds(1.75f);
+        TreePoints = RequestUnusableLand();
+        StartCoroutine(Populator());
     }
 
     // Update is called once per frame
